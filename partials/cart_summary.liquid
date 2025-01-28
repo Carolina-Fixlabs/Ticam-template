@@ -1,0 +1,50 @@
+<div class="cart-summary__wrapper">
+  {% if template == 'cart' and show_shipping_estimates %}
+    <div class="cart-summary__block">
+      <div class="cart-summary__title">
+        {%- t "Estimate shipping costs" -%}
+      </div>
+
+      {{ estimate_form }}
+    </div>
+  {% endif %}
+
+  {% if template == 'cart' and coupon_form %}
+    <div class="cart-summary__block">
+      <div class="cart-summary__title">{% t "Have a discount code?" %}</div>
+      <div class="cart-summary__text">
+        {%- t "Type the coupon code and click on the button to apply it." -%}
+        {% if show_shipping_estimates %}
+          {% unless order.shipping_method %}
+            <br>
+            {%- t "Before entering your coupon, we suggest you estimate and define a shipping method." -%}
+          {% endunless %}
+        {% endif %}
+      </div>
+
+      {{ coupon_form }}
+    </div>
+  {% endif %}
+
+  {% unless template == 'cart' %}
+    <div class="cart-summary__block">
+      <div class="cart-summary__title">
+        {%- t "Order summary" -%}
+
+        <button type="button" class="button cart-summary__toggle-products">
+          <span>{%- t "Show products" -%}</span>
+          <span>{%- t "Hide products" -%}</span>
+          <i class="ph ph-caret-down"></i>
+        </button>
+      </div>
+
+      <div class="row d-none cart-summary__products">
+        {% for prod in order.products %}
+          {% render 'store_product', prod: prod, prod_type: 'normal' %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endunless %}
+
+  {% render 'store_totals' %}
+</div>

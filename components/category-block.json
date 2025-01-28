@@ -1,0 +1,115 @@
+{
+  "name": "Category block",
+  "icon": "square",
+  "help": "For more information on how this component work, visit the theme documentation.",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "permalink": {
+      "name": "Category",
+      "type": "category",
+      "help": "Mandatory. Allows to select a 'Category' from the list of created categories in 'Products > Categories'."
+    },
+    "title": {
+      "name": "Title",
+      "type": "input",
+      "default": ""
+    },
+    "show_description": {
+      "name": "Show description",
+      "type": "checkbox",
+      "default": false
+    },
+    "description": {
+      "name": "Description",
+      "type": "text",
+      "default": ""
+    },
+    "group_images": {
+      "name": "Images",
+      "type": "heading",
+      "default": false
+    },
+    "image_desktop": {
+      "name": "Background image (desktop)",
+      "type": "image"
+    },
+    "image_mobile": {
+      "name": "Background image (mobile)",
+      "type": "image"
+    },
+    "image_overlay": {
+      "name": "Image overlay",
+      "type": "slider",
+      "default": 50,
+      "min": 0,
+      "max": 90,
+      "step": 10,
+      "unit": ""
+    },
+    "icon": {
+      "name": "Icon image",
+      "type": "image"
+    },
+    "icon_size": {
+      "name": "Icon size",
+      "type": "slider",
+      "default": 30,
+      "min": 20,
+      "max": 50,
+      "step": 5,
+      "unit": "%"
+    },
+    "group_link": {
+      "name": "Link options",
+      "type": "heading",
+      "default": false
+    },
+    "link_text": {
+      "name": "Link text",
+      "type": "input",
+      "default": ""
+    },
+    "link_external": {
+      "name": "Enable as external link",
+      "type": "checkbox",
+      "default": false
+    },
+    "link_arrow": {
+      "name": "Show arrow in title",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_link_text": {
+      "name": "Show link as text",
+      "type": "checkbox",
+      "default": true
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "system-1",
+      "pack": "color"
+    }
+  },
+  "nesting": {
+    "group_link": [
+      "link_text",
+      "link_external",
+      "link_arrow",
+      "show_link_text"
+    ],
+    "group_images": [
+      "image_desktop",
+      "image_mobile",
+      "image_overlay",
+      "icon",
+      "icon_size"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

@@ -1,0 +1,11 @@
+{%- if languages.size > 1 -%}
+  <li class="header__item d-none {% if component.options.version == 'v4' %}d-md-flex{% else %}d-lg-flex{% endif %}">
+    {%- render 'dropdown_language', dropdown_position: 'header' -%}
+  </li>
+{%- endif -%}
+
+{%- if store.currencies_codes.size > 1 -%}
+  <li class="header__item d-none {% if component.options.version == 'v4' %}d-md-flex{% else %}d-lg-flex{% endif %}">
+    {%- render 'dropdown_currency', dropdown_position: 'header' -%}
+  </li>
+{%- endif -%}

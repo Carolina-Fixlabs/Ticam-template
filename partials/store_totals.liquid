@@ -1,0 +1,192 @@
+{% if order.order_gift_cards != blank or order.usable_gift_cards_amount > 0 or order.applied_gift_cards_amount > 0 %}
+  {% assign gift_cards = true %}
+{% else %}
+  {% assign gift_cards = false %}
+{% endif %}
+
+<div class="w-100 d-flex flex-column position-relative store-totals">
+  {% if template == 'cart' %}
+    <div class="loading-spinner__wrapper">
+      <div class="loading-spinner"></div>
+    </div>
+  {% endif %}
+
+  <div class="store-totals__content check-empty">
+    {% unless template == 'success' %}
+      <!-- Free shipping -->
+      <div class="w-100 store-totals__free-shipping{% unless order.remaining_for_free_shipping_message != blank %} hidden{% endunless %}">
+        {{- order.remaining_for_free_shipping_message -}}
+      </div>
+
+      <!-- Minimum purchase -->
+      <div class="w-100 store-totals__minimum-store-conditions {% unless order.minimum_purchase.above_minimum == false %}hidden{% endunless %}">
+        {% if order.minimum_purchase.condition_type == 'qty' %}
+          {% capture minimum -%}
+            <strong>{{ order.minimum_purchase.condition_value }}</strong>
+          {%- endcapture %}
+          {% capture at_least -%}
+            <strong class="store-totals__qty-remaining" data-value="{{ order.minimum_purchase.condition_value | minus: order.products_count }}">{{ order.minimum_purchase.condition_value | minus: order.products_count }}</strong>
+          {%- endcapture %}
+          <p>{%- t "The minimum quantity of products to checkout is %{minimum}. To continue please add at least %{at_least} product(s) to the cart.", minimum: minimum, at_least: at_least -%}</p>
+        {% elsif order.minimum_purchase.condition_type == 'price' %}
+          {% capture minimum -%}
+            <strong>{{ order.minimum_purchase.condition_value | price }}</strong>
+          {%- endcapture %}
+          {% capture at_least -%}
+            <strong class="store-totals__price-remaining" data-value="{{ order.minimum_purchase.condition_value | minus: order.subtotal_with_discount }}">{{ order.minimum_purchase.condition_value | minus: order.subtotal_with_discount | price }}</strong>
+          {%- endcapture %}
+          <p>{%- t "The minimum amount to checkout is %{minimum}. To continue please add at least %{at_least} to the cart.", minimum: minimum, at_least: at_least -%}</p>
+        {% endif %}
+
+        {% if order.minimum_purchase.above_minimum == false %}
+          <div class="progress">
+            {% assign progress_percentage = order.subtotal_with_discount | times: 100 | divided_by: order.minimum_purchase.condition_value | round: 0 %}
+            <div class="progress-bar" role="progressbar" style="width: {{ progress_percentage }}%;" aria-valuenow="{{ progress_percentage }}" aria-valuemin="0" aria-valuemax="100">{{ progress_percentage }}%</div>
+          </div>
+        {% endif %}
+      </div>
+    {% endunless %}
+
+    <!-- Product amount -->
+    <div class="d-flex align-items-center justify-content-between store-totals__column" data-name="products">
+      <span class="w-50 store-totals__value">
+        {%- t "Products" %}
+        <span class="w-50 store-totals__price store-totals__price--count">
+          {{- order.products_count -}}
+        </span>
+      </span>
+      <div class="d-flex align-items-center justify-content-between store-totals__column" data-name="subtotal">
+        <span class="store-totals__price" data-value="{{ order.subtotal }}">
+          {{- order.subtotal | price -}}
+        </span>
+      </div>
+    </div>
+
+    <!-- Shipping costs -->
+    <div class="d-flex align-items-center justify-content-between store-totals__column" data-name="shipping">
+      <span class="w-50 store-totals__value">{% t "Shipping" %}</span>
+      <span class="w-50 store-totals__price" data-value="{{ order.shipping }}">
+        {{- order.shipping | price -}}
+      </span>
+    </div>
+
+    <!-- Shipping method message ? -->
+    {% if order.shipping_method and order.shipping_method_id == 'cash_on_delivery' %}
+      <div class="d-flex align-items-center justify-content-start store-totals__column">
+        <p class="w-100 mb-0 store-totals__value store-totals__value--text">
+          {%- t "The shipping amount to pay will be notified once the order is received at the defined shipping address." -%}
+        </p>
+      </div>
+    {% endif %}
+
+    <!-- Taxes -->
+    {% if order.applied_tax > 0 %}
+      <div class="{% if order.applied_tax == 0 %}d-none{% endif %} d-flex align-items-center justify-content-between store-totals__column" data-name="taxes">
+        <span class="w-50 store-totals__value">{% t "Taxes" %}</span>
+        <span class="w-50 store-totals__price store-totals__price--taxes" data-value="{{ order.applied_tax }}">
+          {{- order.applied_tax | price -}}
+        </span>
+      </div>
+    {% endif %}
+
+    <!-- Discount from promotions -->
+    {% if order.discount > 0 %}
+      <div class="d-flex align-items-center justify-content-between store-totals__column" data-name="discounts">
+        <span class="w-50 store-totals__value">{% t "Discounts" %}</span>
+        <span class="w-50 store-totals__price store-totals__price--discounts" data-value="{{ order.discount }}"> -{{ order.discount | price -}}</span>
+      </div>
+    {% endif %}
+
+    <!-- Coupons from promotions -->
+    {% if order.coupons and order.coupons != '' %}
+      {% assign coupons = order.coupons | split: ',' %}
+      <div class="d-flex align-items-start flex-column store-totals__column" data-name="coupons">
+        <div class="w-100 store-totals__value">{% t "Applied discount codes:" %}</div>
+        <div class="w-100 d-flex flex-wrap store-totals__coupons">
+          {% for coupon in coupons %}
+            <div class="store-totals__code" data-value="{{ coupon }}">
+              <span>{{ coupon | downcase }}</span>
+              <button type="button" class="button store-totals__remove">
+                <i class="ph ph-trash"></i>
+              </button>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    <!-- Order total excluding gift card discount -->
+    <div class="d-flex align-items-center justify-content-between store-totals__column" data-name="total">
+      <span class="w-50 store-totals__value {% unless gift_cards %}store-totals__value--last{% endunless %}">
+        {%- t "Total" -%}
+      </span>
+      <span class="w-50 store-totals__price {% if gift_cards %}store-totals__price---total{% else %}store-totals__price--last{% endif %}" data-total="{{ order.total }}">
+        {{- order.total | price -}}
+      </span>
+    </div>
+
+    <!-- Gift cards discount -->
+    {% if gift_cards %}
+      <div class="d-flex align-items-center justify-content-between store-totals__column {% unless gift_cards %}d-none{% endunless %}" data-name="gift-cards">
+        <span class="w-50 store-totals__value">{% t "Gift Cards" %}</span>
+        {% if template == 'success' %}
+          <span class="w-50 store-totals__price store-totals__price--gift-cards" data-value="{{ order.applied_gift_cards_amount }}">
+            -
+            {{- order.applied_gift_cards_amount | price -}}
+          </span>
+        {% else %}
+          <span class="w-50 store-totals__price store-totals__price--gift-cards" data-value="{{ order.usable_gift_cards_amount }}">
+            -
+            {{- order.usable_gift_cards_amount | price -}}
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <!-- Order total due -->
+    {% if gift_cards %}
+      <div class="d-flex align-items-center justify-content-between store-totals__column" data-name="total-outstanding">
+        <span class="w-50 store-totals__value store-totals__value--last">{% t "Amount Due" %}</span>
+        {% if template == 'success' %}
+          <span class="w-50 store-totals__price store-totals__price--last" data-total="{{ order.applied_total_outstanding }}">{{- order.applied_total_outstanding | price -}}</span>
+        {% else %}
+          <span class="w-50 store-totals__price store-totals__price--last" data-total="{{ order.total_outstanding }}">
+            {{- order.total_outstanding | price -}}
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+  {% if template == 'cart' or template == 'checkout' or template == 'revieworder' %}
+    <hr class="store-totals__divider">
+
+    <div class="d-flex align-items-center flex-column text-center store-totals__actions">
+      {% if template == 'cart' %}
+        <a href="{{ order.checkout_url }}" class="button button--style button--main button--full store-totals__button checkout-link" id="proceed_to_checkout" title="{% t 'Go to Checkout' %}">
+          {%- t "Go to Checkout" %}
+          <i class="ph ph-arrow-right"></i
+        ></a>
+      {% elsif template == 'checkout' %}
+        <label for="submit_review_order" class="button button--style button--main button--full store-totals__button" id="submit_review_order_2" role="button" tabindex="0">
+          {%- t "Review your Order" %}
+          <i class="ph ph-arrow-right"></i
+        ></label>
+      {% elsif template == 'revieworder' %}
+        <form class="w-100" action="{{ order.place_order_url }}" method="post">
+          <button type="submit" class="button button--style button--main button--full store-totals__button" id="place_order"><i class="ph ph-lock"></i> {% t "Place your order" %}</button>
+        </form>
+      {% endif %}
+
+      {% if template == 'revieworder' %}
+        <a href="{{ order.checkout_url }}" class="store-totals__link checkout-link" title="{% t 'Back to Checkout' %}">{% t "Back to Checkout" %}</a>
+      {% endif %}
+      {% if template == 'checkout' or template == 'revieworder' %}
+        <a href="{{ cart.url }}" class="store-totals__link" title="{% t 'Edit cart' %}">{% t "Edit cart" %}</a>
+      {% endif %}
+      <a href="{{ store.url }}" class="store-totals__link" title="{% t 'Continue shopping' %}">{% t "Continue shopping" %}</a>
+    </div>
+    <!-- end .store-totals__actions -->
+  {% endif %}
+</div>
+<!-- end .store-totals -->

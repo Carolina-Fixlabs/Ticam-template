@@ -1,0 +1,61 @@
+{% assign store_name = options.theme_store_name | default: store.name %}
+{% assign section_id = 'theme-section-' | append: component.id %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+
+<section
+  id="{{ section_id }}"
+  class="container container--adjust theme-section"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {{ component.attributes }}
+>
+  <div class="row align-items-center justify-content-center theme-section__content">
+    {% if current_url contains '?target=wishlist' %}
+      <div class="col-12 text-center">
+        <div class="alert alert-warning theme-section__alert">
+          {%- t "You need to log in or create an account to Wishlist products." -%}
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="col-12 col-md-5 col-lg-4{% if component.options.columns == 'right' %} order-{% if component.options.columns_mobile == false %}md-{% endif %}2{% endif %} customer-form customer-form--center">
+      <div class="customer-form__wrapper">
+        <div class="w-100 text-center">
+          <div class="theme-section__subtitle">
+            {%- t "Log in to" -%}
+          </div>
+          <h1 class="theme-section__title">
+            {{- store_name -}}
+          </h1>
+        </div>
+
+        {{ login_form }}
+      </div>
+    </div>
+    <!-- end .customer-form -->
+
+    <div class="col-12 col-md-5 col-lg-4{% if component.options.columns == 'right' %} order-{% if component.options.columns_mobile == false %}md-{% endif %}1{% endif %} theme-section__column text-center">
+      <h2 class="theme-section__title theme-section__title--medium">
+        {%- t "Are you new at %{store}?", store: store_name -%}
+      </h2>
+
+      <div class="theme-section__description check-empty" {{ component.attributes.textfield.register_text }}>
+        {{ component.options.register_text }}
+      </div>
+
+      <a
+        href="{{ customer_registration_url }}"
+        class="button button--style button--secondary theme-section__button"
+        title="{% t 'Create your account' %}"
+      >
+        {%- t "Create account" -%}
+      </a>
+    </div>
+  </div>
+</section>

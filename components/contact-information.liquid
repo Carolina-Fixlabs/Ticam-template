@@ -1,0 +1,118 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% assign heading_subtitle = component.options.heading_subtitle %}
+{% assign heading_title = component.options.heading_title %}
+{% assign heading_description = component.options.heading_description %}
+{% assign heading_link = component.options.heading_link %}
+{% capture heading_link_text_default %}{% t "Read more" %}{% endcapture %}
+{% assign heading_link_text = component.options.heading_link_text | default: heading_link_text_default %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+    --contact-block-alignment: {{ component.options.alignment }};
+  }
+</style>
+
+<section
+  id="{{ section_id }}"
+  class="container-fluid theme-section"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+  {{ component.attributes }}
+>
+  <div class="container container--adjust theme-section__container">
+    {% render 'component_heading', subtitle: heading_subtitle, title: heading_title, description: heading_description, link: heading_link, link_text: heading_link_text %}
+
+    <div class="row theme-section__content">
+      {% if component.options.show_email %}
+        <div class="col-12 col-md contact-block">
+          <h6 class="contact-block__title"><i class="theme-icon ph ph-envelope-simple"></i> {% t "Contact email" %}</h6>
+          {% if component.options.email_type == 'location' and store.location.email %}
+            <a href="mailto:{{ store.location.email }}" class="contact-block__link" title="{% t 'Send us an email' %}">
+              {{- store.location.email -}}
+            </a>
+          {% else %}
+            <a href="mailto:{{ store.email }}" class="contact-block__link" title="{% t 'Send us an email' %}">
+              {{- store.email -}}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if store.location.phone != blank and component.options.show_phone %}
+        <div class="col-12 col-md contact-block">
+          <h6 class="contact-block__title"><i class="theme-icon ph ph-phone"></i> {% t "Contact phone" %}</h6>
+          <a href="tel:{{ store.location.phone }}" class="contact-block__link" title="{% t 'Call us' %}">
+            {{- store.location.phone -}}
+          </a>
+        </div>
+      {% endif %}
+
+      {% if component.options.show_whatsapp and social.whatsapp.url != blank %}
+        <div class="col-12 col-md contact-block">
+          <h6 class="contact-block__title"><i class="theme-icon ph ph-whatsapp-logo"></i> {% t "WhatsApp number" %}</h6>
+          <a href="{{ social.whatsapp.url }}&amp;text={% t 'Hello' %} {{ store.name }}!" class="contact-block__link" title="{% t 'Send us a WhatsApp message' %}">
+            {{- social.whatsapp.handler -}}
+          </a>
+        </div>
+      {% endif %}
+
+      {% if locations.all.size > 0 and component.options.show_address %}
+        <div class="col-12 col-md contact-block">
+          <h6 class="contact-block__title"><i class="theme-icon ph ph-map-pin"></i> {% t "Address" %}</h6>
+
+          {% for location in locations.all %}
+            {% if forloop.first %}
+              {% assign location_address = location.address_with_street_number %}
+              {% capture location_address_params -%}
+                {%- if location.complement != blank %}{{ location.complement }}, {% endif -%}
+                {%- if location.postal != blank %}{{ location.postal }}, {% endif -%}
+                {%- if location.municipality != blank %}{{ location.municipality }}, {% endif -%}
+                {{- location.city }}, {{ location.region }}, {{ location.country -}}
+              {%- endcapture %}
+              {% capture location_address_url -%}
+                https://maps.google.com/maps?q={{ location_address | replace: '#', '' | url_encode -}}
+                {{- location_address_params -}}
+              {%- endcapture %}
+              <a href="{{ location_address_url }}" class="contact-block__link" title="{% t 'See on Google Maps' %}" target="_blank">
+                {%- if location.street_address != blank %}
+                  {{- location_address -}}
+                  ,
+                {% endif -%}
+                {{- location_address_params -}}
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if component.options.show_social %}
+        <div class="col-12 col-md contact-block">
+          <h6 class="contact-block__title">{% t "Follow us" %}</h6>
+          {% render 'store_social', position: 'contact' %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

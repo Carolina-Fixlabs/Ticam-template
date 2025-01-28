@@ -1,0 +1,22 @@
+{% if header_version == 'v1' %}
+  {% assign button_display = 'd-lg-none' %}
+{% elsif header_version == 'v3' %}
+  {% assign button_display = 'd-flex' %}
+{% elsif header_version == 'v4' %}
+  {% assign button_display = 'd-flex' %}
+{% endif %}
+
+{% if header_version == 'v2' %}
+  {% render 'header_search' %}
+{% else %}
+  <li class="header__item">
+    <button type="button" class="button header__link header__link--search {{ button_display }}" aria-label="{% t 'Search' %}">
+      <i class="theme-icon ph ph-magnifying-glass header__icon"></i>
+      <div class="d-none d-md-block header__text">{% t "Search" %}</div>
+    </button>
+
+    <a role="button" class="button d-block d-lg-none header__close-mobile-search"><i class="ph ph-x"></i></a>
+
+    {% render 'header_search' %}
+  </li>
+{% endif %}

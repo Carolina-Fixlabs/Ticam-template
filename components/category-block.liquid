@@ -1,0 +1,294 @@
+{% assign category_id = 'category-block-' | append: category-block.id %}
+{% assign cat = store.category[category-block.options.permalink] %}
+
+{% case columns_mobile %}
+  {% when 1 %}
+    {% assign class_mobile = 'col-12' %}
+  {% when 2 %}
+    {% assign class_mobile = 'col-xs-12 col-6' %}
+{% endcase %}
+
+{% case columns_desktop %}
+  {% when 1 %}
+    {% assign class_desktop = 'col-md-12' %}
+  {% when 2 %}
+    {% assign class_desktop = 'col-md-6' %}
+  {% when 3 %}
+    {% assign class_desktop = 'col-md-4' %}
+  {% when 4 %}
+    {% assign class_desktop = 'col-md-6 col-lg-3' %}
+  {% when 5 %}
+    {% assign class_desktop = 'col-md-4 col-lg-by-5' %}
+  {% when 6 %}
+    {% assign class_desktop = 'col-md-4 col-lg-2' %}
+{% endcase %}
+
+{% assign content_position = component.options.content_position %}
+{% assign category_ratio = component.options.ratio %}
+
+{% assign align_desktop = component.options.align_desktop %}
+{% assign align_mobile = component.options.align_mobile %}
+
+{% assign items_align_desktop = align_desktop | replace: 'text-md-', 'justify-content-md-' %}
+{% assign items_align_mobile = align_mobile | replace: 'text-', 'justify-content-' %}
+
+{% capture link_text_default %}{% t "See products" %}{% endcapture %}
+{% assign link_text = category-block.options.link_text | default: link_text_default %}
+{% assign link_external = category-block.options.link_external %}
+
+{% capture category_icon %}
+  {% if category-block.options.icon.url != blank %}
+    <div class="category-block__object{% if content_position == 'over' %} {{ items_align_mobile }} {{ items_align_desktop }}{% endif %}">
+      <img src="{{ category-block.options.icon.url | resize: '200x200' }}" class="category-block__icon" alt="{{ category-block.options.icon.alt | default: cat.name | escape }}" width="200" height="200" loading="lazy">
+    </div>
+  {% endif %}
+{% endcapture %}
+
+{% capture category_image %}
+  {% case category_ratio %}
+    {% when 'landscape' %}
+      {% case columns_mobile %}
+        {% when 1 %}
+          {% assign image_dimension_mobile = '527x296' %}
+        {% when 2 %}
+          {% assign image_dimension_mobile = '366x206' %}
+      {% endcase %}
+
+      {% case options.theme_width %}
+        {% when '1320px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '1296x729' %}
+          {% else %}
+            {% assign image_dimension_desktop = '636x358' %}
+          {% endif %}
+        {% when '1620px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '1596x898' %}
+          {% else %}
+            {% assign image_dimension_desktop = '787x443' %}
+          {% endif %}
+        {% when '1920px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '1896x1076' %}
+          {% else %}
+            {% assign image_dimension_desktop = '936x527' %}
+          {% endif %}
+        {% when '2220px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '2196x1235' %}
+          {% else %}
+            {% assign image_dimension_desktop = '1086x611' %}
+          {% endif %}
+      {% endcase %}
+    {% when 'portrait' %}
+      {% case columns_mobile %}
+        {% when 1 %}
+          {% assign image_dimension_mobile = '527x703' %}
+        {% when 2 %}
+          {% assign image_dimension_mobile = '366x488' %}
+      {% endcase %}
+
+      {% case options.theme_width %}
+        {% when '1320px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '1296x1729' %}
+          {% else %}
+            {% assign image_dimension_desktop = '636x848' %}
+          {% endif %}
+        {% when '1620px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '1596x2128' %}
+          {% else %}
+            {% assign image_dimension_desktop = '787x1049' %}
+          {% endif %}
+        {% when '1920px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '1896x2528' %}
+          {% else %}
+            {% assign image_dimension_desktop = '936x1248' %}
+          {% endif %}
+        {% when '2220px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '2196x2928' %}
+          {% else %}
+            {% assign image_dimension_desktop = '1086x1448' %}
+          {% endif %}
+      {% endcase %}
+    {% when 'rectangular' %}
+      {% case columns_mobile %}
+        {% when 1 %}
+          {% assign image_dimension_mobile = '527x395' %}
+        {% when 2 %}
+          {% assign image_dimension_mobile = '366x275' %}
+      {% endcase %}
+
+      {% case options.theme_width %}
+        {% when '1320px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '1296x927' %}
+          {% else %}
+            {% assign image_dimension_desktop = '636x477' %}
+          {% endif %}
+        {% when '1620px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '1596x1197' %}
+          {% else %}
+            {% assign image_dimension_desktop = '787x590' %}
+          {% endif %}
+        {% when '1920px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '1896x1422' %}
+          {% else %}
+            {% assign image_dimension_desktop = '936x702' %}
+          {% endif %}
+        {% when '2220px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '2196x1647' %}
+          {% else %}
+            {% assign image_dimension_desktop = '1086x815' %}
+          {% endif %}
+      {% endcase %}
+    {% when 'square' %}
+      {% case columns_mobile %}
+        {% when 1 %}
+          {% assign image_dimension_mobile = '527x527' %}
+        {% when 2 %}
+          {% assign image_dimension_mobile = '366x366' %}
+      {% endcase %}
+
+      {% case options.theme_width %}
+        {% when '1320px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '1296x1296' %}
+          {% else %}
+            {% assign image_dimension_desktop = '636x636' %}
+          {% endif %}
+        {% when '1620px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '1596x1596' %}
+          {% else %}
+            {% assign image_dimension_desktop = '787x787' %}
+          {% endif %}
+        {% when '1920px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '1896x1896' %}
+          {% else %}
+            {% assign image_dimension_desktop = '936x936' %}
+          {% endif %}
+        {% when '2220px' %}
+          {% if columns_desktop == 1 %}
+            {% assign image_dimension_desktop = '2196x2196' %}
+          {% else %}
+            {% assign image_dimension_desktop = '1086x1086' %}
+          {% endif %}
+      {% endcase %}
+  {% endcase %}
+
+  {% assign split_image_dimension_desktop = image_dimension_desktop | split: 'x' %}
+  {%- capture image_width_and_height_default -%}
+    width="{{ split_image_dimension_desktop.first }}" height="{{ split_image_dimension_desktop.last }}"
+  {%- endcapture -%}
+
+  {% assign image_class = 'category-block__image' %}
+  {% assign image_desktop = category-block.options.image_desktop.url %}
+  {% assign image_desktop_alt = category-block.options.image_desktop.alt %}
+  {% assign image_mobile = category-block.options.image_mobile.url %}
+  {% assign image_mobile_alt = category-block.options.image_mobile.alt %}
+  {% assign image_alt = image_desktop_alt | default: image_mobile_alt | default: cat.name | default: store.name | escape %}
+  {% assign image_width_and_height = category-block.options.image_desktop.attributes.width_and_height | default: category-block.options.image_mobile.attributes.width_and_height | default: image_width_and_height_default %}
+
+  <div class="category-block__media">
+    {% if content_position == 'below' %}
+      {{ category_icon }}
+    {% endif %}
+
+    {% if content_position == 'over' %}
+      <div class="theme-section__overlay"></div>
+    {% endif %}
+
+    {% if image_desktop != blank and image_mobile != blank %}
+      <picture class="category-block__picture">
+        <source media="screen and (max-width: 575px)" srcset="{{ image_mobile | thumb: image_dimension_mobile }}">
+        <source media="screen and (min-width: 576px)" srcset="{{ image_desktop | thumb: image_dimension_desktop }}">
+        <img class="{{ image_class }}" src="{{ image_desktop | thumb: image_dimension_desktop }}" alt="{{ image_alt }}" {{ image_width_and_height }} loading="lazy">
+      </picture>
+    {% elsif image_desktop != blank and image_mobile == blank %}
+      <img class="{{ image_class }}" src="{{ image_desktop | thumb: image_dimension_desktop }}" alt="{{ image_alt }}" {{ image_width_and_height }} loading="lazy">
+    {% elsif image_desktop == blank and image_mobile != blank %}
+      <img class="{{ image_class }}" src="{{ image_mobile | thumb: image_dimension_desktop }}" alt="{{ image_alt }}" {{ image_width_and_height }} loading="lazy">
+    {% elsif cat.name != blank and cat.images.size > 0 %}
+      <picture class="category-block__picture">
+        <source media="screen and (max-width: 575px)" srcset="{{ cat.images.first | thumb: image_dimension_mobile }}">
+        <source media="screen and (min-width: 576px)" srcset="{{ cat.images.first | thumb: image_dimension_desktop }}">
+        <img class="{{ image_class }}" src="{{ cat.images.first | thumb: image_dimension_desktop }}" alt="{{ image_alt }}" {{ image_width_and_height }} loading="lazy">
+      </picture>
+    {% else %}
+      <div class="theme-image-placeholder{% if content_position == 'over' %} theme-image-placeholder--no-icon{% endif %}"></div>
+    {% endif %}
+  </div>
+{% endcapture %}
+
+{% capture category_content %}
+  <div class="category-block__info">
+    {% if content_position == 'over' %}
+      {{ category_icon }}
+    {% endif %}
+
+    <div class="category-block__title {{ items_align_mobile }} {{ items_align_desktop }}">
+      <span {{ category-block.attributes.textfield.title }}>
+        {%- if cat.name == blank and category-block.options.title == blank %}
+          {% t "Choose a category" %}
+        {% else %}
+          {{- category-block.options.title | default: cat.name -}}
+        {% endif -%}
+      </span>
+      {% if content_position == 'below' and category-block.options.link_arrow %}<i class="ph ph-arrow-right"></i>{% endif %}
+    </div>
+
+    {% if category-block.options.show_description %}
+      <div class="category-block__text check-empty" {{ category-block.attributes.textfield.description }}>
+        {{- category-block.options.description | default: cat.description -}}
+      </div>
+    {% endif %}
+
+    {% if category-block.options.show_link_text %}
+      <div class="category-block__link {{ items_align_mobile }} {{ items_align_desktop }} trsn check-empty">
+        <span {{ category-block.attributes.textfield.link_text }}>
+          {{- link_text -}}
+        </span>
+        {% if content_position == 'over' and category-block.options.link_arrow %}<i class="ph ph-arrow-right"></i>{% endif %}
+      </div>
+    {% endif %}
+  </div>
+{% endcapture %}
+
+<style>
+  #{{ category_id }} {
+    --category-block-aspect-ratio: var(--aspect-ratio-{{ category_ratio }});
+    --theme-overlay-opacity: {{ category-block.options.image_overlay | divided_by: 100.00 }};
+    {% if category-block.options.icon.url != blank %}--category-block-icon-size: {{ category-block.options.icon_size }}%;{% endif %}
+  }
+</style>
+
+<div
+  id="{{ category_id }}"
+  class="{% if display_option == 'carousel' %}swiper-slide{% else %}{{ class_mobile }} {{ class_desktop }}{% endif %} {{ align_mobile }} {{ align_desktop }} category-block"
+  data-content="{{ content_position }}"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+  {{ category-block.attributes }}
+>
+  <div
+    class="category-block__wrapper"
+    {% if content_position == 'over' %}
+      data-bundle-color="{{ category-block.options.bundle_color }}"
+    {% endif %}
+  >
+    {% render 'theme_hover_link', link: cat.url, link_text: link_text, link_external: link_external %}
+
+    {{ category_image }}
+
+    {{ category_content }}
+  </div>
+</div>

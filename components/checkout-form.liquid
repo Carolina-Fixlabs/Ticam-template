@@ -1,0 +1,11 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+
+<style>
+  #{{ section_id }} {
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+<section id="{{ section_id }}" class="theme-section theme-section__content" {{ component.attributes }}>
+  {{ checkout_form }}
+</section>

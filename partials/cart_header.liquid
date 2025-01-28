@@ -1,0 +1,71 @@
+<header class="cart-header{% if template == 'success' %} cart-header--success{% endif %}">
+  <a href="{{ store.url }}" class="cart-header__brand" title="{% t 'Go back to Home page' %}">
+    {% if options.cart_logo.url != blank %}
+      <img src="{{ options.cart_logo.url }}" alt="{{ options.cart_logo.alt | default: store.name }}" class="cart-header__logo" width="auto" height="auto" loading="eager">
+    {% elsif store.logo != blank %}
+      <img src="{{ store.logo }}" alt="{{ store.name }}" class="cart-header__logo" width="auto" height="auto" loading="eager">
+    {% else %}
+      <h1 class="theme-store-name">{{ options.theme_store_name | default: store.name }}</h1>
+    {% endif %}
+  </a>
+
+  {% unless template == 'success' %}
+    <ul class="no-bullet cart-header__menu">
+      <li
+        class="cart-header__item"
+        {% if template == 'cart' %}
+          data-current="true"
+        {% endif %}
+      >
+        {% if template == 'cart' %}
+          <div class="cart-header__text">1. {% t "Cart" -%}</div>
+        {% else %}
+          <a href="{{ order.url }}" class="cart-header__link" title="{% t 'back to Cart' %}"> 1. {% t "Cart" -%}</a>
+        {% endif %}
+      </li>
+
+      <li class="cart-header__item"><i class="ph ph-caret-right cart-header__caret"></i></li>
+
+      <li
+        class="cart-header__item"
+        {% if template == 'checkout' %}
+          data-current="true"
+        {% endif %}
+      >
+        {% if template == 'cart' or template == 'checkout' %}
+          <div class="cart-header__text">
+            2. {% if order.shipping_required %}{% t "Payment & Shipping" -%}{% else %}{% t "Payment" %}{% endif %}
+          </div>
+        {% else %}
+          <a href="{{ order.checkout_url }}" class="cart-header__link checkout-link" title="{% t 'Back to Checkout' %}">
+            2. {% if order.shipping_required %}{% t "Payment & Shipping" -%}{% else %}{% t "Payment" %}{% endif -%}
+          </a>
+        {% endif %}
+      </li>
+
+      <li class="cart-header__item"><i class="ph ph-caret-right cart-header__caret"></i></li>
+
+      <li
+        class="cart-header__item"
+        {% if template == 'revieworder' %}
+          data-current="true"
+        {% endif %}
+      >
+        <div class="cart-header__text">3. {% t "Order review" -%}</div>
+      </li>
+
+      <li class="cart-header__item"><i class="ph ph-caret-right cart-header__caret"></i></li>
+
+      <li class="cart-header__item">
+        <div class="cart-header__text">4. {% t "Order confirmation" -%}</div>
+      </li>
+    </ul>
+  {% endunless %}
+
+  <div class="alert alert-warning alert-dismissible w-100 d-flex align-items-center justify-content-between fade hidden" role="alert">
+    <span id="alert-message"></span>
+    <button type="button" class="btn-close d-flex align-items-center" data-bs-dismiss="alert" aria-label="{% t 'Close' %}">
+      <i class="ph ph-x"></i>
+    </button>
+  </div>
+</header>

@@ -1,0 +1,63 @@
+{% assign subitem_parent_id = 'sidebar-accordion-group-inner-laalaand' | append: item.id %}
+
+<div class="accordion-item sidebar-accordion__item">
+  {% if item.dropdown %}
+    <button
+      type="button"
+      class="accordion-button button sidebar-accordion__button{% if item.active %}--active{% endif %}"
+      data-bs-toggle="collapse"
+      data-bs-target="#{{ subitem_id }}"
+      aria-expanded="{% if item.active %}true{% else %}false{% endif %}"
+      aria-controls="{{ subitem_id }}"
+    >
+      {{- item.name -}}
+      <i class="ph ph-caret-down sidebar-accordion__caret"></i>
+    </button>
+
+    <div
+      id="{{ subitem_id }}"
+      class="accordion-collapse collapse"
+      data-bs-parent="#{{ item_parent_id }}"
+    >
+      <div class="accordion-body sidebar-accordion__body">
+        <div class="accordion sidebar-accordion" id="{{ subitem_parent_id }}">
+          {% for item in item.items %}
+            {% assign subitem_id = 'sidebar-accordion-collapse-inner-' | append: item.id %}
+            {% render 'sidebar_accordion_item', item: item, subitem_id: subitem_id, item_parent_id: subitem_parent_id %}
+          {% endfor %}
+
+          {% unless item.type == 'no_url' %}
+            <div class="sidebar-accordion__item">
+              <a
+                href="{{ item.url }}"
+                class="button sidebar-accordion__button sidebar-accordion__button--last"
+                title="{% t 'View all in' %} {{ item.name }}"
+                {% if item.external %}
+                  target="_blank"
+                {% endif %}
+              >
+                {% t "View all" %}
+                <i class="ph ph-caret-double-right"></i>
+              </a>
+            </div>
+          {% endunless %}
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <a
+      {% if item.type == 'no_url' %}
+        role="button"
+      {% else %}
+        href="{{ item.url }}"
+      {% endif %}
+      class="button sidebar-accordion__button"
+      title="{% t 'Go to' %} {{ item.name }}"
+      {% if item.external %}
+        target="_blank"
+      {% endif %}
+    >
+      {{- item.name -}}
+    </a>
+  {% endif %}
+</div>

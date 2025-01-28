@@ -1,0 +1,166 @@
+{% assign header_version = component.options.version %}
+{% if component.options.width == 'default' %}
+  {% assign header_width = options.theme_width %}
+{% else %}
+  {% assign header_width = component.options.width %}
+{% endif %}
+
+{% if component.subcomponents['header-desktop'] %}
+  {% assign has_desktop_menu = true %}
+{% else %}
+  {% assign has_desktop_menu = false %}
+{% endif %}
+
+{% capture desktop_menu_items %}
+  {% if has_desktop_menu %}
+    {% render 'components/header-desktop', header-desktop: component.subcomponents['header-desktop'], header_version: header_version %}
+  {% endif %}
+{% endcapture %}
+
+{% if component.subcomponents['top-bar'] and component.subcomponents['top-bar-slides'].size > 0 %}
+  {% assign header_slider = true %}
+  {% assign header_slider_fixed = component.subcomponents['top-bar'].options.fixed %}
+{% else %}
+  {% assign header_slider = false %}
+{% endif %}
+
+{% capture social_items %}
+  {% if component.options.show_social %}
+    <li class="header__item d-none d-lg-flex">
+      {%- render 'store_social', position: 'header' -%}
+    </li>
+  {% endif %}
+{% endcapture %}
+
+{% capture languages_currency %}
+  {%- if component.options.actions_position == 'logo-area' -%}
+    {%- render 'header_language_currency' -%}
+  {% endif %}
+{% endcapture %}
+
+{% if customer %}
+  {% assign wishlist_url = '/customer?target=wishlist' %}
+{% else %}
+  {% assign wishlist_url = customer_login_url | append: '?target=wishlist' %}
+{% endif %}
+
+<style>
+  .header {
+    --theme-max-width: {{ header_width }};
+    --header-logo-height-mobile: {{ component.options.logo_height_mobile }}px;
+    --header-logo-height-desktop: {{ component.options.logo_height }}px;
+  }
+  .header,
+  .top-bar {
+    --header-nav-font-weight: {{ component.options.weight }};
+  }
+</style>
+
+<header
+  class="header{% if component.options.fixed %} header--fixed{% endif %}{% if header_slider and header_slider_fixed %} header--push{% endif %}"
+  data-border="{{ component.options.border }}"
+  data-uppercase="{{ component.options.items_uppercase }}"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  data-version="{{ header_version }}"
+  {{ component.attributes }}
+>
+  <div class="h-100 header__container">
+    <div class="row h-100 align-items-center justify-content-between header__wrapper">
+      {% case header_version %}
+        {% when 'v1' %}
+          <div class="col-auto col-sm header__column">
+            <ul class="justify-content-start header__menu">
+              {%- render 'header_menu_item', header_version: header_version, has_desktop_menu: has_desktop_menu -%}
+            </ul>
+          </div>
+
+          <div class="col col-sm header__column">
+            {% render 'header_logo', logo_position: 'desktop' %}
+          </div>
+
+          <div class="col-auto col-sm header__column">
+            <ul class="justify-content-end header__menu">
+              {{- languages_currency -}}
+              {%- render 'header_login', wishlist_url: wishlist_url -%}
+              {%- render 'header_cart' -%}
+            </ul>
+          </div>
+        {% when 'v2' %}
+          <div class="col-12 col-lg header__column">
+            {%- render 'header_logo', logo_position: 'desktop' -%}
+          </div>
+
+          <div class="col-auto header__column d-block{% if has_desktop_menu %} d-lg-none{% endif %}">
+            <ul class="justify-content-start header__menu">
+              {%- render 'header_menu_item', header_version: header_version, has_desktop_menu: has_desktop_menu -%}
+            </ul>
+          </div>
+
+          <div class="col col-lg header__column">
+            {%- render 'header_menu_search_item', header_version: header_version -%}
+          </div>
+
+          <div class="col-auto col-lg header__column">
+            <ul class="justify-content-end header__menu">
+              {{- languages_currency -}}
+              {%- render 'header_login', wishlist_url: wishlist_url -%}
+              {%- render 'header_cart' -%}
+            </ul>
+          </div>
+        {% when 'v3' %}
+          <div class="col-auto col-md header__column">
+            <ul class="justify-content-start header__menu">
+              {%- render 'header_menu_item', header_version: header_version, has_desktop_menu: has_desktop_menu -%}
+              {{- social_items -}}
+            </ul>
+          </div>
+
+          <div class="col col-md header__column">
+            {% render 'header_logo', logo_position: 'desktop' %}
+          </div>
+
+          <div class="col-auto col-md header__column">
+            <ul class="justify-content-end header__menu">
+              {{- languages_currency -}}
+              {%- render 'header_login', wishlist_url: wishlist_url -%}
+              {%- render 'header_cart' -%}
+            </ul>
+          </div>
+        {% when 'v4' %}
+          <div class="col-12 col-lg header__column">
+            {% render 'header_logo', logo_position: 'desktop' %}
+          </div>
+
+          <div class="col-12 col-lg header__column">
+            <ul class="justify-content-center justify-content-lg-end header__menu">
+              {%- render 'header_menu_item', header_version: header_version, has_desktop_menu: has_desktop_menu -%}
+              {{- languages_currency -}}
+              {{- social_items -}}
+              {%- render 'header_login', wishlist_url: wishlist_url -%}
+              {%- render 'header_cart' -%}
+            </ul>
+          </div>
+      {% endcase %}
+    </div>
+  </div>
+  <!-- end .header__container -->
+
+  {% unless header_version == 'v3' or header_version == 'v4' %}
+    {{ desktop_menu_items }}
+  {% endunless %}
+</header>
+<!-- end Header -->
+
+{% render 'mobile_menu' %}
+
+{% if component.options.categories %}
+  {% render 'mobile_categories' %}
+{% endif %}
+
+{% if component.subcomponents['header-cart'] %}
+  {% render 'components/header-cart', header-cart: component.subcomponents['header-cart'] %}
+{% endif %}
+
+{% if header_slider %}
+  {% render 'components/top-bar', top-bar: component.subcomponents['top-bar'] %}
+{% endif %}

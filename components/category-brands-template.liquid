@@ -1,0 +1,176 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% assign image_dimension = component.options.image_dimension %}
+
+{% assign columns_desktop = component.options.columns_desktop %}
+
+{% assign block_class_mobile = 'brand-block trsn col-12 col-sm-6' %}
+{% case columns_desktop -%}
+  {%- when 2 -%}
+    {% assign block_class = block_class_mobile | append: ' col-lg-6' %}
+  {%- when 3 -%}
+    {% assign block_class = block_class_mobile | append: ' col-lg-4' %}
+  {%- when 4 -%}
+    {% assign block_class = block_class_mobile | append: ' col-lg-3' %}
+  {%- when 5 -%}
+    {% assign block_class = block_class_mobile | append: ' col-md-4 col-lg-3 col-lg-by-5' %}
+{%- endcase %}
+
+<style>
+  #{{ section_id }} {
+    {% case image_dimension %}
+      {% when 'landscape' %}
+        --cb-image-dimension: var(--aspect-ratio-landscape);
+      {% when 'portrait' %}
+        --cb-image-dimension: var(--aspect-ratio-portrait);
+      {% when 'rectangular' %}
+        --cb-image-dimension: var(--aspect-ratio-rectangular);
+      {% when 'square' %}
+        --cb-image-dimension: var(--aspect-ratio-square);
+    {% endcase %}
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+<section
+  id="{{ section_id }}"
+  class="container-fluid theme-section"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {{ component.attributes }}
+>
+  <div class="container container--adjust theme-section__container">
+    <div class="row theme-section__content">
+      {% for subcategory in store.category[category.permalink].subcategories %}
+        {% capture link_text_default %}{% t 'Go to' %}{% endcapture %}
+        {% capture link_text -%}
+          {{- component.options.link_text | default: link_text_default }}
+          {{ subcategory.name -}}
+        {%- endcapture %}
+        {% case component.options.image_dimension %}
+          {% when 'landscape' %}
+            {% assign image_width_and_height = 'width="306" height="172"' %}
+
+            {% if columns_desktop == 2 %}
+              {% assign size_lg = '636x358' %}
+            {% elsif columns_desktop == 3 %}
+              {% assign size_lg = '416x234' %}
+            {% else %}
+              {% assign size_lg = '306x172' %}
+            {% endif %}
+
+            {% assign size_sm = '527x296' %}
+            {% assign size_xs = '366x205' %}
+          {% when 'portrait' %}
+            {% assign image_width_and_height = 'width="306" height="407"' %}
+
+            {% if columns_desktop == 2 %}
+              {% assign size_lg = '636x848' %}
+            {% elsif columns_desktop == 3 %}
+              {% assign size_lg = '416x555' %}
+            {% else %}
+              {% assign size_lg = '306x408' %}
+            {% endif %}
+
+            {% assign size_sm = '527x702' %}
+            {% assign size_xs = '366x487' %}
+          {% when 'rectangular' %}
+            {% assign image_width_and_height = 'width="306" height="230"' %}
+
+            {% if columns_desktop == 2 %}
+              {% assign size_lg = '636x477' %}
+            {% elsif columns_desktop == 3 %}
+              {% assign size_lg = '416x312' %}
+            {% else %}
+              {% assign size_lg = '306x230' %}
+            {% endif %}
+
+            {% assign size_sm = '527x395' %}
+            {% assign size_xs = '366x275' %}
+          {% when 'square' %}
+            {% assign image_width_and_height = 'width="306" height="306"' %}
+
+            {% if columns_desktop == 2 %}
+              {% assign size_lg = '636x636' %}
+            {% elsif columns_desktop == 3 %}
+              {% assign size_lg = '416x416' %}
+            {% else %}
+              {% assign size_lg = '306x306' %}
+            {% endif %}
+
+            {% assign size_sm = '527x527' %}
+            {% assign size_xs = '366x366' %}
+        {% endcase %}
+
+        {% case component.options.image_display %}
+          {% when 'resize' %}
+            {% assign img_src_xs = subcategory.images.first | resize: size_xs %}
+            {% assign img_src_sm = subcategory.images.first | resize: size_sm %}
+            {% assign img_src_lg = subcategory.images.first | resize: size_lg %}
+          {% when 'thumb' %}
+            {% assign img_src_xs = subcategory.images.first | thumb: size_xs %}
+            {% assign img_src_sm = subcategory.images.first | thumb: size_sm %}
+            {% assign img_src_lg = subcategory.images.first | thumb: size_lg %}
+        {% endcase %}
+
+        <div
+          class="{{ block_class }} text-{{ component.options.alignment }}"
+          {% if has_animation %}
+            data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+          {% endif %}
+        >
+          {% if component.options.show_image %}
+            <a href="{{ subcategory.url }}" class="brand-block__anchor" title="{{ link_text }} {{ subcategory.name }}">
+              {% if subcategory.images.first == blank %}
+                <div class="theme-image-placeholder theme-image-placeholder--{{ image_dimension }}"></div>
+              {% else %}
+                <picture>
+                  <source media="screen and (max-width: 414px)" srcset="{{ img_src_xs }}">
+                  <source media="screen and (max-width: 575px)" srcset="{{ img_src_sm }}">
+                  <source media="screen and (min-width: 576px)" srcset="{{ img_src_lg }}">
+                  <img
+                    src="{{ img_src_lg }}"
+                    {{ image_width_and_height }}
+                    alt="{{ subcategory.name }}"
+                    loading="lazy"
+                  >
+                </picture>
+              {% endif %}
+            </a>
+          {% endif %}
+          <a href="{{ subcategory.url }}" class="brand-block__link" title="{{ link_text }} {{ subcategory.name }}">
+            <h5 class="brand-block__title">{{ subcategory.name }}</h5>
+          </a>
+          {% if component.options.link_button %}
+            <a
+              href="{{ subcategory.url }}"
+              class="button button--style button--main{% if component.options.link_outline %} button--bordered{% endif %}"
+              title="{{ link_text }}"
+            >
+              <span {{ component.attributes.textfield.link_text }}>{{ link_text }}</span>
+              {%- if component.options.link_arrow %} <i class="ph ph-arrow-right"></i>{% endif %}
+            </a>
+          {% endif %}
+        </div>
+        <!-- end .brand-block -->
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- end .category-gallery -->

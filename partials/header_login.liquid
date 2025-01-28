@@ -1,0 +1,63 @@
+{% if store.customers_enabled %}
+  {% capture login_text -%}
+    {%- if customer %}{% t "My account" %}{% else %}{% t "Login" %}{% endif -%}
+  {%- endcapture %}
+
+  <li class="header__item">
+    <button
+      type="button"
+      class="button dropdown-toggle header__link"
+      id="header-dropdown-login"
+      data-bs-toggle="dropdown"
+      data-bs-display="static"
+      aria-expanded="false"
+      aria-label="{{ login_text }}"
+    >
+      <i class="theme-icon ph ph-user-circle header__icon"></i>
+      <div class="d-none d-md-block header__text">{{ login_text }}</div>
+      <i class="theme-icon ph ph-caret-down header__angle d-none d-sm-block"></i>
+    </button>
+
+    <ul class="dropdown-menu dropdown-menu-end theme-dropdown" aria-labelledby="header-dropdown-login">
+      {% if customer %}
+        <li class="theme-dropdown__item">
+          <a href="{{ customer_account_url }}" class="dropdown-item theme-dropdown__link" title="{% t 'Go to my account' %}">{% t "Go to my account" %}</a>
+        </li>
+
+        <li class="theme-dropdown__item">
+          <a href="{{ customer.edit_url }}" class="dropdown-item theme-dropdown__link" title="{% t 'Edit my details' %}">{% t "Edit my details" %}</a>
+        </li>
+
+        {% if options.enable_wishlist and options.wishlist_header %}
+          <li class="theme-dropdown__item">
+            <a href="{{ wishlist_url }}" class="dropdown-item theme-dropdown__link" title="{% t "See my Wishlist" %}">{% t "See my Wishlist" %} ({{ customer.wishlisted_products.size }}) </a>
+          </li>
+        {% endif %}
+
+        {% if customer.billing_address.size == 0 %}
+          <li class="theme-dropdown__item">
+            <a href="{{ customer.add_billing_address_url }}" class="dropdown-item theme-dropdown__link" title="{% t 'Add Billing Address' %}">{% t "Add Billing Address" %}</a>
+          </li>
+        {% endif %}
+
+        {% if customer.shipping_address.size == 0 %}
+          <li class="theme-dropdown__item">
+            <a href="{{ customer.add_shipping_address_url }}" class="dropdown-item theme-dropdown__link" title="{% t 'Add Shipping Address' %}">{% t "Add Shipping Address" %}</a>
+          </li>
+        {% endif %}
+
+        <li class="theme-dropdown__item">
+          <a href="{{ customer.logout_url }}" class="dropdown-item theme-dropdown__link" title="{% t 'Log out' %}">{% t "Log out" %}</a>
+        </li>
+      {% else %}
+        <li class="theme-dropdown__item">
+          <a href="{{ customer_login_url }}" class="dropdown-item theme-dropdown__link" title="{% t 'Login to your account' %}">{% t "Log in" %}</a>
+        </li>
+
+        <li class="theme-dropdown__item">
+          <a href="{{ customer_registration_url }}" class="dropdown-item theme-dropdown__link" title="{% t 'Create an account' %}">{% t "Create account" %}</a>
+        </li>
+      {% endif %}
+    </ul>
+  </li>
+{% endif %}

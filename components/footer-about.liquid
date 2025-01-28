@@ -1,0 +1,44 @@
+{% assign section_id = 'footer-section-' | append: footer-about.id %}
+
+{% case footer-about.options.column_width %}
+  {% when 'auto' -%}
+    {%- assign column_width = 'col-12 col-lg' %}
+  {% when 'half' -%}
+    {%- assign column_width = 'col-12 col-md-6' %}
+  {% when 'full' -%}
+    {%- assign column_width = 'col-12' %}
+{% endcase %}
+
+<style>
+  .footer {
+    --footer-logo-height: {{ footer-about.options.logo_height }}px;
+  }
+</style>
+
+<div id="{{ section_id }}" class="{{ column_width }} footer__column" {{ footer-about.attributes }}>
+  <div class="footer__content">
+    {% if footer-about.options.logo.url != blank or store.logo != blank %}
+      <img
+        src="{{ footer-about.options.logo.url | default: store.logo }}"
+        alt="{{ footer-about.options.logo.alt | default: store.name | escape }}"
+        class="footer__logo"
+        {{- footer-about.options.logo.attributes.width_and_height | default: 'width="auto" height="auto"' -}}
+        loading="lazy"
+      >
+    {% else %}
+      <h3 class="theme-store-name">{{ store.name }}</h3>
+    {% endif %}
+
+    <div class="footer__text check-empty" {{ footer-about.attributes.textfield.description }}>
+      {{- footer-about.options.description | newline_to_br -}}
+    </div>
+
+    {% if footer-about.options.social %}
+      {% render 'store_social', position: 'footer' %}
+    {% endif %}
+  </div>
+</div>
+
+<div class="col-12 d-block d-lg-none footer__column">
+  <hr class="footer__divider">
+</div>

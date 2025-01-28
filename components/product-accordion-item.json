@@ -1,0 +1,99 @@
+{
+  "name": "Product Accordion item",
+  "icon": "square",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "icon": {
+      "name": "Icon",
+      "type": "ph_icon",
+      "default": "ph ph-truck"
+    },
+    "title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Accordion item title"
+    },
+    "content": {
+      "name": "Content",
+      "type": "text",
+      "default": "Here you can add the text or content of the item."
+    },
+    "group_link": {
+      "name": "Link options",
+      "type": "heading",
+      "default": false
+    },
+    "link": {
+      "name": "Link",
+      "type": "link",
+      "default": null
+    },
+    "link_text": {
+      "name": "Link text",
+      "type": "input",
+      "default": "Read more"
+    },
+    "link_arrow": {
+      "name": "Show arrow in Link",
+      "type": "checkbox",
+      "default": true
+    },
+    "link_external": {
+      "name": "Enable as external link",
+      "type": "checkbox",
+      "default": false
+    },
+    "group_images": {
+      "name": "Image options",
+      "type": "heading",
+      "default": false
+    },
+    "image": {
+      "name": "Image",
+      "type": "image"
+    },
+    "image_size": {
+      "name": "Image size",
+      "type": "slider",
+      "default": 100,
+      "min": 10,
+      "max": 100,
+      "step": 10,
+      "unit": "%"
+    },
+    "image_position": {
+      "name": "Image position",
+      "type": "select",
+      "default": "after",
+      "options": [
+        {
+          "label": "Before the content",
+          "value": "before"
+        },
+        {
+          "label": "After the content",
+          "value": "after"
+        }
+      ]
+    }
+  },
+  "nesting": {
+    "group_link": [
+      "link",
+      "link_text",
+      "link_arrow",
+      "link_external"
+    ],
+    "group_images": [
+      "image",
+      "image_size",
+      "image_position"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

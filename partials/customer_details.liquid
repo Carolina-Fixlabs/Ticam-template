@@ -1,0 +1,325 @@
+<!-- Contact details -->
+<div class="col-12 col-md-4 customer-details">
+  <div class="customer-details__wrapper">
+    <div class="customer-details__heading">
+      <h6 class="customer-details__title">
+        {%- t "Contact details" -%}
+      </h6>
+    </div>
+
+    {% if customer.name != blank %}
+      <div class="customer-details__block">
+        <div class="customer-details__subtitle">
+          {%- t "Name" -%}
+        </div>
+
+        <div class="customer-details__text">
+          {{ customer.name }}
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="customer-details__block">
+      <div class="customer-details__subtitle">
+        {%- t "Email" -%}
+      </div>
+
+      <div class="customer-details__text">
+        {{ customer.email }}
+      </div>
+    </div>
+
+    {% if customer.phone != blank %}
+      <div class="customer-details__block">
+        <div class="customer-details__subtitle">
+          {%- t "Phone" -%}
+        </div>
+
+        <div class="customer-details__text">
+          {{ customer.phone }}
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="customer-details__actions">
+      <a
+        href="{{ customer.edit_url }}"
+        class="button button--style button--secondary button--bordered button--small button--flex customer-details__button"
+        title="{% t 'Edit details' %}"
+      >
+        <i class="ph ph-note-pencil"></i> {% t "Edit" -%}
+      </a>
+    </div>
+  </div>
+  <!-- end .customer-details__wrapper -->
+</div>
+
+<div class="col-12 col-md-8">
+  <div class="row">
+    <!-- Shipping Addresses -->
+    <div class="col-12 customer-details">
+      <div class="customer-details__wrapper">
+        <div class="customer-details__heading">
+          <h6 class="customer-details__title">
+            {%- t "Shipping Addresses" -%}
+          </h6>
+
+          {% if customer.shipping_addresses.size >= 1 %}
+            <a
+              href="{{ customer.add_shipping_address_url }}"
+              class="button button--style button--secondary button--bordered button--small button--flex customer-details__button"
+              title="{% t 'Add new Shipping Address' %}"
+            >
+              <i class="ph ph-plus-circle"></i> {% t "Add new" -%}
+            </a>
+          {% endif %}
+        </div>
+        <!-- end .customer-details__heading -->
+
+        {% if customer.shipping_addresses.size == 0 %}
+          <div class="customer-details__block">
+            <div class="customer-details__text">
+              {%- t "You don't have any Shipping details yet. You can do it by clicking on the button below or it will be automatically added once you make a purchase." -%}
+            </div>
+          </div>
+
+          <div class="customer-details__actions">
+            <a
+              href="{{ customer.add_shipping_address_url }}"
+              class="button button--style button--secondary button--bordered button--small button--flex customer-details__button"
+              title="{% t 'Add Shipping Address' %}"
+            >
+              <i class="ph ph-plus-circle"></i> {% t "Add Shipping Address" -%}
+            </a>
+          </div>
+        {% else %}
+          {% for shipping_address in customer.shipping_addresses %}
+            <div class="customer-details__address">
+              <div class="customer-details__block">
+                <div class="customer-details__subheading">
+                  {%- t "Address" %} #{{ forloop.index -}}
+                  {% if shipping_address.default %}
+                    <span class="customer-details__label" data-label="main_address">{% t "Main" %}</span>
+                  {%- endif %}
+                </div>
+              </div>
+
+              <div class="row customer-details__group">
+                <div class="col-12{% if shipping_address.taxid != blank %} col-md-6{% endif %} customer-details__column">
+                  <div class="customer-details__subtitle">
+                    {%- t "Name / Surname" -%}
+                  </div>
+
+                  <div class="customer-details__text">
+                    {{ shipping_address.fullname }}
+                  </div>
+                </div>
+
+                {% if shipping_address.taxid != blank %}
+                  <div class="col-12 col-md-6 customer-details__column">
+                    <div class="customer-details__subtitle">
+                      {%- t "Tax ID" -%}
+                    </div>
+
+                    <div class="customer-details__text">
+                      {{ shipping_address.taxid }}
+                    </div>
+                  </div>
+                {% endif %}
+
+                <div class="col-12 customer-details__column">
+                  <div class="customer-details__subtitle">
+                    {%- t "Full Address" -%}
+                  </div>
+
+                  <div class="customer-details__text">
+                    {{ shipping_address.address -}}
+                    {%- if shipping_address.complement != blank %}, {{ shipping_address.complement }}{% endif -%}
+                    {%- if shipping_address.postal != blank %}, {{ shipping_address.postal }}{% endif -%}
+                    {%- if shipping_address.municipality != blank %}, {{ shipping_address.municipality }}{% endif -%}
+                    {%- if shipping_address.city != blank %}, {{ shipping_address.city }}{% endif %}, {{ shipping_address.region }}, {{ shipping_address.country }}
+                  </div>
+                </div>
+
+                {% for additional_field in customer.additional_fields %}
+                  {% if additional_field.area == 'shipping' and additional_field.value != blank %}
+                    <div class="col-12 col-md-6 customer-details__column">
+                      <div class="customer-details__subtitle">
+                        {{- additional_field.label -}}
+                      </div>
+
+                      <div class="customer-details__text">
+                        {{- additional_field.value -}}
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+              <div class="customer-details__actions">
+                {% unless shipping_address.default %}
+                  <a
+                    href="{{ shipping_address.set_primary_url }}"
+                    class="button button--style button--secondary button--small button--flex customer-details__button"
+                    title="{% t 'Set as Main Shipping address' %}"
+                  >
+                    <i class="ph ph-check-circle"></i> {% t "Set as Main" -%}
+                  </a>
+                {% endunless %}
+
+                <a
+                  href="{{ shipping_address.edit_url }}"
+                  class="button button--style button--secondary button--bordered button--small button--flex customer-details__button"
+                  title="{% t 'Edit Shipping Address' %}"
+                >
+                  <i class="ph ph-note-pencil"></i> {% t "Edit" -%}
+                </a>
+
+                <a
+                  href="{{ shipping_address.delete_url }}"
+                  class="button button--style button--secondary button--bordered button--small button--flex customer-details__button"
+                  title="{% t 'Delete Shipping Address' %}"
+                >
+                  <i class="ph ph-trash"></i> {% t "Delete" -%}
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Billing Addresses -->
+    <div class="col-12 customer-details">
+      <div class="customer-details__wrapper">
+        <div class="customer-details__heading">
+          <h6 class="customer-details__title">
+            {%- t "Billing Addresses" -%}
+          </h6>
+
+          {% if customer.billing_addresses.size >= 1 %}
+            <a
+              href="{{ customer.add_billing_address_url }}"
+              class="button button--style button--secondary button--bordered button--small button--flex customer-details__button"
+              title="{% t 'Add new Billing Address' %}"
+            >
+              <i class="ph ph-plus-circle"></i> {% t "Add new" -%}
+            </a>
+          {% endif %}
+        </div>
+        <!-- end .customer-details__heading -->
+
+        {% if customer.billing_addresses.size == 0 %}
+          <div class="customer-details__block">
+            <div class="customer-details__text">
+              {%- t "You don't have any Billing details yet. You can do it by clicking on the button below or it will be automatically added once you make a purchase." -%}
+            </div>
+          </div>
+
+          <div class="customer-details__actions">
+            <a
+              href="{{ customer.add_billing_address_url }}"
+              class="button button--style button--secondary button--bordered button--small button--flex customer-details__button"
+              title="{% t 'Add Billing Address' %}"
+            >
+              <i class="ph ph-plus-circle"></i> {% t "Add Billing Address" -%}
+            </a>
+          </div>
+        {% else %}
+          {% for billing_address in customer.billing_addresses %}
+            <div class="customer-details__address">
+              <div class="customer-details__block">
+                <div class="customer-details__subheading">
+                  {%- t "Address" %} #{{ forloop.index -}}
+                  {% if billing_address.default %}
+                    <span class="customer-details__label" data-label="main_address">{% t "Main" %}</span>
+                  {%- endif %}
+                </div>
+              </div>
+
+              <div class="row customer-details__group">
+                <div class="col-12{% if billing_address.taxid != blank %} col-md-6{% endif %} customer-details__column">
+                  <div class="customer-details__subtitle">
+                    {%- t "Name / Surname" -%}
+                  </div>
+
+                  <div class="customer-details__text">
+                    {{ billing_address.fullname }}
+                  </div>
+                </div>
+
+                {% if billing_address.taxid != blank %}
+                  <div class="col-12 col-md-6 customer-details__column">
+                    <div class="customer-details__subtitle">
+                      {%- t "Tax ID" -%}
+                    </div>
+
+                    <div class="customer-details__text">
+                      {{ billing_address.taxid }}
+                    </div>
+                  </div>
+                {% endif %}
+
+                <div class="col-12 customer-details__column">
+                  <div class="customer-details__subtitle">
+                    {%- t "Full Address" -%}
+                  </div>
+
+                  <div class="customer-details__text">
+                    {{ billing_address.address -}}
+                    {%- if billing_address.complement != blank %}, {{ billing_address.complement }}{% endif -%}
+                    {%- if billing_address.postal != blank %}, {{ billing_address.postal }}{% endif -%}
+                    {%- if billing_address.municipality != blank %}, {{ billing_address.municipality }}{% endif -%}
+                    {%- if billing_address.city != blank %}, {{ billing_address.city }}{% endif %}, {{ billing_address.region }}, {{ billing_address.country }}
+                  </div>
+                </div>
+
+                {% for additional_field in customer.additional_fields %}
+                  {% if additional_field.area == 'billing' and additional_field.value != blank %}
+                    <div class="col-12 col-md-6 customer-details__column">
+                      <div class="customer-details__subtitle">
+                        {{- additional_field.label -}}
+                      </div>
+
+                      <div class="customer-details__text">
+                        {{- additional_field.value -}}
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+              <div class="customer-details__actions">
+                {% unless billing_address.default %}
+                  <a
+                    href="{{ billing_address.set_primary_url }}"
+                    class="button button--style button--secondary button--small button--flex customer-details__button"
+                    title="{% t 'Set as Main Billing address' %}"
+                  >
+                    <i class="ph ph-check-circle"></i> {% t "Set as Main" -%}
+                  </a>
+                {% endunless %}
+
+                <a
+                  href="{{ billing_address.edit_url }}"
+                  class="button button--style button--secondary button--bordered button--small button--flex customer-details__button"
+                  title="{% t 'Edit Billing Address' %}"
+                >
+                  <i class="ph ph-note-pencil"></i> {% t "Edit" -%}
+                </a>
+
+                <a
+                  href="{{ billing_address.delete_url }}"
+                  class="button button--style button--secondary button--bordered button--small button--flex customer-details__button"
+                  title="{% t 'Delete Billing Address' %}"
+                >
+                  <i class="ph ph-trash"></i> {% t "Delete" -%}
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

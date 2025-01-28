@@ -1,0 +1,49 @@
+{
+  "name": "Trust block",
+  "icon": "square",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "icon": {
+      "name": "Icon",
+      "type": "ph_icon",
+      "help": "Select an icon.",
+      "default": "ph ph-info"
+    },
+    "title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Block Title"
+    },
+    "text": {
+      "name": "Text",
+      "type": "text",
+      "default": "Trust bar block description"
+    },
+    "link": {
+      "name": "Link",
+      "type": "link",
+      "default": null
+    },
+    "link_text": {
+      "name": "Link text",
+      "type": "input",
+      "default": "Read more"
+    },
+    "link_arrow": {
+      "name": "Show arrow in link",
+      "type": "checkbox",
+      "default": true
+    },
+    "link_external": {
+      "name": "Enable as external link",
+      "type": "checkbox",
+      "default": false
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

@@ -1,0 +1,5 @@
+{% if prod.reviews != empty %}
+  <div class="w-100" {{ product-reviews-stars.attributes }}>
+    {% render 'product_rating', prod: prod %}
+  </div>
+{% endif %}

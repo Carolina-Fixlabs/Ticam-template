@@ -1,0 +1,13 @@
+{
+  "name": "Product reviews stars",
+  "icon": "stars",
+  "help": "This subcomponent allows to display the **rating review score** along with the **rating stars** for a product that has customer reviews. For more details, visit [this article](landing?url=support/product-reviews).",
+  "max_usage": null,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {},
+  "mode": "subcomponents",
+  "properties": {}
+}

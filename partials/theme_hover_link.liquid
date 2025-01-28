@@ -1,0 +1,10 @@
+{% if link != blank %}
+  <a
+    href="{{ link }}"
+    class="hover-link"
+    title="{{ link_text }}"
+    {% if link_external %}
+      target="_blank"
+    {% endif %}
+  ></a>
+{% endif %}

@@ -1,0 +1,3 @@
+{% if options.enable_wishlist and options.wishlist_product_page and store.customers_enabled %}
+  {% render 'product_wishlist', prod: prod, display: display, attributes: product-wishlist.attributes %}
+{% endif %}

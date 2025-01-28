@@ -1,0 +1,21 @@
+<swiper-slider
+  class="swiper theme-section__carousel"
+  sw-layout="{{ sw_layout }}"
+  sw-auto-height="{{ sw_autoheight }}"
+  {{ sw_columns | strip }}
+  sw-root=".theme-section__content"
+  sw-autoplay="{{ component.options.autoplay }}"
+  sw-speed="{{ component.options.autoplay_speed }}"
+>
+  {% if sw_layout == 'instagram' and social.instagram.url != blank %}
+    {{ sw_content }}
+  {% elsif sw_layout == 'product-reviews' or sw_layout == 'recently-viewed' %}
+    {{ sw_content }}
+  {% else %}
+    <div class="swiper-wrapper">
+      {{ sw_content }}
+    </div>
+  {% endif %}
+</swiper-slider>
+
+{% render 'component_swiper_navigation' %}

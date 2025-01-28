@@ -1,0 +1,24 @@
+{
+  "name": "Customer orders",
+  "icon": "list",
+  "max_usage": 1,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "icon": {
+      "name": "Icon",
+      "type": "ph_icon",
+      "help": "Select an icon.",
+      "default": "ph ph-list-bullets"
+    },
+    "title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Orders"
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

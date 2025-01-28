@@ -1,0 +1,165 @@
+{% if prod.variants == blank %}
+  {% assign first_variant = prod %}
+{% else %}
+  {% assign first_variant = prod.variants.first %}
+{% endif %}
+
+<product-form class="product-form product-form-{{ component.id }}">
+  <script type="application/json" class="product-form-json">
+    {
+      "options": {
+        "disableShoppingCart": {{ options.disable_shopping_cart | json }},
+        "disableShoppingCartTitle": {{ options.disable_shopping_cart_title | json }},
+        "disableShoppingCartText": {{ options.disable_shopping_cart_text | json }},
+        "disableShoppingCartContact": {{ options.disable_shopping_cart_contact | json }},
+        "disableShoppingCartWhatsapp": {{ options.disable_shopping_cart_whatsapp | json }}
+      },
+      "info": {
+        "product": {
+          "id": {{ prod.id | json }},
+          "name": {{ prod.name | json }},
+          "url": {{ prod.url | json }},
+          "add_to_cart_url": {{ prod.add_to_cart_url | json }},
+          "back_in_stock_url": {{ prod.back_in_stock_url | json }},
+          "back_in_stock_enabled": {{ prod.back_in_stock_enabled | json }},
+          "stock": {{ prod.stock | json }},
+          "stock_notification": {{ prod.stock_notification | json }},
+          "stock_threshold": {{ prod.stock_threshold | json }},
+          "stock_unlimited": {{ prod.stock_unlimited | json }},
+          "status": {{ prod.status | json }},
+          "options": {{ prod.options | json }},
+          "option_types": {{ prod.options | map: 'type' | json }},
+          "minimum_quantity": {{ prod.minimum_quantity | json }},
+          "maximum_quantity": {{ prod.maximum_quantity | json }},
+          "share_url": {{ store.base_url | append: prod.url | json }}
+        },
+        "variant": {
+          "id": {{ first_variant.id | json }},
+          "stock": {{ first_variant.stock | json }},
+          "stock_notification": {{ first_variant.stock_notification | json }},
+          "stock_threshold": {{ first_variant.stock_threshold | json }},
+          "stock_unlimited": {{ first_variant.stock_unlimited | json }},
+          "status": {{ first_variant.status | json }},
+          "price": {{ first_variant.price | json }},
+          "price_with_discount": {{ first_variant.price | minus: first_variant.discount | json }},
+          "minimum_quantity": {{ prod.minimum_quantity | json }},
+          "maximum_quantity": {{ prod.maximum_quantity | json }}
+        },
+        "contact": {
+          "url": {{ contact.url | json }}
+        },
+        "social": {
+          "whatsapp": {
+            "url": {{ social.whatsapp.url | json }}
+          }
+        },
+        "status": {
+          "outOfStockTitle": {{ options.pf_status_out_of_stock_title | json }},
+          "outOfStockText": {{ options.pf_status_out_of_stock_text | json }},
+          "notAvailableTitle": {{ options.pf_status_not_available_title | json }},
+          "notAvailableText": {{ options.pf_status_not_available_text | json }},
+          "buttonContact": {{ options.pf_status_button_contact | json }},
+          "buttonWhatsapp": {{ options.pf_status_button_whatsapp | json }}
+        }
+      }
+    }
+  </script>
+  <form action="{{ prod.add_to_cart_url }}" method="post" enctype="multipart/form-data" name="buy" {{ product-form.attributes }}>
+    {% if prod.options != empty %}
+      {% render 'product_options', prod: prod, options_display: options.pf_options_display %}
+    {% endif %}
+
+    <div class="product-form__actions{% if prod.status == 'not-available' or prod.stock == 0 and prod.stock_unlimited == false %} hidden{% endif %}">
+      <div class="product-form__wrapper">
+        <div class="product-form__quantity order-1">
+          <button
+            type="button"
+            class="button product-form__handler quantity-down"
+            aria-label="{% t 'Decrease quantity' %}"
+            onclick="updateProductFormCounter(this, -1)"
+          >
+            <i class="ph ph-minus-circle"></i>
+          </button>
+          <label for="input-qty" class="sr-only">{% t "Quantity" %}</label>
+          <input
+            type="number"
+            id="input-qty"
+            name="qty"
+            min="1"
+            value="{{ prod.minimum_quantity | default: 1 | at_least: 1 }}"
+            {% if prod.maximum_quantity and prod.maximum_quantity > 0 %}
+              max="{{ prod.maximum_quantity }}"
+            {% elsif prod.stock_unlimited == false %}
+              max="{{ prod.stock }}"
+            {% endif %}
+            data-min="{{ prod.minimum_quantity | default: 1 | at_least: 1 }}"
+            data-max="{{ prod.maximum_quantity }}"
+            onchange="checkMaxQuantityReached()"
+            class="text text--qty product-form__input"
+          >
+          <button
+            type="button"
+            class="button product-form__handler quantity-up"
+            aria-label="{% t 'Increase quantity' %}"
+            onclick="updateProductFormCounter(this, 1)"
+          >
+            <i class="ph ph-plus-circle"></i>
+          </button>
+        </div>
+
+        {% assign option_types = prod.options | map: 'type' -%}
+        {% if options.display_cart_notification == false or option_types contains 'file' %}
+          <button type="submit" class="button button--style button--main{% if options.pf_buy_now_button_main %} order-3 button--bordered{% else %} order-2{% endif %} button--main product-form__button" id="add-to-cart">
+            {% if options.theme_icon_cart_button %}<i class="theme-icon ph {{ options.theme_icon_cart }}"></i>{% endif -%}
+            <span>{%- t "Add to Cart" -%}</span>
+          </button>
+        {% else %}
+          <button type="button" class="button button--style button--main{% if options.pf_buy_now_button_main %} order-3 button--bordered{% else %} order-2{% endif %} product-form__button" id="add-to-cart">
+            {% if options.theme_icon_cart_button %}<i class="theme-icon ph {{ options.theme_icon_cart }}"></i>{% endif -%}
+            <span>{%- t "Add to Cart" -%}</span>
+          </button>
+        {% endif %}
+
+        {% if options.pf_buy_now_button %}
+          <button
+            id="buy-now-button"
+            type="submit"
+            class="button button--style button--main{% if options.pf_buy_now_button_main %} order-2{% else %} order-3 button--bordered{% endif %} product-form__button px-1"
+            onclick="updateFormAction(this, '{{ prod.buy_now_url }}')"
+          >
+            <span>{%- t "Buy now" -%}</span>
+          </button>
+        {% endif %}
+      </div>
+      <!-- end .product-form__wrapper -->
+
+      {% if template != 'product' %}
+        <a href="{{ prod.url }}" class="product-form__link" title="{% t 'Go to' %} {{ prod.name }}">
+          {%- t "See more details" %}
+          <i class="ph ph-arrow-right"></i>
+        </a>
+      {% endif %}
+
+      <!-- Maximum Stock Reached -->
+      <div class="product-form__text product-form__text--max-stock-disclaimer hidden">
+        {%- t "You have reached the maximum amount available." -%}
+      </div>
+    </div>
+
+    <div
+      id="product-purchase-conditions"
+      class="{% unless prod.minimum_quantity >= 1 or prod.maximum_quantity >= 1 %}hidden{% endunless %}"
+    >
+      <i class="ph ph-info"></i>
+      <p class="mb-0">
+        {%- if prod.minimum_quantity >= 1 and prod.maximum_quantity >= 1 %}
+          {%- t "You must purchase a minimum of %{min} and a maximum of %{max} units", min: prod.minimum_quantity, max: prod.maximum_quantity -%}
+        {% elsif prod.minimum_quantity >= 1 %}
+          {%- t "You must purchase a minimum of %{min} units", min: prod.minimum_quantity -%}
+        {% elsif prod.maximum_quantity >= 1 %}
+          {%- t "You can only purchase a maximum of %{max} units", max: prod.maximum_quantity -%}
+        {% endif -%}
+      </p>
+    </div>
+  </form>
+</product-form>

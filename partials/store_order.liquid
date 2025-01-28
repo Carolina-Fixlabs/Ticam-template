@@ -1,0 +1,3 @@
+{% for ordered_product in order.products %}
+  {% render 'store_product', prod: ordered_product, prod_type: 'normal' %}
+{% endfor %}

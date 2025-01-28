@@ -1,0 +1,32 @@
+{% if dropdown_position == 'header' or dropdown_position == 'top-bar' %}
+  {% assign dropdown_id = 'header-dropdown-languages' %}
+  {% assign dropdown_class = 'header' %}
+{% else %}
+  {% assign dropdown_class = 'sidebar-menu' %}
+  {% assign dropdown_id = 'sidebar-dropdown-languages' %}
+{% endif %}
+
+<button
+  type="button"
+  class="button{% if dropdown_position == 'sidebar' %} button--style{% endif %} dropdown-toggle {{ dropdown_class }}__{% if dropdown_position == 'header' or dropdown_position == 'top-bar' %}link{% elsif dropdown_position == 'sidebar' %}button{% endif %}"
+  id="{{ dropdown_id }}"
+  data-bs-toggle="dropdown"
+  data-bs-display="static"
+  aria-expanded="false"
+  aria-label="{% t 'Languages' %}"
+>
+  <i class="theme-icon ph ph-globe {{ dropdown_class }}__icon"></i>
+  <div class="{% if dropdown_position == 'header' or dropdown_position == 'top-bar' %}d-none d-md-block{% endif %} uppercase {{ dropdown_class }}__text">{{ languages.first.code }}</div>
+  <i class="theme-icon ph ph-caret-down {{ dropdown_class }}__angle"></i>
+</button>
+
+<ul class="dropdown-menu {% if dropdown_position == 'header' %}dropdown-menu-end{% elsif dropdown_position == 'sidebar' %}dropdown-menu-start{% elsif dropdown_position == 'top-bar' %}dropdown-menu-md-end dropdown-menu{% endif %} theme-dropdown" aria-labelledby="{{ dropdown_id }}">
+  {% for language in languages %}
+    <li class="theme-dropdown__item">
+      <a href="{{ language.url }}" class="dropdown-item theme-dropdown__link{% if forloop.first %} theme-dropdown__link--active{% endif %}" title="{% t 'Change to' %} {{ language.name }}">
+        {{- language.name -}}
+        {% if forloop.first %} <i class="theme-icon ph ph-check"></i>{% endif %}
+      </a>
+    </li>
+  {% endfor %}
+</ul>

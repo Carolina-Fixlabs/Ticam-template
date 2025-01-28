@@ -1,0 +1,24 @@
+{% assign section_id = 'product-stock-locations-sidebar-' | append: prod.id %}
+{% assign button_icon = product-stock-locations.options.button_icon %}
+
+<div
+  class="offcanvas offcanvas-end sidebar"
+  id="{{ section_id }}"
+  tabindex="-1"
+  aria-labelledby="{{ section_id }}-title"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  data-product-id="{{ prod.id }}"
+>
+  <div class="offcanvas-header sidebar-header">
+    <h5 id="{{ section_id }}-title" class="offcanvas-title sidebar-header__title">
+      <i class="theme-icon {{ button_icon }} sidebar-header__icon"></i>
+      <span {{ product-stock-locations.attributes.textfield.title }}>{{- product-stock-locations.options.title -}}</span>
+    </h5>
+
+    <button type="button" class="button sidebar-header__close" data-bs-dismiss="offcanvas" aria-label="{% t 'Close' %}">
+      <i class="ph ph-x"></i>
+    </button>
+  </div>
+
+  <div class="offcanvas-body sidebar-body product-stock-locations__content"></div>
+</div>

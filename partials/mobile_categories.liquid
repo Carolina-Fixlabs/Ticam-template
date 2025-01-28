@@ -1,0 +1,19 @@
+<div
+  class="offcanvas offcanvas-start sidebar"
+  tabindex="-1"
+  id="mobile-categories"
+  aria-labelledby="mobile-categories-title"
+  data-bundle-color="{{ component.options.bundle_color }}"
+>
+  <div class="offcanvas-header sidebar-header sidebar-header--categories">
+    <h5 class="offcanvas-title sidebar-header__title" id="mobile-categories-title" {{ component.attributes.textfield.categories_title }}>
+      {{- component.options.categories_title -}}
+    </h5>
+    <button type="button" class="button sidebar-header__close" data-bs-dismiss="offcanvas" aria-label="{% t 'Close' %}"><i class="ph ph-x"></i></button>
+  </div>
+
+  <div class="offcanvas-body sidebar-body">
+    {% render 'sidebar_accordion_categories' %}
+  </div>
+  <!-- end .sidebar-body -->
+</div>

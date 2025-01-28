@@ -1,0 +1,55 @@
+{% capture product_form %}
+  {% unless options.disable_shopping_cart %}
+    <form
+      action="{{ product_info.add_to_cart_url }}"
+      class="store-product__form trsn"
+      method="post"
+      enctype="multipart/form-data"
+      name="buy"
+    >
+      {% assign option_types = product_info.options | map: 'type' -%}
+      {% if options.display_cart_notification == false or option_types contains 'file' %}
+        <button
+          type="submit"
+          class="button button--style button--main button--small store-product__add-to-cart"
+        >
+          {% if options.theme_icon_cart_button %}<i class="theme-icon ph {{ options.theme_icon_cart }}"></i>{% endif -%}
+          <span>{%- t "Add to Cart" -%}</span>
+        </button>
+      {% else %}
+        <button
+          type="button"
+          class="button button--style button--main button--small store-product__add-to-cart"
+          data-product-id="{{ product_id }}"
+          data-variant-id="{{ product_info.id }}"
+          data-product-name="{{ product_info.name }}"
+        >
+          {% if options.theme_icon_cart_button %}<i class="theme-icon ph {{ options.theme_icon_cart }}"></i>{% endif -%}
+          <span>{%- t "Add to Cart" -%}</span>
+        </button>
+      {% endif %}
+    </form>
+  {% endunless %}
+{% endcapture %}
+
+<div class="store-product__actions">
+  {% if product_info.status == 'not-available' %}
+    <div class="store-product__label store-product__label--wishlist" data-label="warning">
+      {%- t "Not available" -%}
+    </div>
+  {% elsif product_info.stock == 0 and product_info.stock_unlimited == false %}
+    <div class="store-product__label store-product__label--wishlist" data-label="warning">
+      {%- t "Out of stock" -%}
+    </div>
+  {% else %}
+    {{ product_form }}
+  {% endif %}
+
+  <button
+    type="button"
+    class="button store-product__delete"
+    onclick="removeFromWishlistCustomer(this,'{{ product_info.wishlist_remove_url }}')"
+  >
+    {%- t 'Remove' -%}
+  </button>
+</div>

@@ -1,0 +1,121 @@
+<div class="product-options variants">
+  {% for option in prod.options %}
+    {% assign label_option = random.hex %}
+    <fieldset
+      id="{{ label_option }}_fieldset"
+      class="product-options__fieldset"
+      data-optionid="{{ option.id }}"
+    >
+      <div class="product-options__title">{{ option.name }}</div>
+
+      {% case option.type %}
+        {% when 'option' %}
+          {% if options_display == 'select' %}
+            <select
+              id="{{ label_option }}"
+              name="{{ option.id }}"
+              class="select prod-options"
+              data-field-type="select"
+              data-optionid="{{ option.id }}"
+            >
+              {% for value in option.values %}
+                <option value="{{ value.id }}">{{ value.name }}</option>
+              {% endfor %}
+            </select>
+          {% else %}
+            <div
+              class="product-options__group prod-options"
+              data-field-type="radio"
+              data-optionid="{{ option.id }}"
+            >
+              {% for value in option.values -%}
+                {% assign label_value = random.hex %}
+                <label class="button product-options__selector product-options__selector--button">
+                  <input
+                    type="radio"
+                    name="{{ option.id }}"
+                    value="{{ value.id }}"
+                    id="{{ label_value }}"
+                    {% if forloop.first %}
+                      checked
+                    {% endif %}
+                  >
+                  <span>{{ value.name }}</span>
+                </label>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% when 'color' %}
+          <div
+            class="product-options__group prod-options"
+            data-field-type="radio"
+            data-optionid="{{ option.id }}"
+          >
+            {% for value in option.values -%}
+              {% assign label_value = random.hex %}
+              <label
+                class="button product-options__selector product-options__selector--color"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                data-bs-title="{{ value.name }}"
+                data-bs-custom-class="product-options__tooltip"
+              >
+                <input
+                  type="radio"
+                  name="{{ option.id }}"
+                  value="{{ value.id }}"
+                  id="{{ label_value }}"
+                  {% if forloop.first %}
+                    checked
+                  {% endif %}
+                >
+                <span style="background-color: {{ value.custom }}">{{ value.name }}</span>
+              </label>
+            {% endfor %}
+          </div>
+        {% when 'input' %}
+          <input
+            class="text prod-options"
+            type="text"
+            id="{{ label_option }}"
+            name="{{ option.id }}"
+            placeholder="{{ option.placeholder | escape_once }}"
+            data-optionid="{{ option.id }}"
+          >
+        {% when 'text' %}
+          <textarea
+            class="prod-options"
+            id="{{ label_option }}"
+            name="{{ option.id }}"
+            placeholder="{{ option.placeholder | escape_once }}"
+            data-optionid="{{ option.id }}"
+            rows="2"
+          ></textarea>
+        {% when 'file' %}
+          <input
+            class="text prod-options product-options__file-upload"
+            type="file"
+            id="{{ label_option }}"
+            name="{{ option.id }}"
+            data-optionid="{{ option.id }}"
+            tabindex="-1"
+          >
+          <div class="product-options__file-wrapper">
+            <input
+              type="text"
+              class="text product-options__file-name"
+              id="{{ label_option | append: '_filename' }}"
+              disabled
+            >
+            <label
+              for="{{ label_option }}"
+              class="button button--secondary product-options__file-button"
+              tabindex="0"
+            >
+              <i class="ph ph-upload"></i> {% t "Choose File" %}
+            </label>
+          </div>
+      {% endcase %}
+    </fieldset>
+  {% endfor %}
+</div>

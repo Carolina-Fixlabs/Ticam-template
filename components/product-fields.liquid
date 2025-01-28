@@ -1,0 +1,42 @@
+{% if prod.product_fields != empty %}
+  {% assign title = product-fields.options.title %}
+  {% assign title_attribute = product-fields.attributes.textfield.title %}
+
+  <section class="w-100" {{ product-fields.attributes }}>
+    {% if template == 'product' %}
+      <h2 class="product-page__subtitle check-empty" {{ title_attribute }}>
+        {{- title -}}
+      </h2>
+    {% else %}
+      <h4 class="product-page__subtitle check-empty" {{ title_attribute }}>
+        {{- title -}}
+      </h4>
+    {% endif %}
+
+    <div class="product-details product-details--{{ product-fields.options.display }}">
+      {% for field in prod.product_fields %}
+        {% for cfv in field.custom_field_values %}
+          <div class="product-details__row{% if cfv.only_some_variants %} product-details__row--variant-only{% endif %}">
+            <div class="product-details__title">{{ field.label }}:</div>
+
+            {% if field.label == 'Video' or field.label == 'video' %}
+              <div class="product-details__value">
+                <div class="product-details__media">
+                  {{ cfv.value }}
+                </div>
+              </div>
+            {% else %}
+              <div class="product-details__value" data-cfvid="{{ cfv.field_id }}">
+                {%- if cfv.value == blank %}
+                  {% t "No additional details provided" %}.
+                {% else %}
+                  {{ cfv.value }}
+                {% endif -%}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}

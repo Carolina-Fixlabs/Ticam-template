@@ -1,0 +1,23 @@
+{
+  "name": "Title",
+  "icon": "text",
+  "max_usage": null,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "mobile_first": {
+      "name": "Show before product image on Mobile",
+      "type": "checkbox",
+      "default": true
+    },
+    "uppercase": {
+      "name": "Show title in uppercase",
+      "type": "checkbox",
+      "default": false
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

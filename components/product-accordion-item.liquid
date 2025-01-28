@@ -1,0 +1,84 @@
+{% assign item_id = 'accordion-item-collapse-' | append: product-accordion-item.id %}
+
+{% assign link = product-accordion-item.options.link %}
+{% capture link_text_default %}{% t "Read more" %}{% endcapture %}
+{% assign link_text = product-accordion-item.options.link_text | default: link_text_default %}
+
+{% assign item_image = product-accordion-item.options.image.url %}
+{% assign item_image_position = product-accordion-item.options.image_position %}
+
+{% capture item_image_print %}
+  <img
+    class="theme-section__image--variable-width"
+    src="{{ item_image }}"
+    alt="{{ product-accordion-item.options.image.alt }}"
+    {{ product-accordion-item.options.image.attributes.width_and_height }}
+    loading="lazy"
+  >
+{% endcapture %}
+
+{% if item_image != blank %}
+  <style>
+    #{{ item_id }} {
+      --section-image-variable-width: {{ product-accordion-item.options.image_size | append: '%' }};
+    }
+  </style>
+{% endif %}
+
+<div class="accordion-item theme-accordion__item" {{ product-accordion-item.attributes }}>
+  <button
+    type="button"
+    class="accordion-button button theme-accordion__button"
+    data-bs-toggle="collapse"
+    data-bs-target="#{{ item_id }}"
+    aria-expanded="{% if accordion_index.index == 1 and is_first %}true{% else %}false{% endif %}"
+    aria-controls="{{ item_id }}"
+  >
+    {% if product-accordion-item.options.icon != blank %}
+      <i class="theme-icon ph {{ product-accordion-item.options.icon }} theme-accordion__icon"></i>
+    {% endif %}
+
+    <span {{ product-accordion-item.attributes.textfield.title }}>
+      {{- product-accordion-item.options.title -}}
+    </span>
+    <i class="ph ph-caret-down theme-accordion__caret"></i>
+  </button>
+
+  <div
+    id="{{ item_id }}"
+    class="accordion-collapse collapse{% if accordion_index.index == 1 and is_first %} show{% endif %}"
+    {% if is_accordion_collapsed %}
+      data-bs-parent="#{{ section_id }}"
+    {% endif %}
+  >
+    <div class="accordion-body theme-accordion__body" {{ product-accordion-item.attributes.textfield.content }}>
+      {% if item_image != blank and item_image_position == 'before' %}
+        {{ item_image_print }}
+      {% endif %}
+
+      <p>{{- product-accordion-item.options.content | newline_to_br -}}</p>
+
+      {% if item_image != blank and item_image_position == 'after' %}
+        {{ item_image_print }}
+      {% endif %}
+
+      {% if link != blank %}
+        <a
+          href="{{ link }}"
+          class="theme-accordion__link"
+          title="{{ link_text }}"
+          {% if product-accordion-item.options.link_external %}
+            target="_blank"
+          {% endif %}
+        >
+          <span {{ product-accordion-item.attributes.textfield.link_text }}>
+            {{- link_text -}}
+          </span>
+          {% if product-accordion-item.options.link_arrow %}
+            <i class="ph ph-arrow-right"></i>
+          {% endif %}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>

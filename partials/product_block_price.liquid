@@ -1,0 +1,111 @@
+{% if prod.variants != empty %}
+  {% assign has_variants = true %}
+
+  {% if prod.variant_with_min_price.price != prod.variant_with_max_price.price %}
+    {% assign has_variants_diff = true %}
+  {% else %}
+    {% assign has_variants_diff = false %}
+  {% endif %}
+
+  {% assign has_variants_text = options.pb_price_from_until %}
+
+  {% assign variant_min = prod.variant_with_min_price %}
+  {% assign variant_max = prod.variant_with_max_price %}
+
+  {% assign variant_min_normal = variant_min.price | price %}
+  {% assign variant_min_discounted = variant_min.price | minus: variant_min.discount | price %}
+
+  {% assign variant_max_normal = variant_max.price | price %}
+  {% assign variant_max_discounted = variant_max.price | minus: variant_max.discount | price %}
+{% else %}
+  {% assign has_variants = false %}
+{% endif %}
+
+{% if prod.discount > 0 %}
+  {% assign has_discount = true %}
+{% else %}
+  {% assign has_discount = false %}
+{% endif %}
+
+{%- capture text_from %}
+  <div class="product-block__price product-block__price--text">{%- t "from" -%}</div>
+{% endcapture -%}
+
+{%- capture text_until %}
+  <div class="product-block__price product-block__price--text">{%- t "until" -%}</div>
+{% endcapture -%}
+
+{% capture print_price_from %}
+  {% if has_variants_text and has_variants_diff %}{{ text_from }}{% endif %}
+  {% if has_discount %}
+    <div class="product-block__price product-block__price--new">{{ variant_min_discounted }}</div>
+    <div class="product-block__price product-block__price--old">{{ variant_min_normal }}</div>
+  {% else %}
+    <div class="product-block__price">{{ variant_min_normal }}</div>
+  {% endif %}
+{% endcapture %}
+
+{% capture print_price_until %}
+  {% if has_variants_text and has_variants_diff %}{{ text_until }}{% endif %}
+  {% if has_discount %}
+    <div class="product-block__price product-block__price--new">{{ variant_max_discounted }}</div>
+    <div class="product-block__price product-block__price--old">{{ variant_max_normal }}</div>
+  {% else %}
+    <div class="product-block__price">{{ variant_max_normal }}</div>
+  {% endif %}
+{% endcapture %}
+
+{% capture print_price_range %}
+  <div class="product-block__price-wrapper">
+    {% if has_variants_text %}{{ text_from }}{% endif %}
+    {% if has_discount %}
+      <div class="product-block__price product-block__price--new">{{ variant_min_discounted }}</div>
+      <div class="product-block__price product-block__price--old">{{ variant_min_normal }}</div>
+    {% else %}
+      <div class="product-block__price">{{ variant_min_normal }}</div>
+    {% endif %}
+  </div>
+  <div class="product-block__price-wrapper">
+    {% if has_variants_text %}{{ text_until }}{% endif %}
+    {% if has_discount %}
+      <div class="product-block__price product-block__price--new">{{ variant_max_discounted }}</div>
+      <div class="product-block__price product-block__price--old">{{ variant_max_normal }}</div>
+    {% else %}
+      <div class="product-block__price">{{ variant_max_normal }}</div>
+    {% endif %}
+  </div>
+{% endcapture %}
+
+{% capture print_price_normal %}
+  {% if has_discount %}
+    <div class="product-block__price-wrapper">
+      <div class="product-block__price product-block__price--new">{{ prod.price | minus: prod.discount | price }}</div>
+      <div class="product-block__price product-block__price--old">{{ prod.price | price }}</div>
+    </div>
+  {% else %}
+    <div class="product-block__price">{{ prod.price | price }}</div>
+  {% endif %}
+{% endcapture %}
+
+<div class="product-block__pricing product-block__pricing--{{ options.pb_price_alignment }}">
+  {% if has_variants %}
+    {% case options.pb_price_display %}
+      {% when 'from' %}
+        <div class="product-block__price-wrapper">
+          {{ print_price_from }}
+        </div>
+      {% when 'until' %}
+        <div class="product-block__price-wrapper">
+          {{ print_price_until }}
+        </div>
+      {% when 'range' %}
+        {% if has_variants_diff %}
+          {{ print_price_range }}
+        {% else %}
+          {{ print_price_from }}
+        {% endif %}
+    {% endcase %}
+  {% else %}
+    {{ print_price_normal }}
+  {% endif %}
+</div>

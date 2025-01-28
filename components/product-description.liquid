@@ -1,0 +1,44 @@
+{% if prod.description != blank %}
+  {% assign title = product-description.options.title %}
+  {% assign title_attribute = product-description.attributes.textfield.title %}
+  {% assign collapse = product-description.options.collapse %}
+
+  <div class="product-page__description" {{ product-description.attributes }}>
+    {% if template == 'product' %}
+      <h2 class="product-page__subtitle check-empty" {{ title_attribute }}>
+        {{- title -}}
+      </h2>
+    {% else %}
+      <h4 class="product-page__subtitle check-empty" {{ title_attribute }}>
+        {{- title -}}
+      </h4>
+    {% endif %}
+
+    <div
+      class="product-page__body{% if collapse %} product-page__body--collapse{% endif %}"
+      data-collapse="{{ collapse }}"
+      data-collapse-threshold="{{ product-description.options.collapse_threshold }}"
+    >
+      {{ prod.description }}
+    </div>
+
+    {% if collapse %}
+      <button type="button" class="button product-page__toggle active">
+        <span>
+          {%- t "Read more" %}
+          <i class="ph ph-caret-down"></i
+        ></span>
+        <span>
+          {%- t "Read less" %}
+          <i class="ph ph-caret-up"></i
+        ></span>
+      </button>
+
+      <style>
+        .product-page__body--collapse {
+          max-height: {{ product-description.options.collapse_threshold | append: 'px' }};
+        }
+      </style>
+    {% endif %}
+  </div>
+{% endif %}

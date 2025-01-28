@@ -1,0 +1,71 @@
+{% if store.address != blank %}
+  {% assign section_id = 'theme-section-' | append: component.id %}
+
+  {% if options.theme_animate %}
+    {% assign has_animation = true %}
+
+    {% if component.options.animate %}
+      {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+      {% assign animate_repeat = component.options.animate_repeat %}
+      {% assign animate_type = component.options.animate_type %}
+    {% else %}
+      {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+      {% assign animate_repeat = options.theme_animate_repeat %}
+      {% assign animate_type = options.theme_animate_type %}
+    {% endif %}
+  {% else %}
+    {% assign has_animation = false %}
+  {% endif %}
+
+  {% assign heading_subtitle = component.options.heading_subtitle %}
+  {% assign heading_title = component.options.heading_title %}
+  {% assign heading_description = component.options.heading_description %}
+  {% assign heading_link = component.options.heading_link %}
+  {% capture heading_link_text_default %}{% t "Read more" %}{% endcapture %}
+  {% assign heading_link_text = component.options.heading_link_text | default: heading_link_text_default %}
+
+  {% case component.options.map_width %}
+    {% when 'small' %}
+      {% assign width = 'col-md-7 col-lg-6' %}
+    {% when 'medium' %}
+      {% assign width = 'col-md-9 col-lg-8' %}
+    {% when 'large' %}
+      {% assign width = 'col-md-11 col-lg-10' %}
+  {% endcase %}
+
+  <style>
+    #{{ section_id }} {
+      --theme-max-width: {{ options.theme_width }};
+      --section-margin-top: {{ component.options.margin_top }}px;
+      --section-margin-bottom: {{ component.options.margin_bottom }}px;
+    }
+  </style>
+
+  <section
+    id="{{ section_id }}"
+    class="container-fluid theme-section theme-contact"
+    data-bundle-color="{{ component.options.bundle_color }}"
+    {% if has_animation %}
+      data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+    {% endif %}
+    {{ component.attributes }}
+  >
+    <div class="container container--adjust theme-section__container">
+      {% render 'component_heading', subtitle: heading_subtitle, title: heading_title, description: heading_description, link: heading_link, link_text: heading_link_text %}
+
+      <div class="row justify-content-{{ component.options.map_position }} theme-section__content">
+        <div class="col-12 {{ width }}">
+          <div class="theme-section__embed theme-section__embed--fixed">
+            <iframe
+              width="100%"
+              height="430"
+              src="https://maps.google.com/maps?q={{ store.address | replace: '#', '' }} {{ store.street_number }},{{ store.city }},{{ store.region }},{{ store.country }}&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              class="border-0 overflow-hidden shadow-sm"
+              title="Map"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}

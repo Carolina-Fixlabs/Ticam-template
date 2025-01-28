@@ -1,0 +1,494 @@
+{% assign modal_id = 'order-modal-' | append: customer_order.id %}
+{% assign modal_accordion_id = 'order-modal-accordion-' | append: customer_order.id %}
+
+{% assign modal_accordion_delivery = modal_accordion_id | append: '-delivery' %}
+
+{% if customer_order.shipping_required and customer_order.status_code != 'canceled' %}
+  {% assign modal_accordion_delivery_show = true %}
+{% elsif customer_order.shipping_required and customer_order.status_code != 'abandoned' %}
+  {% assign modal_accordion_delivery_show = true %}
+{% else %}
+  {% assign modal_accordion_delivery_show = false %}
+{% endif %}
+
+{% capture modal_accordion_delivery_content %}
+  <div class="theme-modal__group">
+    <div class="theme-modal__text">
+      <b>{% t "Status" %}</b><br>
+      <span data-label="{{ customer_order.shipment_status_code }}">
+        {{- customer_order.shipment_status -}}
+      </span>
+    </div>
+
+    {% if customer_order.tracking_number != blank %}
+      <div class="theme-modal__text">
+        <b>{% t "Tracking number" %}</b><br>
+        {% if customer_order.tracking_url != blank %}
+          <a
+            href="{{ customer_order.tracking_url }}"
+            title="{% t 'Track your order' %}"
+            target="_blank"
+          >
+            {{- customer_order.tracking_number }}
+            <i class="theme-icon ph ph-arrow-square-out"></i>
+          </a>
+        {% else %}
+          {{- customer_order.tracking_number -}}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if customer_order.tracking_company != blank and customer_order.tracking_company != 'other' %}
+      <div class="theme-modal__text">
+        <b>{% t "Delivery company" %}</b><br>
+        {{- customer_order.tracking_company -}}
+      </div>
+    {% endif %}
+
+    {% if customer_order.shipment_status_code == 'requested' %}
+      <div class="theme-modal__text">
+        <b>{% t "Expected delivery date" %}</b><br>
+        {{ customer_order.shipment_expected_arrival }}
+      </div>
+    {% endif %}
+
+    {% if customer_order.invoices != blank %}
+      <div class="theme-modal__text">
+        <b>{% t "Invoices" %}</b><br>
+        {% for invoice in customer_order.invoices %}
+          <a
+            href="{{ invoice }}"
+            title="{% t 'See invoice' %}"
+            target="_blank"
+          >
+            <i class="theme-icon ph ph-invoice"></i> {% t "Invoice %{invoice_index}", invoice_index: forloop.index %}
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endcapture %}
+
+{% assign modal_accordion_details = modal_accordion_id | append: '-details' %}
+{% capture modal_accordion_details_content %}
+  <div class="theme-modal__group">
+    <div class="theme-modal__text">
+      <b>{% t "Status" %}</b><br>
+      <span data-label="{{ customer_order.status_code }}">
+        {{- customer_order.status -}}
+      </span>
+    </div>
+
+    <div class="theme-modal__text">
+      <b>{% t "Creation Date" %}</b><br>
+      {{- customer_order.date -}}
+    </div>
+
+    <div class="theme-modal__text">
+      <b>{% t "Completion Date" %}</b><br>
+      {{- customer_order.completion_date -}}
+    </div>
+  </div>
+{% endcapture %}
+
+{% assign modal_accordion_contact = modal_accordion_id | append: '-contact' %}
+{% capture modal_accordion_contact_content %}
+  <div class="theme-modal__group">
+    <div class="theme-modal__text">
+      <b>{% t "Email" %}:</b><br>
+      {{- customer_order.email -}}
+    </div>
+
+    {% if customer_order.phone != blank %}
+      <div class="theme-modal__text">
+        <b>{% t "Phone" %}:</b><br>
+        {{- customer_order.phone -}}
+      </div>
+    {% endif %}
+
+    {% for additional_field in customer_order.additional_fields %}
+      {% if additional_field.area == 'contacts' and additional_field.value != blank %}
+        <div class="theme-modal__text">
+          <b>
+            {{- additional_field.label -}}
+            :</b
+          ><br>
+          {{- additional_field.value | newline_to_br -}}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endcapture %}
+
+{% assign modal_accordion_shipping = modal_accordion_id | append: '-shipping' %}
+{% capture modal_accordion_shipping_content %}
+  <div class="theme-modal__group">
+    <div class="theme-modal__text">
+      <b>{% t "Address" %}:</b><br>
+      {{ customer_order.shipping_address.formatted | newline_to_br }}
+    </div>
+
+    <div class="theme-modal__text">
+      <b>{% t "Method" %}:</b><br>
+      {{- customer_order.shipping_method -}}
+    </div>
+
+    {% for additional_field in customer_order.additional_fields %}
+      {% if additional_field.area == 'shipping' and additional_field.value != blank %}
+        <div class="theme-modal__text">
+          <b>
+            {{- additional_field.label -}}
+            :</b
+          ><br>
+          {{- additional_field.value | newline_to_br -}}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endcapture %}
+
+{% assign modal_accordion_billing = modal_accordion_id | append: '-billing' %}
+{% capture modal_accordion_billing_content %}
+  <div class="theme-modal__group">
+    <div class="theme-modal__text">
+      <b>{% t "Address" %}:</b><br>
+      {{ customer_order.billing_address.formatted | newline_to_br }}
+    </div>
+    <div class="theme-modal__text">
+      <b>{% t "Method" %}:</b><br>
+      {{- customer_order.payment_method -}}
+    </div>
+    {% for additional_field in customer_order.additional_fields %}
+      {% if additional_field.area == 'billing' and additional_field.value != blank %}
+        <div class="theme-modal__text">
+          <b>
+            {{- additional_field.label -}}
+            :</b
+          ><br>
+          {{- additional_field.value | newline_to_br -}}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endcapture %}
+
+{% capture has_additional_fields -%}
+  {%- if customer_order.additional_fields.size > 0 -%}
+    {%- for additional_field in customer_order.additional_fields -%}
+      {%- if additional_field.area == 'other' %}true{% else %}false{% endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endcapture %}
+{% assign modal_accordion_additional = modal_accordion_id | append: '-additional' %}
+{% capture modal_accordion_additional_content %}
+  <div class="theme-modal__group">
+    {% if customer_order.additional_information != blank %}
+      <div class="theme-modal__text">
+        <b>
+          {%- t "Special instructions" -%}
+          :</b
+        ><br>
+        {{- customer_order.additional_information | newline_to_br -}}
+      </div>
+    {% endif %}
+
+    {% for additional_field in customer_order.additional_fields %}
+      {% if additional_field.area == 'other' and additional_field.value != blank %}
+        <div class="theme-modal__text">
+          <b>
+            {{- additional_field.label -}}
+            :</b
+          ><br>
+          {{- additional_field.value | newline_to_br -}}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endcapture %}
+
+{% assign modal_accordion_summary = modal_accordion_id | append: '-summary' %}
+{% capture modal_accordion_summary_content %}
+  <div class="theme-modal__group">
+    <div class="theme-modal__text">{%- t "Products" %}: {{ customer_order.products_count -}}</div>
+    <div class="theme-modal__text">{%- t "Subtotal" %}: {{ customer_order.subtotal | price -}}</div>
+    <div class="theme-modal__text">{%- t "Shipping" %}: +{{ customer_order.shipping | price -}}</div>
+    {% if order.applied_tax > 0 %}
+      <div class="theme-modal__text">{%- t "Taxes" %}: +{{ customer_order.tax | price -}}</div>
+    {% endif %}
+    {% if customer_order.discount > 0 %}
+      <div class="theme-modal__text">{%- t "Discounts" %}: -{{ customer_order.discount | price -}}</div>
+      <div class="theme-modal__text">
+        {%- t "Applied promotions" %}:
+        <br>
+        <ul class="theme-modal__list">
+          {% for promotion in customer_order.applied_promotions %}
+            <li>
+              {{- promotion.name -}}
+              {%- if promotion.coupon != blank %}
+                ({% t "Code" %}: {{ promotion.coupon -}}
+                )
+              {%- endif -%}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    <div class="theme-modal__text theme-modal__text--large">
+      <b>{%- t "Total" %}: {{ customer_order.total | price -}}</b>
+    </div>
+  </div>
+{% endcapture %}
+
+{% assign modal_accordion_products = modal_accordion_id | append: '-products' %}
+{% capture modal_accordion_products_content %}
+  {% if order_repeat contains 'out-of-stock' %}
+    <div class="theme-modal__text alert alert-warning">
+      <i class="theme-icon ph ph-warning-circle"></i> {% t "This order contains products that are currently <b>not available</b> or have run <b>out of stock</b> and they will not be added to cart if you reorder" -%}
+      .
+    </div>
+  {% endif %}
+
+  <div class="row theme-modal__group">
+    {% for prod in customer_order.products %}
+      {% unless prod.status == 'disabled' %}
+        {% render 'store_product', prod: prod, prod_type: 'customer' %}
+      {% endunless %}
+    {% endfor %}
+  </div>
+{% endcapture %}
+
+<div
+  id="{{ modal_id }}"
+  class="modal fade theme-modal"
+  tabindex="-1"
+  aria-labelledby="{{ modal_id }}-title"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable theme-modal__dialog" data-bundle-color="default">
+    <div class="modal-content theme-modal__content">
+      <div class="modal-header theme-modal__header">
+        <h6 class="modal-title theme-modal__title" id="{{ modal_id }}-title">{%- t "Order" %} #{{ customer_order.id -}}</h6>
+
+        <button type="button" class="button theme-modal__close" data-bs-dismiss="modal" aria-label="{% t 'Close' %}">
+          <i class="ph ph-x-circle"></i>
+        </button>
+      </div>
+      <!-- end .theme-modal__header -->
+
+      <div class="modal-body theme-modal__body">
+        <div id="{{ modal_accordion_id }}" class="accordion theme-accordion">
+          {% if modal_accordion_delivery_show %}
+            <!-- Delivery status -->
+            <div class="accordion-item theme-accordion__item">
+              <button
+                type="button"
+                class="accordion-button button theme-accordion__button"
+                data-bs-toggle="collapse"
+                data-bs-target="#{{ modal_accordion_delivery }}"
+                aria-expanded="true"
+                aria-controls="{{ modal_accordion_delivery }}"
+              >
+                <span>{%- t "Delivery information" -%}</span>
+                <i class="ph ph-caret-down theme-accordion__caret"></i>
+              </button>
+              <div
+                id="{{ modal_accordion_delivery }}"
+                class="accordion-collapse collapse show"
+                data-bs-parent="#{{ modal_accordion_id }}"
+              >
+                <div class="accordion-body theme-accordion__body">
+                  {{ modal_accordion_delivery_content }}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+          <!-- Details -->
+          <div class="accordion-item theme-accordion__item">
+            <button
+              type="button"
+              class="accordion-button button theme-accordion__button"
+              data-bs-toggle="collapse"
+              data-bs-target="#{{ modal_accordion_details }}"
+              aria-expanded="{% if modal_accordion_delivery_show %}false{% else %}true{% endif %}"
+              aria-controls="{{ modal_accordion_details }}"
+            >
+              <span>{%- t "Details" -%}</span>
+              <i class="ph ph-caret-down theme-accordion__caret"></i>
+            </button>
+            <div
+              id="{{ modal_accordion_details }}"
+              class="accordion-collapse collapse {% unless modal_accordion_delivery_show %}show{% endunless %}"
+              data-bs-parent="#{{ modal_accordion_id }}"
+            >
+              <div class="accordion-body theme-accordion__body">
+                {{ modal_accordion_details_content }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact details -->
+          <div class="accordion-item theme-accordion__item">
+            <button
+              type="button"
+              class="accordion-button button theme-accordion__button"
+              data-bs-toggle="collapse"
+              data-bs-target="#{{ modal_accordion_contact }}"
+              aria-expanded="false"
+              aria-controls="{{ modal_accordion_contact }}"
+            >
+              <span>{%- t "Contact details" -%}</span>
+              <i class="ph ph-caret-down theme-accordion__caret"></i>
+            </button>
+            <div
+              id="{{ modal_accordion_contact }}"
+              class="accordion-collapse collapse"
+              data-bs-parent="#{{ modal_accordion_id }}"
+            >
+              <div class="accordion-body theme-accordion__body">
+                {{ modal_accordion_contact_content }}
+              </div>
+            </div>
+          </div>
+
+          {% if customer_order.shipping_required %}
+            <!-- Shipping information -->
+            <div class="accordion-item theme-accordion__item">
+              <button
+                type="button"
+                class="accordion-button button theme-accordion__button"
+                data-bs-toggle="collapse"
+                data-bs-target="#{{ modal_accordion_shipping }}"
+                aria-expanded="false"
+                aria-controls="{{ modal_accordion_shipping }}"
+              >
+                <span>{%- t "Shipping information" -%}</span>
+                <i class="ph ph-caret-down theme-accordion__caret"></i>
+              </button>
+              <div
+                id="{{ modal_accordion_shipping }}"
+                class="accordion-collapse collapse"
+                data-bs-parent="#{{ modal_accordion_id }}"
+              >
+                <div class="accordion-body theme-accordion__body">
+                  {{ modal_accordion_shipping_content }}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+          <!-- Billing information -->
+          <div class="accordion-item theme-accordion__item">
+            <button
+              type="button"
+              class="accordion-button button theme-accordion__button"
+              data-bs-toggle="collapse"
+              data-bs-target="#{{ modal_accordion_billing }}"
+              aria-expanded="false"
+              aria-controls="{{ modal_accordion_billing }}"
+            >
+              <span>{%- t "Billing information" -%}</span>
+              <i class="ph ph-caret-down theme-accordion__caret"></i>
+            </button>
+            <div
+              id="{{ modal_accordion_billing }}"
+              class="accordion-collapse collapse"
+              data-bs-parent="#{{ modal_accordion_id }}"
+            >
+              <div class="accordion-body theme-accordion__body">
+                {{ modal_accordion_billing_content }}
+              </div>
+            </div>
+          </div>
+
+          {% if customer_order.additional_information != blank or has_additional_fields contains 'true' %}
+            <!-- Additional information -->
+            <div class="accordion-item theme-accordion__item">
+              <button
+                type="button"
+                class="accordion-button button theme-accordion__button"
+                data-bs-toggle="collapse"
+                data-bs-target="#{{ modal_accordion_additional }}"
+                aria-expanded="false"
+                aria-controls="{{ modal_accordion_additional }}"
+              >
+                <span>{%- t "Additional information" -%}</span>
+                <i class="ph ph-caret-down theme-accordion__caret"></i>
+              </button>
+              <div
+                id="{{ modal_accordion_additional }}"
+                class="accordion-collapse collapse"
+                data-bs-parent="#{{ modal_accordion_id }}"
+              >
+                <div class="accordion-body theme-accordion__body">
+                  {{ modal_accordion_additional_content }}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+          <!-- Summary -->
+          <div class="accordion-item theme-accordion__item">
+            <button
+              type="button"
+              class="accordion-button button theme-accordion__button"
+              data-bs-toggle="collapse"
+              data-bs-target="#{{ modal_accordion_summary }}"
+              aria-expanded="false"
+              aria-controls="{{ modal_accordion_summary }}"
+            >
+              <span>{%- t "Summary" -%}</span>
+              <i class="ph ph-caret-down theme-accordion__caret"></i>
+            </button>
+            <div
+              id="{{ modal_accordion_summary }}"
+              class="accordion-collapse collapse"
+              data-bs-parent="#{{ modal_accordion_id }}"
+            >
+              <div class="accordion-body theme-accordion__body">
+                {{ modal_accordion_summary_content }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Products -->
+          <div class="accordion-item theme-accordion__item">
+            <button
+              type="button"
+              class="accordion-button button theme-accordion__button"
+              data-bs-toggle="collapse"
+              data-bs-target="#{{ modal_accordion_products }}"
+              aria-expanded="false"
+              aria-controls="{{ modal_accordion_products }}"
+            >
+              <span>{%- t "Products" -%}</span>
+              <i class="ph ph-caret-down theme-accordion__caret"></i>
+            </button>
+            <div
+              id="{{ modal_accordion_products }}"
+              class="accordion-collapse collapse"
+              data-bs-parent="#{{ modal_accordion_id }}"
+            >
+              <div class="accordion-body theme-accordion__body">
+                {{ modal_accordion_products_content }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end .theme-modal__body -->
+
+      {% if order_repeat contains 'available' %}
+        <div class="modal-footer theme-modal__footer">
+          <a
+            href="{{ customer_order.duplicate_url }}"
+            class="button button--style button--main button--full button--flex theme-modal__button"
+            title="{% t 'Reorder' %}"
+          >
+            <i class="theme-icon ph ph-repeat"></i> {% t "Reorder" -%}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

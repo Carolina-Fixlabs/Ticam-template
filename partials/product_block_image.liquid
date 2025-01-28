@@ -1,0 +1,121 @@
+{% assign color_swatch_limit = 5 %}
+{% assign color_swatch_limit_mobile = 3 %}
+
+{% assign image_overlap = false %}
+{% if prod.images.size > 1 and options.pb_image_transition == 'overlap' %}
+  {% assign image_overlap = true %}
+{% endif %}
+
+{% assign has_color_options = false %}
+{% if options.pb_show_color_options and prod.options.size > 0 %}
+  {% for option in prod.options %}
+    {% if option.type == 'color' %}
+      {% assign has_color_options = true %}
+      <product-block-swatch class="product-block__options">
+        {% for value in option.values limit: color_swatch_limit %}
+          <button
+            id="{{ value.id }}"
+            type="button"
+            class="button product-block__color{% if forloop.first %} product-block__color--active{% endif %}"
+            aria-label="{{ value.name }}"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            data-bs-title="{{ value.name }}"
+            data-bs-custom-class="product-block__tooltip"
+            {% if value.image != blank %}
+              data-image="{{ value.image | transform: options.pb_image_display, size_sm | strip }}"
+            {% endif %}
+          >
+            <div class="w-100 h-100 d-block" style="background: {{ value.custom }};"></div>
+          </button>
+        {% endfor %}
+
+        {% if option.values.size > color_swatch_limit %}
+          <a href="{{ prod.url }}" class="product-block__color product-block__color--remaining">+{{ option.values.size | minus: color_swatch_limit }}</a>
+        {% endif %}
+        {% if option.values.size > color_swatch_limit_mobile %}
+          <a href="{{ prod.url }}" class="product-block__color product-block__color--remaining product-block__color--remaining-mobile">+{{ option.values.size | minus: color_swatch_limit_mobile }}</a>
+        {% endif %}
+      </product-block-swatch>
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% case options.pb_image_display %}
+  {% when 'resize' %}
+    {% assign img_src_xs = prod.images.first | resize: size_xs %}
+    {% assign img_src_sm = prod.images.first | resize: size_sm %}
+    {% assign img_src_lg = prod.images.first | resize: size_lg %}
+    {% if options.theme_width != '1320px' %}
+      {% assign img_src_xl = prod.images.first | resize: size_xl %}
+    {% endif %}
+    {% if image_overlap and has_color_options == false %}
+      {% assign img_src_xs_hover = prod.images[1] | resize: size_xs %}
+      {% assign img_src_sm_hover = prod.images[1] | resize: size_sm %}
+      {% assign img_src_lg_hover = prod.images[1] | resize: size_lg %}
+      {% if options.theme_width != '1320px' %}
+        {% assign img_src_xl_hover = prod.images.first | resize: size_xl %}
+      {% endif %}
+    {% endif %}
+  {% when 'thumb' %}
+    {% assign img_src_xs = prod.images.first | thumb: size_xs %}
+    {% assign img_src_sm = prod.images.first | thumb: size_sm %}
+    {% assign img_src_lg = prod.images.first | thumb: size_lg %}
+    {% if options.theme_width != '1320px' %}
+      {% assign img_src_xl = prod.images.first | thumb: size_xl %}
+    {% endif %}
+    {% if image_overlap and has_color_options == false %}
+      {% assign img_src_xs_hover = prod.images[1] | thumb: size_xs %}
+      {% assign img_src_sm_hover = prod.images[1] | thumb: size_sm %}
+      {% assign img_src_lg_hover = prod.images[1] | thumb: size_lg %}
+      {% if options.theme_width != '1320px' %}
+        {% assign img_src_xl_hover = prod.images.first | thumb: size_xl %}
+      {% endif %}
+    {% endif %}
+{% endcase %}
+
+<div class="product-block__canvas">
+  {% if prod.images.size == 0 %}
+    <picture class="product-block__picture">
+      <div class="product-block__image-placeholder theme-image-placeholder"></div>
+    </picture>
+  {% elsif prod.images.size > 0 %}
+    <picture class="product-block__picture">
+      <source media="screen and (max-width: 414px)" srcset="{{ img_src_xs }}">
+      <source media="screen and (max-width: 575px)" srcset="{{ img_src_sm }}">
+      {% if options.theme_width == '1320px' %}
+        <source media="screen and (min-width: 576px)" srcset="{{ img_src_lg }}">
+      {% else %}
+        <source media="screen and (min-width: 576px) and (max-width: 1199px)" srcset="{{ img_src_lg }}">
+        <source media="screen and (min-width: 1200px)" srcset="{{ img_src_xl }}">
+      {% endif %}
+      <img
+        src="{{ img_src_lg }}"
+        class="product-block__image"
+        {{ image_width_and_height }}
+        alt="{{ prod.name }}"
+        loading="lazy"
+      >
+    </picture>
+    {% if image_overlap and has_color_options == false %}
+      <picture class="product-block__picture product-block__picture--overlap">
+        <source media="screen and (max-width: 414px)" srcset="{{ img_src_xs_hover }}">
+        <source media="screen and (max-width: 575px)" srcset="{{ img_src_sm_hover }}">
+        {% if options.theme_width == '1320px' %}
+          <source media="screen and (min-width: 576px)" srcset="{{ img_src_lg_hover }}">
+        {% else %}
+          <source media="screen and (min-width: 576px) and (max-width: 1199px)" srcset="{{ img_src_lg_hover }}">
+          <source media="screen and (min-width: 1200px)" srcset="{{ img_src_xl_hover }}">
+        {% endif %}
+        <img
+          src="{{ img_src_lg_hover }}"
+          class="product-block__image"
+          {{ image_width_and_height }}
+          alt="{{ prod.name }}"
+          loading="lazy"
+        >
+      </picture>
+    {% endif %}
+  {% endif %}
+</div>

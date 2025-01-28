@@ -1,0 +1,38 @@
+{% capture default_title %}{% t "Share this product" %}{% endcapture %}
+{% assign title = product-share.options.title | default: default_title %}
+{% assign title_attribute = product-share.attributes.textfield.title %}
+
+<share-component
+  class="share-component share-{{ component.id }}"
+  {{ product-share.attributes }}
+>
+  <script type="application/json" class="share-json">
+    {
+      "options": {
+        "showFacebook": {{ product-share.options.show_facebook | json }},
+        "showTwitter": {{ product-share.options.show_twitter | json }},
+        "showWhatsapp": {{ product-share.options.show_whatsapp | json }},
+        "showPinterest": {{ product-share.options.show_pinterest | json }},
+        "showEmail": {{ product-share.options.show_email | json }},
+        "showClipboard": {{ product-share.options.show_clipboard | json }}
+      },
+      "info": {
+        "title": {{ product-share.options.title | default: default_title | json }},
+        "product": {
+          "name": {{ prod.name | json }},
+          "url": {{ store.base_url | append: prod.url | json }},
+          "description": {{ prod.description | strip_html | truncate: 50 | json }},
+          "image": {{ prod.images.first | json }}
+        }
+      }
+    }
+  </script>
+
+  {% if template == 'product' %}
+    <h2 class="product-page__subtitle" {{ title_attribute }}>{{- title -}}</h2>
+  {% else %}
+    <h4 class="product-page__subtitle" {{ title_attribute }}>{{- title -}}</h4>
+  {% endif %}
+
+  <div class="theme-share"></div>
+</share-component>

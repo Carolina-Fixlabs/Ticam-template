@@ -1,0 +1,33 @@
+{
+  "name": "Checkout form",
+  "icon": "cash-register",
+  "max_usage": 1,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "checkout__checkout"
+  ],
+  "options": {
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 0,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 0,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

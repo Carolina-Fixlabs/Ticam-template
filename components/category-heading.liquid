@@ -1,0 +1,129 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% assign align_desktop = options.heading_align_desktop %}
+{% assign align_mobile = options.heading_align_mobile %}
+
+{% case align_desktop %}
+  {% when 'center' %}
+    {% if options.filters_desktop %}
+      {% assign column1_width = 'col-12 col-md-8 offset-md-2' %}
+      {% assign column2_width = 'col-12 d-block d-md-none text-md-end text-' | append: align_mobile %}
+    {% else %}
+      {% assign column1_width = 'col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3' %}
+      {% assign column2_width = 'col-12 col-md-2 col-lg-3 text-md-end text-' | append: align_mobile %}
+    {% endif %}
+  {% when 'start' %}
+    {% if options.filters_desktop %}
+      {% assign column1_width = 'col-12' %}
+      {% assign column2_width = 'col-12 d-block d-md-none text-md-end text-' | append: align_mobile %}
+    {% else %}
+      {% assign column1_width = 'col-12 col-md-8 col-lg-9' %}
+      {% assign column2_width = 'col-12 col-md-4 col-lg-3 text-md-end text-' | append: align_mobile %}
+    {% endif %}
+{% endcase %}
+
+{%- capture section_title -%}
+  {% case template %}
+    {% when 'category' %}
+      {{- category.name -}}
+    {% when 'searchresults' %}
+      {%- t "Search results" -%}
+  {% endcase %}
+{%- endcapture -%}
+
+{%- capture section_description -%}
+  {%- if template == 'category' and category.description != blank -%}
+    {{- category.description -}}
+  {%- elsif template == 'searchresults' -%}
+    {% t "You've searched for" %}: "<strong>{{ search.query }}</strong>"
+  {%- endif -%}
+{%- endcapture -%}
+
+{% capture filters_button %}
+  {% if category.template != 'Brands' and category.template != 'Show subcategories' %}
+    <div class="{{ column2_width }} theme-section__column" data-column="filters">
+      <a
+        role="button"
+        class="button button--style button--secondary button--bordered"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#sidebar-filters"
+        aria-controls="sidebar-filters"
+        aria-label="{% t 'Filters' %}"
+      >
+        <i class="theme-icon ph ph-sliders-horizontal"></i> {% t "Filters" -%}
+      </a>
+    </div>
+  {% endif %}
+{% endcapture %}
+
+{% capture section_image %}
+  {% if template == 'category' and category.images.size > 0 %}
+    <div class="theme-section__media">
+      <div class="theme-section__overlay"></div>
+      <img src="{{ category.images.first }}" alt="{{ category.name | escape }}" class="theme-section__image" width="auto" height="auto" loading="lazy">
+    </div>
+  {% endif %}
+{% endcapture %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+    --theme-overlay-opacity: {{ component.options.background_image_overlay | divided_by: 100.00 }};
+  }
+</style>
+
+<section
+  id="{{ section_id }}"
+  class="container-fluid theme-section theme-section--heading"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+  {{ component.attributes }}
+>
+  <div class="container container--adjust theme-section__container">
+    <div class="row align-items-start theme-section__heading">
+      <div class="{{ column1_width }} text-{{ align_mobile }} text-md-{{ align_desktop }} theme-section__column">
+        <h1 class="theme-section__title{% if options.heading_title_underline %} theme-section__title--underline{% endif %} check-empty">
+          {{- section_title -}}
+        </h1>
+
+        {% if component.options.description %}
+          <div class="theme-section__description check-empty">
+            {{- section_description -}}
+          </div>
+        {% endif %}
+      </div>
+      <!-- end .theme-section__column -->
+
+      {% if template == 'category' and category.products_count > 0 %}
+        {{ filters_button }}
+      {% elsif template == 'searchresults' and search.results.size > 0 %}
+        {{ filters_button }}
+      {% endif %}
+    </div>
+    <!-- end .theme-section__heading -->
+  </div>
+
+  {% if component.options.background_image %}
+    {{ section_image }}
+  {% endif %}
+</section>

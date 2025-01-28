@@ -1,0 +1,28 @@
+<product-stock {{ product-stock.attributes }} class="product-stock product-stock-{{ component.id }}">
+  <script type="application/json" class="product-stock-json">
+    {
+      "options": {
+        "low_stock_version": {{ options.pf_low_stock_version | json }}
+      },
+      "info": {
+        "product": {
+          "status": {{ prod.status | json }},
+          "stock": {{ prod.stock | json }},
+          "stock_notification": {{ prod.stock_notification | json }},
+          "stock_threshold": {{ prod.stock_threshold | json }},
+          "stock_unlimited": {{ prod.stock_unlimited | json }}
+        },
+        "variants": [{% for variant in prod.variants %}
+          {
+            "id": {{ variant.id | json }},
+            "status": {{ variant.status | json }},
+            "stock": {{ variant.stock | json }},
+            "stock_notification": {{ variant.stock_notification | json }},
+            "stock_threshold": {{ variant.stock_threshold | json }},
+            "stock_unlimited": {{ variant.stock_unlimited | json }}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}]
+      }
+    }
+  </script>
+</product-stock>

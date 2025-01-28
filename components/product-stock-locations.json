@@ -1,0 +1,28 @@
+{
+  "name": "Product Stock Locations",
+  "icon": "location-dot",
+  "max_usage": null,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Find your preferred store"
+    },
+    "button_icon": {
+      "name": "Button icon",
+      "type": "ph_icon",
+      "default": "ph ph-storefront"
+    },
+    "button_text": {
+      "name": "Button text",
+      "type": "input",
+      "default": "Show stock from locations"
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

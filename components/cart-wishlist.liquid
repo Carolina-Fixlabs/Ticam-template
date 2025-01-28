@@ -1,0 +1,30 @@
+{% if customer.wishlisted_products.size > 0 or request.preview_mode %}
+  {% assign section_id = 'theme-section-' | append: component.id %}
+
+  <style>
+    #{{ section_id }} {
+      --section-margin-top: {{ component.options.margin_top }}px;
+      --section-margin-bottom: {{ component.options.margin_bottom }}px;
+    }
+  </style>
+
+  <section id="{{ section_id }}" class="theme-section theme-section__content" {{ component.attributes }}>
+    <hr class="cart-page__divider">
+    <h3 class="cart-page__title" {{ component.attributes.textfield.title }}>{{ component.options.title }}</h3>
+    <div>
+      <div class="row">
+        {% for prod in customer.wishlisted_products %}
+          {% render 'store_product', prod: prod, prod_type: 'wishlist' %}
+        {% else %}
+          <div class="col-12">
+            <div class="alert alert-info mb-0">
+              {%- t "If the logged in customer has products added to their wish list, they will be displayed here." -%}
+              <br>
+            </div>
+            <span class="small text-center">{% t "This meessage is only visible for administrator." -%}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}

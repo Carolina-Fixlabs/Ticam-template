@@ -1,0 +1,111 @@
+{% assign section_id = 'selected-product-' | append: component.id %}
+{% assign prod = products.product[component.options.permalink] | default: products.all.first %}
+{% assign columns_order_option = component.options.columns_order %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% if prod.images.size > 1 and component.options.gallery_thumbs and component.options.gallery_thumbs_position != 'bottom' %}
+  {% assign layout_change = true %}
+{% else %}
+  {% assign layout_change = false %}
+{% endif %}
+
+{% assign is_card = component.options.card_enable %}
+{% assign card_border = component.options.card_border %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+    --product-page-alignment: {{ component.options.content_alignment }};
+    --product-page-border: {{ component.options.card_border_opacity | divided_by: 100.0 }}
+  }
+</style>
+
+<section
+  id="{{ section_id }}"
+  class="container-fluid theme-section product-page text-{{ component.options.content_alignment }}"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+  {% if is_card %}
+    data-card="true" data-card-border="{{ card_border }}"
+  {% endif %}
+  {{ component.attributes }}
+>
+  <script type="application/json" class="product-json" data-productid="{{ prod.id }}">
+    {{ prod | json }}
+  </script>
+
+  <div class="container theme-section__container">
+    <div
+      class="row theme-section__content"
+      {% if is_card %}
+        data-bundle-color="{{ component.options.card_bundle_color }}"
+      {% endif %}
+    >
+      <div class="col-12 col-md-6{% if layout_change == false %} col-lg-5{% if columns_order_option %} order-md-2 offset-lg-1{% endif %}{% endif %} theme-section__column product-gallery">
+        {% render 'product_gallery', prod: prod %}
+      </div>
+      <!-- end .theme-section__column -->
+
+      <div class="col-12 col-md-6 {% if layout_change %}col-lg-5{% endif %} {% if columns_order_option %}order-md-1{% else %}offset-lg-1{% endif %} theme-section__column">
+        <div class="product-page__info">
+          {% for child in component.children %}
+            {% case child.property %}
+              {% when 'attributes' %}
+                {% render 'components/product-attributes', product-attributes: child, prod: prod %}
+              {% when 'title' %}
+                {% render 'components/product-title', product-title: child, prod: prod %}
+              {% when 'price' %}
+                {% render 'components/product-price', product-price: child, prod: prod %}
+              {% when 'reviews-stars' %}
+                {% render 'components/product-reviews-stars', product-reviews-stars: child, prod: prod %}
+              {% when 'stock' %}
+                {% render 'components/product-stock', product-stock: child, prod: prod %}
+              {% when 'form' %}
+                {% render 'components/product-form', product-form: child, prod: prod %}
+              {% when 'wishlist' %}
+                {% if store.customers_enabled %}
+                  {% render 'components/product-wishlist', product-wishlist: child, prod: prod, display: 'form' %}
+                {% endif %}
+              {% when 'stock-locations' %}
+                {% render 'components/product-stock-locations', product-stock-locations: child, prod: prod %}
+              {% when 'description' %}
+                {% render 'components/product-description', product-description: child, prod: prod %}
+              {% when 'fields' %}
+                {% render 'components/product-line-divider', product-line-divider: child, prod: prod %}
+              {% when 'share' %}
+                {% render 'components/product-share', product-share: child, prod: prod %}
+            {% endcase %}
+          {% endfor %}
+        </div>
+        <!-- end .product-page__info -->
+      </div>
+      <!-- end .theme-section__column -->
+    </div>
+  </div>
+</section>
+
+{% for child in component.children %}
+  {% case child.property %}
+    {% when 'stock-locations' %}
+      {% render 'product_stock_locations', product-stock-locations: child, prod: prod %}
+  {% endcase %}
+{% endfor %}

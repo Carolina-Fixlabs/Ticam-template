@@ -1,0 +1,13 @@
+{
+  "name": "Wishlist",
+  "icon": "heart",
+  "help": "This subcomponent displays a button that allows logged-in users to add products to their customer account **Wishlist**. You can customize its behavior in **Theme settings > Wishlist**. For more details, visit [this article](landing?url=support/theme-customization/#wishlist).",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {},
+  "mode": "subcomponents",
+  "properties": {}
+}

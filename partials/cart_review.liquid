@@ -1,0 +1,288 @@
+{% if order.shipping_required and order.shipping_address.formatted != blank %}
+  {% assign show_shipping_info = true %}
+{% else %}
+  {% assign show_shipping_info = false %}
+{% endif %}
+
+{% if order.shipping_required == false or order.shipping_address.formatted != order.billing_address.formatted %}
+  {% assign show_billing_info = true %}
+{% else %}
+  {% assign show_billing_info = false %}
+{% endif %}
+
+<div class="row">
+  <div class="col-12">
+    <h3 class="cart-page__title">{% t "Contact information" %}</h3>
+  </div>
+
+  <div class="col-12 cart-page__group">
+    <div class="row cart-page__box">
+      <div class="col-12 col-md-6 cart-page__column">
+        <h6 class="cart-page__subtitle">
+          {%- t "Email" -%}
+        </h6>
+        <div class="cart-page__text">
+          {{- order.email -}}
+        </div>
+      </div>
+
+      {% if order.phone and order.phone != blank %}
+        <div class="col-12 col-md-6 cart-page__column">
+          <h6 class="cart-page__subtitle">
+            {%- t "Phone" -%}
+          </h6>
+          <div class="cart-page__text">
+            {{- order.phone -}}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if order.additional_fields.size > 0 %}
+        <div class="w-100"></div>
+
+        {% for additional_field in order.additional_fields %}
+          {% if additional_field.area == 'contact' and additional_field.value != blank %}
+            <div class="col-12 col-md-6 cart-page__column">
+              <h6 class="cart-page__subtitle">
+                {{- additional_field.label -}}
+              </h6>
+              <div class="cart-page__text">
+                {{- additional_field.value | newline_to_br -}}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+    <!-- end .cart-page__group -->
+  </div>
+  <!-- end .cart-page__group -->
+
+  {% if show_shipping_info %}
+    <div class="col-12{% if show_billing_info %} col-md-6{% endif %}">
+      <div class="row">
+        <div class="col-12">
+          <h3 class="cart-page__title">{% t "Shipping information" %}</h3>
+        </div>
+
+        <div class="col-12 cart-page__group">
+          <div class="row cart-page__box">
+            <div class="col-12 cart-page__column">
+              <h6 class="cart-page__subtitle">
+                {%- t "Name" -%}
+              </h6>
+              <div class="cart-page__text">
+                {{- order.shipping_address.full_name -}}
+              </div>
+            </div>
+            <!-- end .cart-page__column -->
+
+            <div class="col-12 cart-page__column">
+              <h6 class="cart-page__subtitle">
+                {%- t "Shipping address" -%}
+              </h6>
+              <div class="cart-page__text">
+                {{- order.shipping_address.formatted | newline_to_br -}}
+              </div>
+            </div>
+            <!-- end .cart-page__column -->
+
+            {% if order.additional_fields.size > 0 %}
+              <div class="w-100"></div>
+
+              {% for additional_field in order.additional_fields %}
+                {% if additional_field.area == 'shipping' and additional_field.value != blank %}
+                  <div class="col-12 col-md-6 cart-page__column">
+                    <h6 class="cart-page__subtitle">
+                      {{- additional_field.label -}}
+                    </h6>
+                    <div class="cart-page__text">
+                      {{- additional_field.value | newline_to_br -}}
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+
+            {% if order.shipping_address.formatted == order.billing_address.formatted %}
+              <div class="col-12 cart-page__column">
+                <div class="cart-page__text cart-page__text--small">
+                  <i class="ph ph-info"></i> <i>{% t "Your Billing Information is the same as your Shipping Information." -%}</i>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        <!-- end .cart-page__group -->
+      </div>
+    </div>
+  {% endif %}
+
+  {% if show_billing_info %}
+    <div class="col-12 col-md-6">
+      <div class="row">
+        <div class="col-12">
+          <h3 class="cart-page__title">{% t "Billing information" %}</h3>
+        </div>
+
+        <div class="col-12 cart-page__group">
+          <div class="row cart-page__box">
+            <div class="col-12 cart-page__column">
+              <h6 class="cart-page__subtitle">
+                {%- t "Name" -%}
+              </h6>
+              <div class="cart-page__text">
+                {{- order.billing_address.full_name -}}
+              </div>
+            </div>
+            <!-- end .cart-page__column -->
+
+            <div class="col-12 cart-page__column">
+              <h6 class="cart-page__subtitle">
+                {%- t "Billing address" -%}
+              </h6>
+              <div class="cart-page__text">
+                {{- order.billing_address.formatted | newline_to_br -}}
+              </div>
+            </div>
+            <!-- end .cart-page__column -->
+
+            {% if order.additional_fields.size > 0 %}
+              <div class="w-100"></div>
+
+              {% for additional_field in order.additional_fields %}
+                {% if additional_field.area == 'billing' and additional_field.value != blank %}
+                  <div class="col-12 col-md-6 cart-page__column">
+                    <h6 class="cart-page__subtitle">
+                      {{- additional_field.label -}}
+                    </h6>
+                    <div class="cart-page__text">
+                      {{- additional_field.value | newline_to_br -}}
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+        <!-- end .cart-page__group -->
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- Payment method -->
+  <div class="col-12{% if show_shipping_info %} col-md-6{% endif %}">
+    <div class="row">
+      <div class="col-12">
+        <h3 class="cart-page__title">{% t "Payment method" %}</h3>
+      </div>
+
+      <div class="col-12 cart-page__group">
+        <div class="row cart-page__box">
+          <div class="col-12 cart-page__column">
+            {% capture payment_method_html -%}
+              <b>{{ order.payment_method }}</b>
+            {%- endcapture %}
+
+            <div class="cart-page__text">
+              <i class="theme-icon ph ph-credit-card cart-page__icon"></i> <b>{{- order.payment_method -}}</b>
+            </div>
+
+            {% if order.payment_method_id == 'manual' %}
+              <div class="cart-page__text cart-page__text--small check-empty">
+                {{- order.payment_information | newline_to_br -}}
+              </div>
+            {% elsif order.payment_method_id == 'external_payment_gateway' %}
+              <div class="cart-page__text cart-page__text--small">
+                {%- t "You will be redirected to %{payment_name} to complete the payment.", payment_name: payment_method_html -%}
+              </div>
+            {% else %}
+              <div class="cart-page__text cart-page__text--small">
+                {%- t "You will be redirected to %{payment_name} for a secure and encrypted payment enviroment to complete your purchase.", payment_name: payment_method_html -%}
+              </div>
+            {% endif %}
+          </div>
+          <!-- end .cart-page__column -->
+        </div>
+      </div>
+      <!-- end .cart-page__group -->
+    </div>
+  </div>
+
+  {% if show_shipping_info %}
+    <!-- Shipping method -->
+    <div class="col-12 col-md-6">
+      <div class="row">
+        <div class="col-12">
+          <h3 class="cart-page__title">{% t "Shipping method" %}</h3>
+        </div>
+
+        <div class="col-12 cart-page__group">
+          <div class="row cart-page__box">
+            <div class="col-12 cart-page__column">
+              {% if order.shipping_method_id == 'cash_on_delivery' %}
+                <div class="cart-page__text">
+                  <i class="theme-icon ph ph-hand-coins cart-page__icon"></i> <b>{{- order.shipping_method -}}</b>
+                </div>
+
+                <div class="cart-page__text cart-page__text--small">
+                  {%- t "You will need to make the respective payment once you receive your order" -%}
+                </div>
+              {% else %}
+                <div class="cart-page__text">
+                  <i class="theme-icon ph ph-truck cart-page__icon"></i> <b>{{- order.shipping_method -}}</b>
+                </div>
+              {% endif %}
+            </div>
+            <!-- end .cart-page__column -->
+          </div>
+        </div>
+        <!-- end .cart-page__group -->
+      </div>
+    </div>
+  {% endif %}
+
+  {% capture has_additional_fields -%}
+    {%- if order.additional_fields.size > 0 -%}
+      {%- for additional_field in order.additional_fields -%}
+        {%- if additional_field.area == 'other' and additional_field.value != blank %}true{% else %}false{% endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endcapture %}
+
+  {% if order.additional_information != blank or has_additional_fields contains 'true' %}
+    <div class="col-12">
+      <h3 class="cart-page__title">{% t "Additional information" %}</h3>
+    </div>
+
+    <div class="col-12 cart-page__group">
+      <div class="row cart-page__box">
+        {% if order.additional_information and order.additional_information != blank %}
+          <div class="col-12 cart-page__column">
+            <h6 class="cart-page__subtitle">
+              {%- t "Special instructions" -%}
+            </h6>
+            <div class="cart-page__text">
+              {{- order.additional_information | newline_to_br -}}
+            </div>
+          </div>
+        {% endif %}
+
+        {% for additional_field in order.additional_fields %}
+          {% if additional_field.area == 'other' and additional_field.value != blank %}
+            <div class="col-12 cart-page__column">
+              <h6 class="cart-page__subtitle">
+                {{- additional_field.label -}}
+              </h6>
+              <div class="cart-page__text">
+                {{- additional_field.value | newline_to_br -}}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <!-- end .cart-page__group -->
+    </div>
+    <!-- end .cart-page__group -->
+  {% endif %}
+</div>

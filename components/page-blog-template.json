@@ -1,0 +1,198 @@
+{
+  "name": "Page Blog template",
+  "icon": "blog",
+  "max_usage": 1,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "page"
+  ],
+  "options": {
+    "page_category": {
+      "name": "Page category",
+      "type": "page_category",
+      "default": "Post"
+    },
+    "limit": {
+      "name": "Quantity of items to display",
+      "type": "slider",
+      "default": 40,
+      "min": 3,
+      "max": 40,
+      "step": 1,
+      "unit": ""
+    },
+    "columns_desktop": {
+      "name": "Number of columns on desktop",
+      "type": "select",
+      "default": "3",
+      "options": [
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        },
+        {
+          "label": "3",
+          "value": "3"
+        }
+      ]
+    },
+    "columns_mobile": {
+      "name": "Number of columns on mobile",
+      "type": "select",
+      "default": "2",
+      "options": [
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        }
+      ]
+    },
+    "width": {
+      "name": "Width",
+      "type": "select",
+      "default": "grid",
+      "options": [
+        {
+          "label": "Grid width",
+          "value": "grid"
+        },
+        {
+          "label": "Small",
+          "value": "small"
+        },
+        {
+          "label": "Medium",
+          "value": "medium"
+        },
+        {
+          "label": "Large",
+          "value": "large"
+        }
+      ]
+    },
+    "position_x": {
+      "name": "Horizontal content position",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "end"
+        }
+      ]
+    },
+    "group_appearance": {
+      "name": "Appearance",
+      "type": "heading",
+      "default": false
+    },
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 0,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    },
+    "animate": {
+      "name": "Customize animation options",
+      "type": "checkbox",
+      "help": "Allows to override the animation options defined at **Theme settings > Design > Enable theme animations**.",
+      "default": false
+    },
+    "animate_type": {
+      "name": "Animation type",
+      "type": "select",
+      "default": "fade-up",
+      "options": [
+        {
+          "label": "From down",
+          "value": "fade-up"
+        },
+        {
+          "label": "From up",
+          "value": "fade-down"
+        },
+        {
+          "label": "From left",
+          "value": "fade-right"
+        },
+        {
+          "label": "From right",
+          "value": "fade-left"
+        },
+        {
+          "label": "Zoom in",
+          "value": "zoom-in"
+        },
+        {
+          "label": "Zoom out",
+          "value": "zoom-out"
+        }
+      ]
+    },
+    "animate_repeat": {
+      "name": "Do the animation once",
+      "type": "checkbox",
+      "default": true
+    },
+    "animate_delay": {
+      "name": "Animation delay",
+      "type": "slider",
+      "default": 50,
+      "min": 0,
+      "max": 300,
+      "step": 50,
+      "unit": "ms"
+    }
+  },
+  "nesting": {
+    "animate": [
+      "animate_type",
+      "animate_repeat",
+      "animate_delay"
+    ],
+    "group_appearance": [
+      "margin_top",
+      "margin_bottom",
+      "bundle_color",
+      "animate"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

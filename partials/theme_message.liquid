@@ -1,0 +1,78 @@
+<div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center theme-message">
+  <div class="theme-message__wrapper">
+    {% case template %}
+      {% when 'category' %}
+        <h5 class="theme-message__title">
+          {%- t "There are still no products available here" -%}
+        </h5>
+        <div class="theme-message__text">
+          {%- t "You can try looking at other categories or use the search bar to find other products." -%}
+        </div>
+      {% when 'page' %}
+        <h5 class="theme-message__title">
+          {%- t "There no published articles here yet" -%}
+        </h5>
+        <div class="theme-message__text">
+          {%- t "You can try looking at other content of the store for now." -%}
+        </div>
+        <a
+          href="{{ store.url }}"
+          class="button button--style button--secondary theme-message__button"
+          title="{% t 'Go back to Home page' %}"
+        >
+          {%- t "Go to Home page" -%}
+        </a>
+      {% when 'searchresults' %}
+        <h5 class="theme-message__title">
+          {%- t "There are no results available" -%}
+        </h5>
+        <div class="theme-message__text">
+          {%- t "We haven't found any products that match your search for" %}
+          <b>{{ search.query }}</b>. {% t "Try searching with other keywords or go back to the Home page." -%}
+        </div>
+        <a
+          href="{{ store.url }}"
+          class="button button--style button--secondary theme-message__button"
+          title="{% t 'Go back to Home page' %}"
+        >
+          {%- t "Go to Home page" -%}
+        </a>
+      {% when 'cart' %}
+        <h5 class="theme-message__title">
+          {%- t "Your shopping cart is empty." -%}
+        </h5>
+        <a
+          href="{{ store.url }}"
+          class="button button--style button--secondary theme-message__button"
+          title="{% t 'Go back to Home page' %}"
+        >
+          {%- t "Go to Home page" -%}
+        </a>
+      {% when 'customer_account' %}
+        <h5 class="theme-message__title">
+          {%- t "You have not made any purchases." -%}
+        </h5>
+        <a
+          href="{{ store.url }}"
+          class="button button--style button--main theme-message__button"
+          title="{% t 'Start shopping' %}"
+        >
+          {%- t "Start shopping" -%}
+        </a>
+      {% when 'error' %}
+        <h5 class="theme-message__title">
+          {{- error.title -}}
+        </h5>
+        <div class="theme-message__text">
+          {{- error.message -}}
+        </div>
+        <a
+          href="{{ error.link | default: store.url }}"
+          class="button button--style button--secondary theme-message__button"
+          title="{% t 'Go back & Keep Shopping' %}"
+        >
+          {%- t "Go back & Keep Shopping" -%}
+        </a>
+    {% endcase %}
+  </div>
+</div>

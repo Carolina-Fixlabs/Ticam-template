@@ -1,0 +1,38 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+
+<section
+  id="{{ section_id }}"
+  class="container-fluid theme-section customer-heading"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {{ component.attributes }}
+>
+  <div class="container container--adjust theme-section__container">
+    <div class="row align-items-start customer-heading__wrapper">
+      <div class="col-12 col-sm customer-heading__column">
+        <h3 class="customer-heading__name">
+          {{- customer.name | default: customer.email -}}
+        </h3>
+        {% if customer.name != blank %}
+          <div class="customer-heading__email">
+            {{- customer.email -}}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="col-12 col-sm-auto customer-heading__column">
+        <a href="{{ customer.logout_url }}" class="button button--style button--secondary button--small" title="{% t 'Log out' %}">
+          {%- t 'Log out' -%}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- end .customer-heading -->

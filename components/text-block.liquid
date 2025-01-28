@@ -1,0 +1,76 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% case component.options.width %}
+  {% when 'full' %}
+    {% assign column_width = 'col-md-12' %}
+  {% when 'large' %}
+    {% assign column_width = 'col-md-10' %}
+  {% when 'medium' %}
+    {% assign column_width = 'col-md-8' %}
+  {% when 'small' %}
+    {% assign column_width = 'col-md-6' %}
+{% endcase %}
+
+{% assign link = component.options.link %}
+{% capture link_default %}{% t "Read more" %}{% endcapture %}
+{% assign link_text = component.options.link_text | default: link_default %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+
+<section
+  id="{{ section_id }}"
+  class="container-fluid theme-section"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+  {{ component.attributes }}
+>
+  <div class="container container--adjust theme-section__container">
+    <div class="row align-items-start justify-content-{{ component.options.position_x }} theme-section__content">
+      <div class="col-12 {{ column_width }} {{ component.options.alignment }}">
+        <div class="theme-section__subtitle check-empty" {{ component.attributes.textfield.subtitle }}>{{ component.options.subtitle }}</div>
+
+        <h3 class="theme-section__title check-empty" {{ component.attributes.textfield.title }}>{{ component.options.title }}</h3>
+
+        <div class="theme-section__description check-empty" {{ component.attributes.textfield.text }}>{{ component.options.text | newline_to_br }}</div>
+
+        {% if link != blank %}
+          <a
+            href="{{ link }}"
+            class="button button--style button--secondary{% if component.options.link_outline %} button--bordered{% endif %} theme-section__button"
+            title="{{ link_text }}"
+            {% if component.options.link_external %}
+              target="_blank"
+            {% endif %}
+          >
+            <span {{ component.attributes.textfield.link_text }}>{{ link_text }}</span>
+            {%- if component.options.link_arrow %} <i class="ph ph-arrow-right"></i>{% endif %}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

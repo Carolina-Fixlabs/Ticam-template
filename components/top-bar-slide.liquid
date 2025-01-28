@@ -1,0 +1,33 @@
+<div class="swiper-slide top-bar__block" {{ top-bar-slide.attributes }}>
+  <div class="h-100">
+    <div class="d-flex {{ alignment_class }} align-items-center h-100 top-bar__content">
+      <div class="top-bar__text-wrapper">
+        {%- if top-bar-slide.options.icon != blank -%}
+          <i class="theme-icon ph {{ top-bar-slide.options.icon | remove: 'ph ' }} top-bar__icon"></i>
+        {%- endif -%}
+
+        <div class="top-bar__text" {{ top-bar-slide.attributes.textfield.text }}>
+          {%- if top-bar-slide.options.text != blank -%}
+            {{- top-bar-slide.options.text -}}
+          {%- else -%}
+            {%- t "Add a text for this slide" -%}
+          {%- endif -%}
+        </div>
+      </div>
+
+      {% if top-bar-slide.options.link != blank and top-bar-slide.options.link_text != blank %}
+        <a
+          href="{{ top-bar-slide.options.link }}"
+          class="top-bar__link"
+          title="{{ top-bar-slide.options.link_text }}"
+          {% if top-bar-slide.options.link_external %}
+            target="_blank"
+          {% endif %}
+          {{ top-bar-slide.attributes.textfield.link_text }}
+        >
+          {{- top-bar-slide.options.link_text -}}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>

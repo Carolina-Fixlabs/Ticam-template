@@ -1,0 +1,92 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+{% assign display_option = component.options.display %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% if component.options.columns_desktop == 1 %}
+  {% assign class_desktop = 'col-sm-12' %}
+{% elsif component.options.columns_desktop == 2 %}
+  {% assign class_desktop = 'col-sm-6' %}
+{% elsif component.options.columns_desktop == 3 %}
+  {% assign class_desktop = 'col-sm-6 col-lg-4' %}
+{% endif %}
+
+{% capture icon_alignment -%}
+  {%- if component.options.alignment == 'center' -%}
+    {%- case component.options.icon -%}
+      {%- when 'closing' -%}
+        start
+      {%- when 'opening' -%}
+        end
+      {%- else -%}
+        end
+    {%- endcase -%}
+  {%- elsif component.options.alignment == 'start' -%}
+    start
+  {%- else -%}
+    end
+  {%- endif -%}
+{%- endcapture %}
+
+{% capture sw_content %}
+  {% for review in store.featured_reviews limit: component.options.limit %}
+    {% render 'featured_review', review: review, display_option: display_option, class_desktop: class_desktop, has_animation: has_animation, animate_type: animate_type, animate_repeat: animate_repeat, animate_delay: animate_delay, icon_alignment: icon_alignment %}
+  {% else %}
+    {% render 'component_placeholder_featured_review', display_option: display_option, class_desktop: class_desktop, has_animation: has_animation, animate_type: animate_type, animate_repeat: animate_repeat, animate_delay: animate_delay, icon_alignment: icon_alignment %}
+  {% endfor %}
+{% endcapture %}
+
+{% assign heading_subtitle = component.options.heading_subtitle %}
+{% assign heading_title = component.options.heading_title %}
+{% assign heading_description = component.options.heading_description %}
+{% assign heading_link = component.options.heading_link %}
+{% capture heading_link_text_default %}{% t "See more reviews" %}{% endcapture %}
+{% assign heading_link_text = component.options.heading_link_text | default: heading_link_text_default %}
+
+{%- capture sw_columns %}sw-columns-desktop="{{ component.options.columns_desktop }}" sw-columns-mobile="1"{% endcapture -%}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+    --review-block-alignment: {{ component.options.alignment }};
+    --review-block-icon-size: {{ component.options.icon_size }}px;
+  }
+  #{{ section_id }} .review-block--card .review-block__wrapper[data-border="true"]:after {
+    --review-block-card-border: {{ component.options.review_card_border_opacity | divided_by: 100.00 }};
+  }
+</style>
+
+<section
+  id="{{ section_id }}"
+  class="container-fluid theme-section"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {{ component.attributes }}
+>
+  <div class="container container--adjust theme-section__container">
+    {% render 'component_heading', subtitle: heading_subtitle, title: heading_title, description: heading_description, link: heading_link, link_text: heading_link_text %}
+
+    <div class="row theme-section__content">
+      {% if display_option == 'carousel' %}
+        {% render 'component_swiper', sw_layout: 'featured-reviews', sw_content: sw_content, sw_columns: sw_columns, sw_autoheight: 'false' %}
+      {% else %}
+        {{ sw_content }}
+      {% endif %}
+    </div>
+  </div>
+</section>

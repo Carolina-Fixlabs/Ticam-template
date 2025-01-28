@@ -1,0 +1,46 @@
+{% if images_format == 'format' %}
+  {% case component.options.gallery_image_dimension %}
+    {% when 'landscape' %}
+      {% assign thumb_dimension = '84x47' %}
+      {% assign image_width_and_height = 'width="84" height="47"' %}
+    {% when 'portrait' %}
+      {% assign thumb_dimension = '84x112' %}
+      {% assign image_width_and_height = 'width="84" height="112"' %}
+    {% when 'rectangular' -%}
+      {% assign thumb_dimension = '84x63' %}
+      {% assign image_width_and_height = 'width="84" height="63"' %}
+    {% when 'square' -%}
+      {% assign thumb_dimension = '84x84' %}
+      {% assign image_width_and_height = 'width="84" height="84"' %}
+  {% endcase %}
+{% elsif images_format == 'no-format' %}
+  {% assign thumb_dimension = '84x84' %}
+  {% assign image_width_and_height = 'width="84" height="84"' %}
+{% endif %}
+
+{% capture image_thumbnails %}
+  {% for image in prod.images %}
+    <div class="swiper-slide product-gallery__thumb">
+      <img
+        src="{{ image | thumb: thumb_dimension }}"
+        alt="{{ prod.name }} - {% t 'thumbnail' %} {{ forloop.index }}"
+        class="product-gallery__image product-gallery__image--thumb"
+        {{ image_width_and_height }}
+        loading="lazy"
+      >
+    </div>
+  {% endfor %}
+{% endcapture %}
+
+<swiper-slider
+  class="swiper product-gallery__carousel product-gallery__carousel--thumbs"
+  sw-layout="product-gallery-thumbs"
+  sw-thumbs-direction="{% if component.options.gallery_thumbs_position == 'bottom' %}horizontal{% else %}vertical{% endif %}"
+  sw-autoplay="false"
+>
+  <div class="swiper-wrapper">
+    {{ image_thumbnails }}
+  </div>
+
+  {{ product_gallery_arrows }}
+</swiper-slider>

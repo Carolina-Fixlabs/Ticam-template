@@ -1,0 +1,46 @@
+{
+  "name": "Footer menu 2",
+  "icon": "square-2",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-customization/#footer-menu-2).",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "column_width": {
+      "name": "Column space",
+      "type": "select",
+      "default": "auto",
+      "options": [
+        {
+          "label": "Auto",
+          "value": "auto"
+        },
+        {
+          "label": "Half width",
+          "value": "half"
+        },
+        {
+          "label": "Full width",
+          "value": "full"
+        }
+      ]
+    },
+    "title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Information"
+    }
+  },
+  "traits": [
+    {
+      "type": "menu_links",
+      "menus": [
+        "footer_2"
+      ]
+    }
+  ],
+  "mode": "subcomponents",
+  "properties": {}
+}

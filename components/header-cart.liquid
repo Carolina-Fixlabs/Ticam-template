@@ -1,0 +1,65 @@
+{% assign sidebar_actions = header-cart.options.actions %}
+
+{% capture sidebar_button_checkout %}
+  <a
+    href="{{ order.checkout_url }}"
+    class="button button--style {% if sidebar_actions == 'cart' %}button--secondary button--bordered{% else %}button--main{% endif %} button--full sidebar-actions__button checkout-link"
+    title="{% t 'Proceed to Checkout' %}"
+  >
+    {%- t 'Proceed to Checkout' -%}
+  </a>
+{% endcapture %}
+
+{% capture sidebar_button_cart %}
+  <a
+    href="{{ order.url }}"
+    class="button button--style {% if sidebar_actions == 'checkout' %}button--secondary button--bordered{% else %}button--main{% endif %} button--full sidebar-actions__button"
+    title="{% t 'Go to Cart' %}"
+  >
+    {%- t "Go to Cart" -%}
+  </a>
+{% endcapture %}
+
+<div
+  class="offcanvas offcanvas-end sidebar{% if order.products_count > 0 %} has-items{% endif %}"
+  tabindex="-1"
+  id="sidebar-cart"
+  aria-labelledby="sidebar-cart-title"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {{ header-cart.attributes }}
+>
+  <div class="offcanvas-header sidebar-header">
+    <h5 class="offcanvas-title sidebar-header__title" id="sidebar-cart-title">
+      {% if header-cart.options.icon %}
+        <i class="theme-icon ph {{ options.theme_icon_cart }} sidebar-header__icon"></i>
+      {% endif %}
+      {% t "Order summary" %}
+    </h5>
+    <button type="button" class="button sidebar-header__close" data-bs-dismiss="offcanvas" aria-label="{% t 'Close' %}"><i class="ph ph-x"></i></button>
+  </div>
+
+  <cart-area class="offcanvas-body sidebar-body position-relative">
+    <div class="loading-spinner__wrapper">
+      <div class="loading-spinner"></div>
+    </div>
+    <div class="sidebar-body__text sidebar-body__text--empty">{% t "Your cart is currently empty." %}</div>
+    <div class="row sidebar-body__content cart-area__content">
+      {% for prod in order.products %}
+        {% render 'store_product', prod: prod, prod_type: 'normal' %}
+      {% endfor %}
+    </div>
+    {% render 'store_totals' %}
+  </cart-area>
+
+  <div class="sidebar-actions">
+    <div class="sidebar-actions__text check-empty" {{ header-cart.attributes.textfield.actions_text }}>{{ header-cart.options.actions_text | newline_to_br }}</div>
+    {% if sidebar_actions == 'checkout' %}
+      {{ sidebar_button_checkout }}
+      {{ sidebar_button_cart }}
+    {% elsif sidebar_actions == 'cart' %}
+      {{ sidebar_button_cart }}
+      {{ sidebar_button_checkout }}
+    {% endif %}
+  </div>
+  <!-- end .sidebar-actions -->
+</div>

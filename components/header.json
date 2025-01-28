@@ -1,0 +1,252 @@
+{
+  "name": "Header",
+  "icon": "",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-customization/#header).",
+  "max_usage": 1,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "home",
+    "product",
+    "category",
+    "page",
+    "searchresults",
+    "contactpage",
+    "error",
+    "customer__account",
+    "customer__address",
+    "customer__details",
+    "customer__login",
+    "customer__reset_password"
+  ],
+  "options": {
+    "version": {
+      "name": "Header Version",
+      "type": "select",
+      "help": "Choose the version of the 'Header' you would like to use on your theme.",
+      "default": "v2",
+      "options": [
+        {
+          "label": "Classic",
+          "value": "v1"
+        },
+        {
+          "label": "Retail",
+          "value": "v2"
+        },
+        {
+          "label": "Compact",
+          "value": "v3"
+        },
+        {
+          "label": "Prime",
+          "value": "v4"
+        }
+      ]
+    },
+    "width": {
+      "name": "Width",
+      "type": "select",
+      "help": "When choosing **Default**, the option defined at **Theme settings > Design > Theme styles > Maximum container width** will be applied.",
+      "default": "default",
+      "options": [
+        {
+          "label": "Default",
+          "value": "default"
+        },
+        {
+          "label": "Small",
+          "value": "1320px"
+        },
+        {
+          "label": "Medium",
+          "value": "1620px"
+        },
+        {
+          "label": "Large",
+          "value": "1920px"
+        },
+        {
+          "label": "Extra Large",
+          "value": "2220px"
+        },
+        {
+          "label": "Full width",
+          "value": "100%"
+        }
+      ]
+    },
+    "fixed": {
+      "name": "Fixed header",
+      "type": "checkbox",
+      "default": true
+    },
+    "border": {
+      "name": "Show bottom border",
+      "type": "checkbox",
+      "help": "Allows to display a border at the bottom of the Header to create a division with the content below.",
+      "default": true
+    },
+    "categories": {
+      "name": "Show Categories menu",
+      "type": "checkbox",
+      "help": "Allows to display a secondary menu that displays items from the 'Categories Menu', within the Navigation settings.",
+      "default": true
+    },
+    "categories_display": {
+      "name": "Categories menu display",
+      "type": "select",
+      "help": "Allows to choose in which devices the menu will be displayed.",
+      "default": "both",
+      "options": [
+        {
+          "label": "Both desktop and mobile",
+          "value": "both"
+        },
+        {
+          "label": "Only on desktop",
+          "value": "desktop"
+        },
+        {
+          "label": "Only on mobile",
+          "value": "mobile"
+        }
+      ]
+    },
+    "categories_title": {
+      "name": "Categories menu title",
+      "type": "input",
+      "default": "Categories"
+    },
+    "categories_icon": {
+      "name": "Categories menu icon",
+      "type": "ph_icon",
+      "help": "Allows to choose an icon for the menu item.",
+      "default": "ph ph-list-bullets"
+    },
+    "group_logo": {
+      "name": "Logo options",
+      "type": "heading",
+      "default": false
+    },
+    "logo": {
+      "name": "Logo",
+      "type": "image"
+    },
+    "logo_mobile": {
+      "name": "Logo (mobile)",
+      "type": "image"
+    },
+    "logo_height": {
+      "name": "Logo height (desktop)",
+      "type": "slider",
+      "default": 50,
+      "min": 10,
+      "max": 120,
+      "step": 1,
+      "unit": "px"
+    },
+    "logo_height_mobile": {
+      "name": "Logo height (mobile)",
+      "type": "slider",
+      "default": 40,
+      "min": 10,
+      "max": 120,
+      "step": 1,
+      "unit": "px"
+    },
+    "group_appearance": {
+      "name": "Appearance",
+      "type": "heading",
+      "default": false
+    },
+    "items_uppercase": {
+      "name": "First level menu items in All caps",
+      "type": "checkbox",
+      "default": true
+    },
+    "weight": {
+      "name": "Header items font weight",
+      "type": "slider",
+      "help": "Allows to define the weight of all the visible items in the Header.",
+      "default": 600,
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "unit": ""
+    },
+    "actions_position": {
+      "name": "Header actions display",
+      "type": "select",
+      "help": "Select the position where the Languages and Currencies dropdown menus will appear. Note: These dropdown menus will only be displayed if more than one language or currency is available.",
+      "default": "top-bar",
+      "options": [
+        {
+          "label": "Logo area",
+          "value": "logo-area"
+        },
+        {
+          "label": "Top bar",
+          "value": "top-bar"
+        }
+      ]
+    },
+    "show_social": {
+      "name": "Show social networks links",
+      "type": "checkbox",
+      "help": "Allows to define if social networks links will be displayed or not.",
+      "default": true
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    }
+  },
+  "traits": [
+    {
+      "type": "menu_links",
+      "menus": [
+        "main",
+        "category"
+      ]
+    }
+  ],
+  "nesting": {
+    "categories": [
+      "categories_display",
+      "categories_title",
+      "categories_icon"
+    ],
+    "group_logo": [
+      "logo",
+      "logo_mobile",
+      "logo_height",
+      "logo_height_mobile"
+    ],
+    "group_appearance": [
+      "items_uppercase",
+      "weight",
+      "actions_position",
+      "show_social",
+      "bundle_color"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {
+    "top-bar": {
+      "type": "top-bar",
+      "multiple": false
+    },
+    "header-cart": {
+      "type": "header-cart",
+      "multiple": false
+    },
+    "header-desktop": {
+      "type": "header-desktop",
+      "multiple": false
+    }
+  }
+}

@@ -1,0 +1,2876 @@
+{
+  "header": {
+    "type": "header",
+    "placement": "top",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "version": "v2",
+      "width": "default",
+      "fixed": true,
+      "border": true,
+      "categories": true,
+      "categories_display": "both",
+      "categories_title": "Categorías",
+      "categories_icon": "ph ph-list-bullets",
+      "logo": {
+        "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/a3474970b94225ba4792/ticam.png",
+        "alt": ""
+      },
+      "logo_mobile": {
+        "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/cf73d19b7cc5e7321cb9/ticam.png",
+        "alt": ""
+      },
+      "logo_height": 61,
+      "logo_height_mobile": 41,
+      "items_uppercase": true,
+      "weight": 600,
+      "actions_position": "top-bar",
+      "show_social": true,
+      "bundle_color": "default"
+    },
+    "children": [
+      {
+        "property": "header-desktop",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "width": "full",
+          "border": true,
+          "spacing": false,
+          "alignment": "start",
+          "custom_bundle_color": true,
+          "bundle_color": "default",
+          "event": "hover",
+          "submenu": "megamenu"
+        },
+        "children": []
+      },
+      {
+        "property": "header-cart",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": true,
+          "actions": "checkout",
+          "actions_text": "Los costos de envío serán calculados al momento de pagar."
+        },
+        "children": []
+      },
+      {
+        "property": "top-bar",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "width": "grid",
+          "fixed": true,
+          "autoplay": true,
+          "autoplay_speed": 5000,
+          "bundle_color": "bundle-faa7dc036b957"
+        },
+        "children": [
+          {
+            "property": "top-bar-slides",
+            "identifier": "",
+            "visibility": true,
+            "options": {
+              "icon": "",
+              "text": "Especialista en equipos de vigilancia",
+              "link": "/",
+              "link_text": "",
+              "link_external": false
+            },
+            "children": []
+          },
+          {
+            "property": "top-bar-slides",
+            "identifier": "",
+            "visibility": true,
+            "options": {
+              "icon": "",
+              "text": "Lunes a Viernes: 09:00 a 18:00 hrs\nSábado: 09:00 a 14:00 hrs\n",
+              "link": null,
+              "link_text": "Leer más",
+              "link_external": false
+            },
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "type": "footer",
+    "placement": "bottom",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "width": "default",
+      "align_desktop": "text-md-start",
+      "align_mobile": "text-start",
+      "payment_methods": true,
+      "bank_transfer_payment": true,
+      "store_payments": false,
+      "store_payments_options": false,
+      "partners": [],
+      "titles_uppercase": true,
+      "titles_underline": true,
+      "bundle_color": "system-1"
+    },
+    "children": [
+      {
+        "property": "footer-about",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "column_width": "auto",
+          "logo": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/a1f370a790a5194a3671/Logo_TICAM_blanco1.png",
+            "alt": ""
+          },
+          "logo_height": 50,
+          "description": "Somos parte de un grupo de empresas con más de 15 años de experiencia en el desarrollo de tecnologías vinculadas al monitoreo y seguridad para entornos productivos.",
+          "social": false
+        },
+        "children": []
+      },
+      {
+        "property": "footer-menu-1",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "column_width": "auto",
+          "title": "NOSOTROS"
+        },
+        "children": []
+      },
+      {
+        "property": "footer-menu-2",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "column_width": "auto",
+          "title": "Información"
+        },
+        "children": []
+      },
+      {
+        "property": "footer-contact-information",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "column_width": "auto",
+          "title": "Contáctanos",
+          "show_email": true,
+          "email_type": "contact",
+          "show_whatsapp": false,
+          "show_phone": true,
+          "show_address": true
+        },
+        "children": []
+      }
+    ]
+  },
+  "slider": {
+    "type": "slider",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "content_type": "content",
+      "width": "1320px",
+      "height": "small",
+      "autoplay": true,
+      "autoplay_speed": 5500,
+      "show_arrows": true,
+      "show_arrows_hover": false,
+      "show_dots": true,
+      "margin_top": 24,
+      "margin_bottom": 0,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": [
+      {
+        "property": "slides",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/f59a25ff8dc7e6fe6f35/banner.jpg",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "link": "quienes-somos",
+          "link_text": "Conócenos",
+          "link_external": false,
+          "link_button": true,
+          "link_outline": false,
+          "link_arrow": true,
+          "subtitle": "Energía solar y tecnología a tu servicio",
+          "title": "Reseller oficial dahua para el sur de chile",
+          "description": "",
+          "align_desktop": "text-md-center",
+          "align_mobile": "text-center",
+          "position_x": "center",
+          "position_y_desktop": "center",
+          "position_y_mobile": "center",
+          "image_overlay": 40,
+          "position_image_x": "center",
+          "position_image_y": "center",
+          "bundle_color": "bundle-3b446397523f3"
+        },
+        "children": []
+      },
+      {
+        "property": "slides",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/fdaf43d1e3ae8124db55/sliderr%202.jpg",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "link": "equipos-de-respaldo-y-regulacion/ups",
+          "link_text": "Explorar Productos",
+          "link_external": false,
+          "link_button": true,
+          "link_outline": false,
+          "link_arrow": true,
+          "subtitle": "Bienvenido a Ticam",
+          "title": "Innovación al servicio de tu hogar y empresa",
+          "description": "Explora nuestra selección de soluciones tecnológicas en energía solar y monitoreo, diseñadas para transformar tu espacio.",
+          "align_desktop": "text-md-center",
+          "align_mobile": "text-center",
+          "position_x": "center",
+          "position_y_desktop": "center",
+          "position_y_mobile": "center",
+          "image_overlay": 30,
+          "position_image_x": "center",
+          "position_image_y": "center",
+          "bundle_color": "bundle-3b446397523f3"
+        },
+        "children": []
+      },
+      {
+        "property": "slides",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/5b1961bc76e79af56429/slide33.jpg",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "link": "/",
+          "link_text": "Energía Solar",
+          "link_external": false,
+          "link_button": true,
+          "link_outline": false,
+          "link_arrow": true,
+          "subtitle": "Sostenibilidad, Innovación, Calidad y Seguridad",
+          "title": "En Ticam, creemos en un futuro más sustentable.",
+          "description": "Nuestras soluciones combinan tecnología avanzada y compromiso con el medio ambiente.",
+          "align_desktop": "text-md-center",
+          "align_mobile": "text-center",
+          "position_x": "center",
+          "position_y_desktop": "center",
+          "position_y_mobile": "center",
+          "image_overlay": 20,
+          "position_image_x": "center",
+          "position_image_y": "center",
+          "bundle_color": "bundle-3b446397523f3"
+        },
+        "children": []
+      }
+    ]
+  },
+  "trust-bar": {
+    "type": "trust-bar",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "display": "carousel",
+      "columns_desktop": "4",
+      "columns_mobile": "2",
+      "alignment": "start",
+      "enable_icons": true,
+      "card": false,
+      "card_border": true,
+      "card_border_opacity": 10,
+      "card_bundle_color": "system-1",
+      "autoplay": true,
+      "autoplay_speed": 3000,
+      "show_arrows": false,
+      "show_arrows_hover": false,
+      "show_dots": false,
+      "margin_top": 32,
+      "margin_bottom": 32,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": [
+      {
+        "property": "trust-blocks",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-shopping-bag-open",
+          "title": "Cotiza Online",
+          "text": "Experiencia de compra inigualable/ Confianza / Rapidez",
+          "link": null,
+          "link_text": "Leer más",
+          "link_arrow": true,
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "trust-blocks",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-storefront",
+          "title": "Envíos y retiros en Tienda",
+          "text": "Envíos sur de Chile / Delivery zona urbana Puerto Montt/ Retiro en Tienda",
+          "link": null,
+          "link_text": "Leer más",
+          "link_arrow": true,
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "trust-blocks",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-truck",
+          "title": "Compra por encargo",
+          "text": "Servicio especial para empresas e instaladores/ Soporte técnico a la compra / Rapidez",
+          "link": null,
+          "link_text": "Leer más",
+          "link_arrow": true,
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "trust-blocks",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-lock",
+          "title": "Technical showroom",
+          "text": "Exhibición de productos/ estacionamiento seguro sin costo y congestiones / Agenda visita",
+          "link": null,
+          "link_text": "",
+          "link_arrow": true,
+          "link_external": false
+        },
+        "children": []
+      }
+    ]
+  },
+  "product-template": {
+    "type": "product-template",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "content_alignment": "start",
+      "gallery_image_format": true,
+      "gallery_image_dimension": "square",
+      "gallery_image_display": "thumb",
+      "gallery_image_size": 719,
+      "gallery_thumbs": true,
+      "gallery_thumbs_position": "bottom",
+      "gallery_zoom": false,
+      "gallery_zoom_size": 2,
+      "sticky_product_image": true,
+      "margin_top": 40,
+      "margin_bottom": 32,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": [
+      {
+        "property": "title",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "mobile_first": true,
+          "uppercase": false
+        },
+        "children": []
+      },
+      {
+        "property": "price",
+        "identifier": "",
+        "visibility": false,
+        "options": {
+          "mobile_first": false,
+          "display": "horizontal",
+          "show_discount_badge": true,
+          "show_discount_message": true
+        },
+        "children": []
+      },
+      {
+        "property": "reviews-stars",
+        "identifier": "",
+        "visibility": false,
+        "options": {},
+        "children": []
+      },
+      {
+        "property": "stock",
+        "identifier": "",
+        "visibility": false,
+        "options": {},
+        "children": []
+      },
+      {
+        "property": "form",
+        "identifier": "",
+        "visibility": true,
+        "options": {},
+        "children": []
+      },
+      {
+        "property": "description",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "title": "Descripción",
+          "collapse": true,
+          "collapse_threshold": 160
+        },
+        "children": []
+      },
+      {
+        "property": "wishlist",
+        "identifier": "",
+        "visibility": true,
+        "options": {},
+        "children": []
+      },
+      {
+        "property": "stock-locations",
+        "identifier": "",
+        "visibility": false,
+        "options": {
+          "title": "Encuentra tu tienda preferida",
+          "button_icon": "ph ph-storefront",
+          "button_text": "Mostrar stock de ubicaciones"
+        },
+        "children": []
+      },
+      {
+        "property": "attributes",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "mobile_first": true,
+          "show_sku": true,
+          "show_sku_text": true,
+          "show_brand": true
+        },
+        "children": []
+      },
+      {
+        "property": "share",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "title": "Compartir este producto",
+          "show_facebook": true,
+          "show_twitter": true,
+          "show_whatsapp": true,
+          "show_pinterest": true,
+          "show_email": false,
+          "show_clipboard": true
+        },
+        "children": []
+      },
+      {
+        "property": "attachments",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "title": "Ficha Técnica"
+        },
+        "children": []
+      },
+      {
+        "property": "fields",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "title": "Detalles",
+          "display": "table"
+        },
+        "children": []
+      }
+    ]
+  },
+  "product-reviews": {
+    "type": "product-reviews",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "display": "grid",
+      "limit": 6,
+      "columns_desktop": "3",
+      "alignment": "start",
+      "name_filter": "full_name",
+      "autoplay": false,
+      "autoplay_speed": 4000,
+      "show_arrows": true,
+      "show_arrows_hover": false,
+      "show_dots": true,
+      "review_card": true,
+      "review_card_border": true,
+      "review_card_border_opacity": 10,
+      "review_card_bundle_color": "default",
+      "heading_subtitle": "",
+      "heading_title": "Reseñas de Productos",
+      "heading_description": "",
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "system-2",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "recommended-products": {
+    "type": "recommended-products",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "limit": 12,
+      "display": "carousel",
+      "heading": true,
+      "heading_subtitle": "",
+      "heading_title": "También podría interesarte uno de estos",
+      "heading_description": "",
+      "heading_link": null,
+      "heading_link_text": "Ver más productos",
+      "autoplay": false,
+      "autoplay_speed": 4000,
+      "show_arrows": true,
+      "show_arrows_hover": false,
+      "show_dots": true,
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": false,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "category-heading": {
+    "type": "category-heading",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "description": true,
+      "background_image": false,
+      "background_image_overlay": 50,
+      "margin_top": 32,
+      "margin_bottom": 0,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "template-image": {
+    "type": "template-image",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "width": "grid",
+      "position_x": "center",
+      "margin_top": 32,
+      "margin_bottom": 32,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "product-feed": {
+    "type": "product-feed",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "limit": 40,
+      "margin_top": 16,
+      "margin_bottom": 32,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "category-brands-template": {
+    "type": "category-brands-template",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "columns_desktop": 4,
+      "show_image": true,
+      "image_dimension": "square",
+      "image_display": "thumb",
+      "link_button": true,
+      "link_text": "Ir a",
+      "link_outline": false,
+      "link_arrow": true,
+      "alignment": "start",
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "category-subcategories-template": {
+    "type": "category-subcategories-template",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "limit": 12,
+      "display": "carousel",
+      "heading_description": true,
+      "heading_link": true,
+      "heading_link_text": "Ver más productos",
+      "autoplay": false,
+      "autoplay_speed": 4000,
+      "show_arrows": true,
+      "show_arrows_hover": false,
+      "show_dots": true,
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "template-heading": {
+    "type": "template-heading",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": false,
+    "options": {
+      "width": "grid",
+      "position_x": "center",
+      "show_date": false,
+      "show_description": false,
+      "description": "",
+      "background_image": false,
+      "background_image_overlay": 50,
+      "margin_top": 32,
+      "margin_bottom": 0,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "page-body": {
+    "type": "page-body",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "width": "grid",
+      "alignment": "text-start",
+      "position_x": "center",
+      "margin_top": 32,
+      "margin_bottom": 32,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "page-blog-template": {
+    "type": "page-blog-template",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "page_category": "Post",
+      "limit": 40,
+      "columns_desktop": "3",
+      "columns_mobile": "2",
+      "width": "grid",
+      "position_x": "center",
+      "margin_top": 0,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "page-body(2)": {
+    "type": "page-body",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "width": "medium",
+      "alignment": "text-start",
+      "position_x": "center",
+      "margin_top": 32,
+      "margin_bottom": 32,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "line-divider": {
+    "type": "line-divider",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "width": "default",
+      "spacing": false,
+      "thickness": 1,
+      "opacity": 20,
+      "margin_top": 16,
+      "margin_bottom": 16,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "page-share": {
+    "type": "page-share",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "alignment": "center",
+      "title": "Comparte este artículo",
+      "show_facebook": true,
+      "show_twitter": true,
+      "show_whatsapp": true,
+      "show_pinterest": true,
+      "show_email": false,
+      "show_clipboard": true,
+      "margin_top": 32,
+      "margin_bottom": 40,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "contact-form": {
+    "type": "contact-form",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "heading": true,
+      "heading_subtitle": "",
+      "heading_title": "Mándanos un mensaje",
+      "heading_description": "Llena todos los campos y envía tu mensaje. Te responderemos a la brevedad posible.",
+      "heading_link": null,
+      "heading_link_text": "Leer más",
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "contact-map": {
+    "type": "contact-map",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "heading": true,
+      "heading_subtitle": "",
+      "heading_title": "Visítanos",
+      "heading_description": "",
+      "heading_link": null,
+      "heading_link_text": "Leer más",
+      "map_width": "grid",
+      "map_position": "center",
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "cart-products": {
+    "type": "cart-products",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "title": "Tus productos",
+      "margin_top": 0,
+      "margin_bottom": 0
+    },
+    "children": []
+  },
+  "cart-cross-selling": {
+    "type": "cart-cross-selling",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "title": "También podría interesarte uno de estos",
+      "margin_top": 0,
+      "margin_bottom": 0
+    },
+    "children": []
+  },
+  "checkout-form": {
+    "type": "checkout-form",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "margin_top": 0,
+      "margin_bottom": 0
+    },
+    "children": []
+  },
+  "customer-heading": {
+    "type": "customer-heading",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "margin_top": 40,
+      "margin_bottom": 24,
+      "bundle_color": "default"
+    },
+    "children": []
+  },
+  "customer-tabs": {
+    "type": "customer-tabs",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "margin_top": 16,
+      "margin_bottom": 40,
+      "bundle_color": "default"
+    },
+    "children": [
+      {
+        "property": "orders",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-list-bullets",
+          "title": "Pedidos"
+        },
+        "children": []
+      },
+      {
+        "property": "details",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-info",
+          "title": "Detalles"
+        },
+        "children": []
+      },
+      {
+        "property": "wishlist",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-heart",
+          "title": "Lista de favoritos"
+        },
+        "children": []
+      }
+    ]
+  },
+  "customer-login": {
+    "type": "customer-login",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "columns": "left",
+      "columns_mobile": false,
+      "register_text": "Al registrarte, podrás agilizar tu proceso de compra. Edita tus datos, añade varias direcciones, revisa y realiza un seguimiento de tus pedidos, y mucho más.",
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default"
+    },
+    "children": []
+  },
+  "accordion": {
+    "type": "accordion",
+    "model": true,
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "enable_width": false,
+      "width": "large",
+      "alignment": "center",
+      "collapse": true,
+      "first": false,
+      "heading": true,
+      "heading_subtitle": "",
+      "heading_title": "Título de la Sección",
+      "heading_description": "Puedes agregar un texto o una descripción para proporcionar más contexto sobre lo que trata esta sección.",
+      "heading_link": null,
+      "heading_link_text": "Leer más",
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": [
+      {
+        "property": "items",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "title": "Título de ejemplo de ítem de acordeón",
+          "content": "Aquí se muestra el texto, descripción o contenido para cada ítem de acordeón que agregues.",
+          "image": {
+            "url": "",
+            "alt": ""
+          },
+          "size": 50,
+          "image_position": "after"
+        },
+        "children": []
+      },
+      {
+        "property": "items",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "title": "Título de ejemplo de ítem de acordeón",
+          "content": "Aquí se muestra el texto, descripción o contenido para cada ítem de acordeón que agregues.",
+          "image": {
+            "url": "",
+            "alt": ""
+          },
+          "size": 50,
+          "image_position": "after"
+        },
+        "children": []
+      },
+      {
+        "property": "items",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "title": "Título de ejemplo de ítem de acordeón",
+          "content": "Aquí se muestra el texto, descripción o contenido para cada ítem de acordeón que agregues.",
+          "image": {
+            "url": "",
+            "alt": ""
+          },
+          "size": 50,
+          "image_position": "after"
+        },
+        "children": []
+      }
+    ]
+  },
+  "banners": {
+    "type": "banners",
+    "model": true,
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "display": "carousel",
+      "content_type": "content",
+      "ratio": "rectangular",
+      "columns_desktop": "3",
+      "columns_mobile": "2",
+      "heading": false,
+      "heading_subtitle": "",
+      "heading_title": "Título de la Sección",
+      "heading_description": "",
+      "heading_link": null,
+      "heading_link_text": "Leer más",
+      "autoplay": true,
+      "autoplay_speed": 4000,
+      "show_arrows": true,
+      "show_arrows_hover": false,
+      "show_dots": true,
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": [
+      {
+        "property": "banners",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image_desktop": {
+            "url": "",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "link": null,
+          "link_text": "Leer más",
+          "link_external": false,
+          "link_button": true,
+          "link_outline": false,
+          "link_arrow": true,
+          "subtitle": "",
+          "title": "Agrega tus banners",
+          "position_x": "center",
+          "position_y": "center",
+          "image_overlay": 50,
+          "position_image_x": "center",
+          "position_image_y": "center",
+          "bundle_color": "system-1"
+        },
+        "children": []
+      },
+      {
+        "property": "banners",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image_desktop": {
+            "url": "",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "link": null,
+          "link_text": "Leer más",
+          "link_external": false,
+          "link_button": true,
+          "link_outline": false,
+          "link_arrow": true,
+          "subtitle": "",
+          "title": "Agrega tus banners",
+          "position_x": "center",
+          "position_y": "center",
+          "image_overlay": 50,
+          "position_image_x": "center",
+          "position_image_y": "center",
+          "bundle_color": "system-1"
+        },
+        "children": []
+      },
+      {
+        "property": "banners",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image_desktop": {
+            "url": "",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "link": null,
+          "link_text": "Leer más",
+          "link_external": false,
+          "link_button": true,
+          "link_outline": false,
+          "link_arrow": true,
+          "subtitle": "",
+          "title": "Agrega tus banners",
+          "position_x": "center",
+          "position_y": "center",
+          "image_overlay": 50,
+          "position_image_x": "center",
+          "position_image_y": "center",
+          "bundle_color": "system-1"
+        },
+        "children": []
+      },
+      {
+        "property": "banners",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image_desktop": {
+            "url": "",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "link": null,
+          "link_text": "Leer más",
+          "link_external": false,
+          "link_button": true,
+          "link_outline": false,
+          "link_arrow": true,
+          "subtitle": "",
+          "title": "Agrega tus banners",
+          "position_x": "center",
+          "position_y": "center",
+          "image_overlay": 50,
+          "position_image_x": "center",
+          "position_image_y": "center",
+          "bundle_color": "system-1"
+        },
+        "children": []
+      }
+    ]
+  },
+  "logo-gallery": {
+    "type": "logo-gallery",
+    "model": true,
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "display": "carousel",
+      "columns_desktop": 6,
+      "columns_mobile": "2",
+      "image_dimension": "square",
+      "image_display": "thumb",
+      "heading": true,
+      "heading_subtitle": "",
+      "heading_title": "Nuestras marcas",
+      "heading_description": "",
+      "heading_link": null,
+      "heading_link_text": "Leer más",
+      "autoplay": false,
+      "autoplay_speed": 4000,
+      "show_arrows": true,
+      "show_arrows_hover": false,
+      "show_dots": true,
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": [
+      {
+        "property": "logos",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image": {
+            "url": "",
+            "alt": ""
+          },
+          "link": null,
+          "link_text": "Ver más",
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "logos",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image": {
+            "url": "",
+            "alt": ""
+          },
+          "link": null,
+          "link_text": "Ver más",
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "logos",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image": {
+            "url": "",
+            "alt": ""
+          },
+          "link": null,
+          "link_text": "Ver más",
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "logos",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image": {
+            "url": "",
+            "alt": ""
+          },
+          "link": null,
+          "link_text": "Ver más",
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "logos",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image": {
+            "url": "",
+            "alt": ""
+          },
+          "link": null,
+          "link_text": "Ver más",
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "logos",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image": {
+            "url": "",
+            "alt": ""
+          },
+          "link": null,
+          "link_text": "Ver más",
+          "link_external": false
+        },
+        "children": []
+      }
+    ]
+  },
+  "slider(2)": {
+    "type": "slider",
+    "model": true,
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "content_type": "content",
+      "width": "1320px",
+      "height": "medium",
+      "autoplay": true,
+      "autoplay_speed": 3000,
+      "show_arrows": true,
+      "show_arrows_hover": false,
+      "show_dots": true,
+      "margin_top": 0,
+      "margin_bottom": 0,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": [
+      {
+        "property": "slides",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image_desktop": {
+            "url": "",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "link": "/",
+          "link_text": "ir a la colección",
+          "link_external": false,
+          "link_button": true,
+          "link_outline": false,
+          "link_arrow": true,
+          "subtitle": "",
+          "title": "Bienvenidos",
+          "description": "",
+          "align_desktop": "text-md-center",
+          "align_mobile": "text-center",
+          "position_x": "center",
+          "position_y_desktop": "center",
+          "position_y_mobile": "center",
+          "image_overlay": 50,
+          "position_image_x": "center",
+          "position_image_y": "center",
+          "bundle_color": "system-1"
+        },
+        "children": []
+      },
+      {
+        "property": "slides",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image_desktop": {
+            "url": "",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "link": "/",
+          "link_text": "ir a la colección",
+          "link_external": false,
+          "link_button": true,
+          "link_outline": false,
+          "link_arrow": true,
+          "subtitle": "",
+          "title": "Nuevo diseño",
+          "description": "",
+          "align_desktop": "text-md-center",
+          "align_mobile": "text-center",
+          "position_x": "start",
+          "position_y_desktop": "center",
+          "position_y_mobile": "center",
+          "image_overlay": 50,
+          "position_image_x": "center",
+          "position_image_y": "center",
+          "bundle_color": "system-1"
+        },
+        "children": []
+      },
+      {
+        "property": "slides",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image_desktop": {
+            "url": "",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "link": "/",
+          "link_text": "ir a la colección",
+          "link_external": false,
+          "link_button": true,
+          "link_outline": false,
+          "link_arrow": true,
+          "subtitle": "",
+          "title": "Título del Slide",
+          "description": "",
+          "align_desktop": "text-md-center",
+          "align_mobile": "text-center",
+          "position_x": "end",
+          "position_y_desktop": "center",
+          "position_y_mobile": "center",
+          "image_overlay": 50,
+          "position_image_x": "center",
+          "position_image_y": "center",
+          "bundle_color": "system-1"
+        },
+        "children": []
+      }
+    ]
+  },
+  "testimonials": {
+    "type": "testimonials",
+    "model": true,
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "display": "carousel",
+      "alignment": "center",
+      "columns_desktop": "2",
+      "columns_mobile": "2",
+      "heading": true,
+      "heading_subtitle": "",
+      "heading_title": "Testimonios",
+      "heading_description": "",
+      "heading_link": null,
+      "heading_link_text": "Ver más testimonios",
+      "icons": true,
+      "avatar_image_size": "small",
+      "avatar_shape": "circle",
+      "testimony_card": true,
+      "testimony_card_border": true,
+      "testimony_card_border_opacity": 10,
+      "testimony_card_bundle_color": "default",
+      "autoplay": false,
+      "autoplay_speed": 4000,
+      "show_arrows": true,
+      "show_arrows_hover": false,
+      "show_dots": true,
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": [
+      {
+        "property": "testimonies",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "quote": "Aquí puedes agregar el testimonio que cada cliente entregó sobre tu tienda para aumentar el reconocimiento de tu marca.",
+          "author": "Nombre del autor",
+          "image": {
+            "url": "",
+            "alt": ""
+          }
+        },
+        "children": []
+      },
+      {
+        "property": "testimonies",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "quote": "Aquí puedes agregar el testimonio que cada cliente entregó sobre tu tienda para aumentar el reconocimiento de tu marca.",
+          "author": "Nombre del autor",
+          "image": {
+            "url": "",
+            "alt": ""
+          }
+        },
+        "children": []
+      },
+      {
+        "property": "testimonies",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "quote": "Aquí puedes agregar el testimonio que cada cliente entregó sobre tu tienda para aumentar el reconocimiento de tu marca.",
+          "author": "Nombre del autor",
+          "image": {
+            "url": "",
+            "alt": ""
+          }
+        },
+        "children": []
+      },
+      {
+        "property": "testimonies",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "quote": "Aquí puedes agregar el testimonio que cada cliente entregó sobre tu tienda para aumentar el reconocimiento de tu marca.",
+          "author": "Nombre del autor",
+          "image": {
+            "url": "",
+            "alt": ""
+          }
+        },
+        "children": []
+      }
+    ]
+  },
+  "trust-bar(2)": {
+    "type": "trust-bar",
+    "model": true,
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "display": "carousel",
+      "columns_desktop": "4",
+      "columns_mobile": "2",
+      "alignment": "start",
+      "enable_icons": true,
+      "card": false,
+      "card_border": true,
+      "card_border_opacity": 10,
+      "card_bundle_color": "system-1",
+      "autoplay": true,
+      "autoplay_speed": 3000,
+      "show_arrows": false,
+      "show_arrows_hover": false,
+      "show_dots": false,
+      "margin_top": 32,
+      "margin_bottom": 32,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": [
+      {
+        "property": "trust-blocks",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-truck",
+          "title": "Envío gratis",
+          "text": "Envío gratuito para compras superiores a $50",
+          "link": null,
+          "link_text": "Leer más",
+          "link_arrow": true,
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "trust-blocks",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-credit-card",
+          "title": "Pagos Seguros",
+          "text": "Pagos seguros y protegidos",
+          "link": null,
+          "link_text": "Leer más",
+          "link_arrow": true,
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "trust-blocks",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-storefront",
+          "title": "Abierto 24 horas",
+          "text": "Nuestra tienda está abierta las 24 horas y los 7 días de la semana",
+          "link": null,
+          "link_text": "Leer más",
+          "link_arrow": true,
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "trust-blocks",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-headset",
+          "title": "Soporte al cliente",
+          "text": "¡Alta satisfacción y bajo tiempo de respuesta!",
+          "link": "/contact",
+          "link_text": "Contáctanos",
+          "link_arrow": true,
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "trust-blocks",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-seal-check",
+          "title": "Calidad de productos garantizada",
+          "text": "Todos nuestros productos han sido testeados y certificados con altos estándares de calidad.",
+          "link": null,
+          "link_text": "Leer más",
+          "link_arrow": true,
+          "link_external": false
+        },
+        "children": []
+      }
+    ]
+  },
+  "product-tabs": {
+    "type": "product-tabs",
+    "model": true,
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "width": "full",
+      "position_x": "center",
+      "margin_top": 32,
+      "margin_bottom": 32,
+      "bundle_color": "system-2",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": [
+      {
+        "property": "description",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "title": "Descripción",
+          "collapse": false,
+          "collapse_threshold": 160
+        },
+        "children": []
+      },
+      {
+        "property": "fields",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "title": "Detalles",
+          "display": "table"
+        },
+        "children": []
+      },
+      {
+        "property": "attachments",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "title": "Archivos"
+        },
+        "children": []
+      }
+    ]
+  },
+  "categories": {
+    "type": "categories",
+    "model": true,
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "display": "carousel",
+      "columns_desktop": 3,
+      "columns_mobile": "2",
+      "content_position": "over",
+      "align_desktop": "text-md-start",
+      "align_mobile": "text-start",
+      "ratio": "square",
+      "heading": true,
+      "heading_subtitle": "",
+      "heading_title": "Título de la Sección",
+      "heading_description": "",
+      "heading_link": null,
+      "heading_link_text": "Leer más",
+      "autoplay": true,
+      "autoplay_speed": 4000,
+      "show_arrows": true,
+      "show_arrows_hover": false,
+      "show_dots": true,
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": [
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": null,
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 50,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "system-1"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": null,
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 50,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "system-1"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": null,
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 50,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "system-1"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": null,
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 50,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "system-1"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": null,
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 50,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "system-1"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": null,
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 50,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "system-1"
+        },
+        "children": []
+      }
+    ]
+  },
+  "featured-products": {
+    "type": "featured-products",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "limit": 12,
+      "display": "carousel",
+      "heading": true,
+      "heading_subtitle": "",
+      "heading_title": "Productos Destacados",
+      "heading_description": "",
+      "heading_link": null,
+      "heading_link_text": "Ver más productos",
+      "autoplay": false,
+      "autoplay_speed": 4000,
+      "show_arrows": true,
+      "show_arrows_hover": false,
+      "show_dots": true,
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": true,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "template-heading(2)": {
+    "type": "template-heading",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": false,
+    "options": {
+      "width": "grid",
+      "position_x": "center",
+      "show_date": false,
+      "show_description": false,
+      "description": "",
+      "background_image": false,
+      "background_image_overlay": 50,
+      "margin_top": 32,
+      "margin_bottom": 0,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "template-image(2)": {
+    "type": "template-image",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": false,
+    "options": {
+      "width": "grid",
+      "position_x": "center",
+      "margin_top": 32,
+      "margin_bottom": 32,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "page-body(3)": {
+    "type": "page-body",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "width": "grid",
+      "alignment": "text-start",
+      "position_x": "center",
+      "margin_top": 32,
+      "margin_bottom": 32,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "media-with-text": {
+    "type": "media-with-text",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "columns": "media-content",
+      "columns_mobile": false,
+      "image_desktop": {
+        "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/62850b3373a17931aea4/green-voltaics-energy-TtyY0tr7_as-unsplash.jpg",
+        "alt": ""
+      },
+      "image_mobile": {
+        "url": "",
+        "alt": ""
+      },
+      "video": "",
+      "ratio": "aspect-ratio-landscape",
+      "alignment": "start",
+      "position_y": "center",
+      "subtitle": "",
+      "title": "¿Quiénes Somos?",
+      "text": "En Ticam, nos especializamos en sistemas de energía solar y monitoreo, ofreciendo soluciones tecnológicas integrales y personalizadas que impulsan la seguridad y sostenibilidad de empresas y hogares en el sur de Chile. <div><br></div><div>Nuestra experiencia nos permite adaptarnos a las necesidades específicas de la región, proporcionando alternativas innovadoras y eficientes. </div>",
+      "link": "nuestros-productos",
+      "link_text": "Exclusivos Ticam",
+      "link_outline": false,
+      "link_arrow": true,
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "media-with-text(2)": {
+    "type": "media-with-text",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "columns": "content-media",
+      "columns_mobile": true,
+      "image_desktop": {
+        "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/c826ca87fe2b1bc47918/watt-a-lot-gqpuuF3a2tY-unsplash.jpg",
+        "alt": ""
+      },
+      "image_mobile": {
+        "url": "",
+        "alt": ""
+      },
+      "video": "",
+      "ratio": "aspect-ratio-landscape",
+      "alignment": "start",
+      "position_y": "center",
+      "subtitle": "",
+      "title": "¿Qué Buscamos?",
+      "text": "Nos esforzamos por liderar el proceso de transición energética en la región con propuestas competitivas que contribuyen al desarrollo sustentable.</p><p><span style=\"font-family: var(--font-secondary); color: var(--color-secondary); font-size: var(--description-size-desktop); font-weight: var(--bs-body-font-weight);\">Nuestra misión es consolidarnos como el proveedor confiable y responsable de soluciones integrales en monitoreo, seguridad y sostenibilidad, apoyando a empresas y hogares de la zona sur del país, a través de una amplia gama de productos tecnológicos.</span>",
+      "link": null,
+      "link_text": "",
+      "link_outline": false,
+      "link_arrow": true,
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "trust-bar(3)": {
+    "type": "trust-bar",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "display": "carousel",
+      "columns_desktop": "4",
+      "columns_mobile": "2",
+      "alignment": "start",
+      "enable_icons": true,
+      "card": true,
+      "card_border": true,
+      "card_border_opacity": 10,
+      "card_bundle_color": "system-2",
+      "autoplay": true,
+      "autoplay_speed": 3000,
+      "show_arrows": false,
+      "show_arrows_hover": false,
+      "show_dots": false,
+      "margin_top": 32,
+      "margin_bottom": 32,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": [
+      {
+        "property": "trust-blocks",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-battery-charging",
+          "title": "Sostenibilidad",
+          "text": "Promovemos soluciones energéticas responsables.",
+          "link": null,
+          "link_text": "Leer más",
+          "link_arrow": true,
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "trust-blocks",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-lightbulb-filament",
+          "title": "Innovación",
+          "text": "Desarrollamos tecnologías que superan las expectativas.",
+          "link": null,
+          "link_text": "Leer más",
+          "link_arrow": true,
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "trust-blocks",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-hand-palm",
+          "title": "Calidad",
+          "text": "Ofrecemos productos y servicios con altos estándares de excelencia",
+          "link": null,
+          "link_text": "Leer más",
+          "link_arrow": true,
+          "link_external": false
+        },
+        "children": []
+      },
+      {
+        "property": "trust-blocks",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "icon": "ph ph-person-arms-spread",
+          "title": "Seguridad",
+          "text": "Priorizamos la protección de personas, empresas y hogares.",
+          "link": null,
+          "link_text": "",
+          "link_arrow": true,
+          "link_external": false
+        },
+        "children": []
+      }
+    ]
+  },
+  "instagram": {
+    "type": "instagram",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "limit": "6",
+      "display": "grid",
+      "spacing": false,
+      "title": "Síguenos en Instagram",
+      "autoplay": false,
+      "autoplay_speed": 4000,
+      "show_arrows": true,
+      "show_arrows_hover": false,
+      "show_dots": true,
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "big-banner": {
+    "type": "big-banner",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "width": "100%",
+      "height": "medium",
+      "show_content": false,
+      "align_desktop": "text-md-center",
+      "align_mobile": "text-center",
+      "position_x": "center",
+      "subtitle": "",
+      "title": "Título de la Sección",
+      "description": "Aquí puedes agregar un texto o descripción para entregar mayor contexto sobre qué trata la sección.",
+      "image_desktop": {
+        "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/b1c5fc24e1cfc340e9e0/Frame%201.png",
+        "alt": ""
+      },
+      "image_mobile": {
+        "url": "",
+        "alt": ""
+      },
+      "image_overlay": 50,
+      "position_image_x": "center",
+      "position_image_y": "center",
+      "link": "/",
+      "link_text": "Leer más",
+      "link_external": false,
+      "link_button": true,
+      "link_outline": false,
+      "link_arrow": true,
+      "bundle_color": "default",
+      "margin_top": 0,
+      "margin_bottom": 0,
+      "bundle_color_background": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "categories(2)": {
+    "type": "categories",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "display": "carousel",
+      "columns_desktop": 6,
+      "columns_mobile": "2",
+      "content_position": "over",
+      "align_desktop": "text-md-center",
+      "align_mobile": "text-center",
+      "ratio": "square",
+      "heading": true,
+      "heading_subtitle": "",
+      "heading_title": "",
+      "heading_description": "",
+      "heading_link": null,
+      "heading_link_text": "Leer más",
+      "autoplay": true,
+      "autoplay_speed": 5000,
+      "show_arrows": true,
+      "show_arrows_hover": false,
+      "show_dots": false,
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": [
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": "energia-solar",
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/7f881c71bac350641d5e/01.png",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 0,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "bundle-f62ed5fe8f745"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": "accesorios-para-energia-solar",
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/477061d4d28738e4317e/02.png",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 0,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "bundle-f62ed5fe8f745"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": "equipos-de-respaldo-y-regulacion",
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/c9efd4137f8f3ddb6be6/03.png",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 0,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "bundle-f62ed5fe8f745"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": "materiales-montajes-electricos",
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/5f2a44900222a0d1d82b/04.png",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 0,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "bundle-f62ed5fe8f745"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": "tableros-y-gabinetes",
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/a880337ff49fe5155259/05.png",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 0,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "bundle-f62ed5fe8f745"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": "cctv/redes",
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/52d0392d2a0630cfe61d/06.png",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 0,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "bundle-f62ed5fe8f745"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": "equipos-de-video-1",
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/07605d74dc26d8f5eb0b/07.png",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 0,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "bundle-f62ed5fe8f745"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": "equipos-de-video",
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/96212b40d7bea408fbb4/08.png",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 0,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "bundle-f62ed5fe8f745"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": "conectividad-de-videos-y-redes",
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/d21e84f1c59ccb167471/09.png",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 0,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "bundle-f62ed5fe8f745"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": "accesorios-de-monitoreo",
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/5ac3de1a683b2bca4899/10.png",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 0,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "bundle-f62ed5fe8f745"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": "soluciones-integrales",
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/f6c67134722ba1531825/11.png",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 0,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "bundle-f62ed5fe8f745"
+        },
+        "children": []
+      },
+      {
+        "property": "categories",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "permalink": "otros",
+          "title": "",
+          "show_description": false,
+          "description": "",
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/5875a3deb80ec48b6b19/12.png",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "image_overlay": 0,
+          "icon": {
+            "url": "",
+            "alt": ""
+          },
+          "icon_size": 30,
+          "link_text": "",
+          "link_external": false,
+          "link_arrow": true,
+          "show_link_text": true,
+          "bundle_color": "bundle-f62ed5fe8f745"
+        },
+        "children": []
+      }
+    ]
+  },
+  "media-with-text(3)": {
+    "type": "media-with-text",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "columns": "media-content",
+      "columns_mobile": false,
+      "image_desktop": {
+        "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/c98b628a558a8c40bd44/LUMINARIA%2001.jpeg",
+        "alt": ""
+      },
+      "image_mobile": {
+        "url": "",
+        "alt": ""
+      },
+      "video": "",
+      "ratio": "aspect-ratio-landscape",
+      "alignment": "start",
+      "position_y": "center",
+      "subtitle": "",
+      "title": "Descubre los Exclusivos Ticam ",
+      "text": "<div>Productos con nuestro sello único de calidad.</div>Nuestros productos propios están hechos para destacar en cualquier espacio. ¡Conócelos hoy mismo!",
+      "link": "nuestros-productos",
+      "link_text": "Ver Exclusivos Ticam",
+      "link_outline": false,
+      "link_arrow": true,
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": false,
+      "animate_delay": 50
+    },
+    "children": []
+  },
+  "banners(2)": {
+    "type": "banners",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "display": "carousel",
+      "content_type": "content",
+      "ratio": "landscape",
+      "columns_desktop": "3",
+      "columns_mobile": "2",
+      "heading": false,
+      "heading_subtitle": "",
+      "heading_title": "Título de la Sección",
+      "heading_description": "",
+      "heading_link": null,
+      "heading_link_text": "Leer más",
+      "autoplay": true,
+      "autoplay_speed": 4000,
+      "show_arrows": true,
+      "show_arrows_hover": false,
+      "show_dots": true,
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": [
+      {
+        "property": "banners",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/65d17ad15f1680c47715/banner1.jpg",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "link": "camara-submarina",
+          "link_text": "Cámara submarina",
+          "link_external": false,
+          "link_button": true,
+          "link_outline": false,
+          "link_arrow": true,
+          "subtitle": "Soluciones Integrales",
+          "title": "aprovecha los mejores precios del mercado",
+          "position_x": "center",
+          "position_y": "center",
+          "image_overlay": 20,
+          "position_image_x": "center",
+          "position_image_y": "center",
+          "bundle_color": "bundle-3b446397523f3"
+        },
+        "children": []
+      },
+      {
+        "property": "banners",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/ec74c64de54171a3587f/banner2.jpg",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "link": "camara-bullet-hdcvi-dahua%C2%AE-hfw1200r-z-ire6-a",
+          "link_text": "Cámaras de seguridad",
+          "link_external": false,
+          "link_button": true,
+          "link_outline": false,
+          "link_arrow": true,
+          "subtitle": "Seguridad inteligente al alcance de todos",
+          "title": "Tu hogar protegido las   24 horas",
+          "position_x": "center",
+          "position_y": "center",
+          "image_overlay": 30,
+          "position_image_x": "center",
+          "position_image_y": "center",
+          "bundle_color": "bundle-3b446397523f3"
+        },
+        "children": []
+      },
+      {
+        "property": "banners",
+        "identifier": "",
+        "visibility": true,
+        "options": {
+          "image_desktop": {
+            "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/df3a8d2bfbf1751d5834/banner3.jpg",
+            "alt": ""
+          },
+          "image_mobile": {
+            "url": "",
+            "alt": ""
+          },
+          "link": "luminaria-solar-profesional-modelo-ls60-para-salmonicultura",
+          "link_text": "Ver más ",
+          "link_external": false,
+          "link_button": true,
+          "link_outline": false,
+          "link_arrow": true,
+          "subtitle": "Experiencia inigualable",
+          "title": "Luminaria Solar Profesional",
+          "position_x": "center",
+          "position_y": "center",
+          "image_overlay": 20,
+          "position_image_x": "center",
+          "position_image_y": "center",
+          "bundle_color": "bundle-3b446397523f3"
+        },
+        "children": []
+      }
+    ]
+  },
+  "featured-category": {
+    "type": "featured-category",
+    "placement": "middle",
+    "identifier": "",
+    "visibility": true,
+    "options": {
+      "permalink": "soluciones-integrales",
+      "limit": 5,
+      "display": "grid",
+      "heading": true,
+      "heading_subtitle": "",
+      "heading_title": "Todo en soluciones",
+      "heading_description": "",
+      "heading_link": true,
+      "heading_link_text": "Ver más productos",
+      "display_image": true,
+      "image_desktop": {
+        "url": "https://assets.jumpseller.com/store/ticam/themes/816927/settings/2d5d6a1bd88cf9813fb1/foco%20submarino1%20%281%29.jpg",
+        "alt": ""
+      },
+      "image_mobile": {
+        "url": "",
+        "alt": ""
+      },
+      "show_image_content": true,
+      "image_overlay": 40,
+      "image_title": "",
+      "image_link": "",
+      "image_content_align_desktop": "text-md-center",
+      "image_content_align_mobile": "text-center",
+      "image_content_position_y": "center",
+      "image_bundle_color": "bundle-723d2e554764a",
+      "autoplay": false,
+      "autoplay_speed": 4000,
+      "show_arrows": true,
+      "show_arrows_hover": false,
+      "show_dots": true,
+      "margin_top": 48,
+      "margin_bottom": 48,
+      "bundle_color": "default",
+      "animate": false,
+      "animate_type": "fade-up",
+      "animate_repeat": true,
+      "animate_delay": 50
+    },
+    "children": []
+  }
+}

@@ -1,0 +1,110 @@
+{% capture location-name-placeholder %}{% t "Location" %}{% endcapture %}
+
+{% if footer-locations.options.display == 'all' %}
+  {% assign filtered_locations = locations.all %}
+{% else %}
+  {% assign filtered_locations = locations.pickups %}
+{% endif %}
+
+{% case footer-locations.options.column_width %}
+  {% when 'auto' -%}
+    {% if filtered_locations.size == 6 %}
+      {%- assign column_width = 'col-12 col-sm-6 col-md-4' %}
+    {% elsif filtered_locations.size >= 7 %}
+      {%- assign column_width = 'col-12 col-sm-6 col-md-3' %}
+    {% else %}
+      {%- assign column_width = 'col-12 col-sm-6 col-md' %}
+    {% endif %}
+  {% when 'half' -%}
+    {%- assign column_width = 'col-12 col-md-6' %}
+  {% when 'full' -%}
+    {%- assign column_width = 'col-12' %}
+{% endcase %}
+
+<div class="col-12 footer__column" {{ footer-locations.attributes }}>
+  <div class="row">
+    {% for location in filtered_locations %}
+      {% assign location_id = 'footer-location-modal-' | append: forloop.index %}
+
+      {% if location.email != blank and footer-locations.options.show_email %}
+        {% assign location_email = true %}
+      {% else %}
+        {% assign location_email = false %}
+      {% endif %}
+
+      {% if location.phone != blank and footer-locations.options.show_phone %}
+        {% assign location_phone = true %}
+      {% else %}
+        {% assign location_phone = false %}
+      {% endif %}
+
+      {% if location.address_with_street_number != blank and footer-locations.options.show_address %}
+        {% assign location_address = true %}
+      {% else %}
+        {% assign location_address = false %}
+      {% endif %}
+
+      {% assign location_map = footer-locations.options.show_map %}
+
+      <div class="{{ column_width }} footer__column" {{ footer-locations.attributes }}>
+        <div class="footer__content">
+          <h4 class="footer__title">
+            {{ location.name | default: location-name-placeholder }}
+            {%- if location.pickup_point %}
+              <span class="footer-location__badge">{% t "Pickup point" %}</span>
+            {%- endif %}
+          </h4>
+          <ul class="no-bullet footer__menu">
+            {% if location_email %}
+              <li class="footer__item">
+                <a href="mailto:{{ location.email }}" class="footer__link" title="{% t 'Send us an email' %}" target="_blank">
+                  <i class="theme-icon ph ph-envelope-simple"></i>
+                  {{ location.email }}
+                </a>
+              </li>
+            {% endif %}
+            {% if location_phone %}
+              <li class="footer__item">
+                <a href="tel:{{ location.phone }}" class="footer__link" title="{% t 'Call us' %}" target="_blank">
+                  <i class="theme-icon ph ph-phone"></i>
+                  {{ location.phone }}
+                </a>
+              </li>
+            {% endif %}
+            {% if location_address %}
+              <li class="footer__item">
+                {% assign location_address_full = location.address_with_street_number %}
+                {% capture location_address_params -%}
+                  {%- if location.complement != blank %}{{ location.complement }}, {% endif -%}
+                  {%- if location.postal != blank %}{{ location.postal }}, {% endif -%}
+                  {%- if location.municipality != blank %}{{ location.municipality }}, {% endif -%}
+                  {{- location.city }}, {{ location.region }}, {{ location.country -}}
+                {%- endcapture %}
+                {% capture location_address_url -%}
+                  https://maps.google.com/maps?q={{ location_address_full | replace: '#', '' | url_encode -}}
+                  {{- location_address_params -}}
+                {%- endcapture %}
+                <a href="{{ location_address_url }}" class="footer__link" title="{% t 'See on Google Maps' %}" target="_blank">
+                  <i class="theme-icon ph ph-map-pin footer__icon"></i>
+                  {{- location.formatted -}}
+                </a>
+              </li>
+            {% endif %}
+            {% if footer-locations.options.show_more_details_link %}
+              <li class="footer__item">
+                <a role="button" class="footer__link" data-bs-toggle="modal" data-bs-target="#{{ location_id }}">
+                  <i class="theme-icon ph ph-info footer__icon"></i>
+                  {%- t "View more details" -%}
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+        <!-- end .footer-content__block -->
+
+        {% render 'location_modal', location: location, location_id: location_id, location_email: location_email, location_phone: location_phone, location_address: location_address, location_map: location_map %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+<!-- end .footer-content__column -->

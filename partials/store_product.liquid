@@ -1,0 +1,174 @@
+{% assign product_info = prod.variant | default: prod %}
+
+{% if prod_type == 'wishlist' %}
+  {% assign product_image = product_info.image | thumb: '100x100' %}
+{% else %}
+  {% assign product_image = product_info.image | thumb: '70x70' %}
+{% endif %}
+
+<div class="col-12{% if template == 'cart' %} col-md-6{% endif %} store-product{% if prod_type == 'wishlist' %} col-md-6{% unless template == 'cart' %} col-xl-4{% endunless %} store-product--wishlist{% endif %}" data-id="{{ prod.id }}">
+  <div class="store-product__wrapper">
+    <a href="{{ prod.url }}" class="store-product__anchor" title="{% t 'Go to' %} {{ prod.name }}" target="_blank">
+      {% if product_info.image == blank %}
+        <div class="store-product__placeholder">
+          <i class="ph ph-image"></i>
+        </div>
+      {% else %}
+        <img src="{{ product_image }}" alt="{{ prod.name }}" class="store-product__image" width="70" height="70" loading="lazy">
+      {% endif %}
+    </a>
+    <!-- end .store-product__anchor -->
+
+    <div class="store-product__info">
+      <div class="store-product__attributes check-empty">
+        <span class="store-product__sku check-empty">{{- prod.sku -}}</span>
+        <span>|</span>
+        <span class="store-product__brand check-empty">{{- prod.brand -}}</span>
+      </div>
+
+      <h6 class="store-product__name">
+        <span>{{- prod.name -}}</span>
+        {% if prod.exists? and prod.digital and prod.digital_products != blank %}
+          <product-download>
+            <script type="application/json" class="product-download-json">
+              {
+                "name": {{ prod.name | json }},
+                "files": [
+                  {% for digital_product in prod.digital_products %}
+                    {
+                      "url": {{ digital_product.url | json }},
+                      "name": {{ digital_product.name | json }}
+                    }{% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                ]
+              }
+            </script>
+            <button id="download-zip" type="button" class="button button--small mt-2 button--style button--secondary">
+              {% t 'Download as a ZIP' %}
+              <i id="download-icon" class="ph ph-download-simple"></i>
+            </button>
+          </product-download>
+        {% endif %}
+      </h6>
+
+      <div class="store-product__pricing">
+        <div class="store-product__price store-product__price--qty">
+          {{ prod.qty }}
+          <i class="ph ph-x"></i>
+        </div>
+        {% if product_info.discount > 0 %}
+          <div class="store-product__price store-product__price--new">{{ product_info.price | minus: product_info.discount | price }}</div>
+          <div class="store-product__price store-product__price--old">{{ product_info.price | price }}</div>
+        {% else %}
+          <div class="store-product__price">{{ product_info.price | price }}</div>
+        {% endif %}
+      </div>
+
+      {% if prod_type == 'normal' or prod_type == 'customer' %}
+        <div class="store-product__options{% if prod.options.size == 0 %} hidden{% endif %}">
+          {% for option in prod.options %}
+            {% if option.value == blank or option.value == null %}
+              {% continue %}
+            {% endif %}
+            <div class="store-product__option">{{ option.name }}: {{ option.value }}</div>
+          {% endfor %}
+        </div>
+      {% elsif prod.variant != blank %}
+        {% if prod_type == 'wishlist' or prod_type == 'cross' %}
+          <div class="store-product__options{% if prod.options.size == 0 %} hidden{% endif %}">
+            {% for variant_value in prod.variant.values %}
+              <div class="store-product__option">{{- variant_value.option.name }}: {{ variant_value.name -}}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endif %}
+
+      {% if prod_type == 'customer' and prod.status == 'not-available' %}
+        <div class="store-product__label" data-label="warning">{% t "Not available" %}</div>
+      {% elsif prod_type == 'customer' and prod.stock == 0 and prod.stock_unlimited == false %}
+        <div class="store-product__label" data-label="warning">{% t "Out of stock" %}</div>
+      {% endif %}
+
+      {% unless template == 'checkout' or template == 'revieworder' or template == 'success' %}
+        {% if prod_type == 'cross' %}
+          {% unless prod.status == 'not-available' or options.disable_shopping_cart %}
+            <div class="store-product__actions">
+              <form
+                action="{% if prod.variants.size == 0 %}{{ prod.add_to_cart_url }}{% else %}{{ prod.variant.add_to_cart_url | default: prod.add_to_cart_url }}{% endif %}"
+                class="store-product__form trsn"
+                method="post"
+                enctype="multipart/form-data"
+                name="buy"
+              >
+                {% assign option_types = prod.options | map: 'type' -%}
+                {% if options.display_cart_notification == false or option_types contains 'file' %}
+                  <button
+                    type="submit"
+                    class="button button--style button--main button--small store-product__add-to-cart"
+                  >
+                    {% if options.theme_icon_cart_button %}<i class="theme-icon ph {{ options.theme_icon_cart }}"></i>{% endif -%}
+                    <span>{%- t "Add to Cart" -%}</span>
+                  </button>
+                {% else %}
+                  <button
+                    type="button"
+                    class="button button--style button--main button--small store-product__add-to-cart"
+                    data-product-id="{{ prod.id }}"
+                    data-product-name="{{ prod.name }}"
+                  >
+                    {% if options.theme_icon_cart_button %}<i class="theme-icon ph {{ options.theme_icon_cart }}"></i>{% endif -%}
+                    <span>{%- t "Add to Cart" -%}</span>
+                  </button>
+                {% endif %}
+              </form>
+            </div>
+          {% endunless %}
+        {% elsif prod_type == 'wishlist' %}
+          {% render 'store_product_wishlist', product_info: product_info, product_id: prod.id %}
+        {% elsif prod_type == 'normal' %}
+          <div class="store-product__actions">
+            <form
+              action="/cart/add/{{ prod.product_id }}"
+              class="store-product__form trsn"
+              method="post"
+              name="buy"
+            >
+              <div class="trsn store-product__quantity">
+                <button
+                  type="button"
+                  class="button store-product__handler store-product__handler--minus"
+                  aria-label="{% t 'Decrease quantity' %}"
+                >
+                  <i class="ph ph-minus-circle"></i>
+                </button>
+                <input
+                  type="number"
+                  aria-label="{% t 'Quantity' %}"
+                  min="1"
+                  {% if prod.maximum_quantity and prod.maximum_quantity > 0 %}
+                    max="{{ prod.maximum_quantity }}"
+                  {% elsif prod.stock_unlimited == false %}
+                    max="{{ prod.stock }}"
+                  {% endif %}
+                  value="{{ prod.qty | at_least: 1 }}"
+                  data-min="{{ prod.minimum_quantity | default: 1 | at_least: 1 }}"
+                  data-max="{{ prod.maximum_quantity }}"
+                  class="text text--qty store-product__input"
+                >
+                <button
+                  type="button"
+                  class="button store-product__handler store-product__handler--plus"
+                  aria-label="{% t 'Increase quantity' %}"
+                >
+                  <i class="ph ph-plus-circle"></i>
+                </button>
+              </div>
+            </form>
+            <button type="button" class="button store-product__delete">{% t "Remove" %}</button>
+          </div>
+        {% endif %}
+      {% endunless %}
+    </div>
+    <!-- end .store-product__info -->
+  </div>
+</div>

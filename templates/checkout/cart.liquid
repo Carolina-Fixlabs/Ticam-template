@@ -1,0 +1,32 @@
+<script src="{{ 'cart.js' | asset }}" defer></script>
+
+<section
+  class="container-fluid cart-page"
+  data-bundle-color="{{ options.cart_bundle_color }}"
+>
+  <div class="row cart-page__container">
+    <div class="col-12 col-lg-8 cart-page__content">
+      {% render 'cart_header' %}
+
+      {% if customer == null and store.customers_enabled and store.customers_optional %}
+        <div class="col-12 text-center">
+          <div class="cart-page__message">
+            {% capture login_text -%}
+              <a href="{{ customer_login_url }}" class="cart-page__link" title="{% t 'Log in to your account' %}">{% t "Log in" %}</a>
+            {%- endcapture %}
+            {%- t "Already have an account? You can %{login} here", login: login_text -%}
+          </div>
+        </div>
+      {% endif %}
+
+      {{ index_for_components }}
+    </div>
+    <!-- end .cart-page__content -->
+
+    <div class="col-12 col-lg-4 cart-summary{% if order.products_count == 0 %} cart-summary--empty{% endif %}">
+      {% render 'cart_summary' %}
+    </div>
+    <!-- end .cart-summary -->
+  </div>
+</section>
+<!-- end #cart-page -->

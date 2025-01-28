@@ -1,0 +1,19 @@
+{% if cross_selling.products_count > 0 %}
+  {% assign section_id = 'theme-section-' | append: component.id %}
+
+  <style>
+    #{{ section_id }} {
+      --section-margin-top: {{ component.options.margin_top }}px;
+      --section-margin-bottom: {{ component.options.margin_bottom }}px;
+    }
+  </style>
+  <section id="{{ section_id }}" class="theme-section theme-section__content" {{ component.attributes }}>
+    <hr class="cart-page__divider">
+    <h3 class="cart-page__title" {{ component.attributes.textfield.title }}>{{ component.options.title }}</h3>
+    <div class="row cross-selling-products">
+      {% for cs_prod in cross_selling.products %}
+        {% render 'store_product', prod: cs_prod, prod_type: 'cross' %}
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}

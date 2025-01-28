@@ -1,0 +1,69 @@
+{% capture default_title %}{% t "Share this article" %}{% endcapture %}
+{% assign title = component.options.title | default: default_title %}
+{% assign section_id = 'theme-section-' | append: component.id %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+
+<section
+  id="{{ section_id }}"
+  class="container-fluid theme-section"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+  {{ component.attributes }}
+>
+  <share-component class="container theme-section__container share-component share-{{ component.id }}">
+    <script type="application/json" class="share-json">
+      {
+        "options": {
+          "showFacebook": {{ component.options.show_facebook | json }},
+          "showTwitter": {{ component.options.show_twitter | json }},
+          "showWhatsapp": {{ component.options.show_whatsapp | json }},
+          "showPinterest": {{ component.options.show_pinterest | json }},
+          "showEmail": {{ component.options.show_email | json }},
+          "showClipboard": {{ component.options.show_clipboard | json }}
+        },
+        "info": {
+          "sectionId": {{ section_id | json }},
+          "title": {{ title | json }},
+          "page": {
+            "title": {{ page.title | json }},
+            "url": {{ page.url | json }},
+            "body": {{ page.body | strip_html | truncate: 50 | json }}
+            {% if page.images.size > 0 %},"image": {{ page.images.first | json }}{% endif %}
+          }
+        }
+      }
+    </script>
+
+    <div class="row theme-section__content">
+      <div class="col-12 text-{{ component.options.alignment }}">
+        <h6 class="theme-section__title theme-section__title--small" {{ component.attributes.textfield.title }}>{{ title }}</h6>
+        <div class="theme-share justify-content-{{ component.options.alignment }}"></div>
+      </div>
+    </div>
+  </share-component>
+</section>

@@ -1,0 +1,99 @@
+{% if customer.orders.size > 0 %}
+  <div class="col-12 customer-table">
+    <div class="row d-none d-md-flex align-items-center customer-table__heading">
+      <div class="col-1 customer-table__heading-column">
+        <div class="customer-table__title">#</div>
+      </div>
+      <div class="col-2 customer-table__heading-column">
+        <div class="customer-table__title">{% t "Date" %}</div>
+      </div>
+      <div class="col-2 customer-table__heading-column">
+        <div class="customer-table__title">{% t "Status" %}</div>
+      </div>
+      <div class="col-3 customer-table__heading-column">
+        <div class="customer-table__title">{% t "Shipping address" %}</div>
+      </div>
+      <div class="col-2 customer-table__heading-column">
+        <div class="customer-table__title">{% t "Delivery status" %}</div>
+      </div>
+      <div class="col customer-table__heading-column">
+        <div class="customer-table__title">{% t "Actions" %}</div>
+      </div>
+    </div>
+    <!-- end .customer-table__heading -->
+
+    {% for customer_order in customer.orders %}
+      {% capture order_repeat -%}
+        {%- for prod in customer_order.products -%}
+          {%- if prod.status == 'not-available' or prod.stock == 0 and prod.stock_unlimited == false %}out-of-stock{% else %}available{% endif -%}
+        {%- endfor -%}
+      {%- endcapture %}
+      <div class="row align-items-start align-items-md-center customer-table__row{% if forloop.first %} customer-table__row--first{% elsif forloop.last %} customer-table__row--last{% endif %}">
+        <div class="col-12 col-md-1 customer-table__column">
+          <div class="d-flex align-items-center justify-content-start">
+            <div class="customer-table__title d-block d-md-none">{% t "Order ID:" %}</div>
+            <div class="customer-table__text">
+              <b>{{- customer_order.id -}}</b>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-2 customer-table__column">
+          <div class="customer-table__title d-block d-md-none">{% t "Date" %}</div>
+          <div class="customer-table__text">
+            {{- customer_order.date -}}
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-2 customer-table__column">
+          <div class="customer-table__title d-block d-md-none">{% t "Status" %}</div>
+          <div class="customer-table__label" data-label="{{ customer_order.status_code }}">
+            {{- customer_order.status_id -}}
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-3 customer-table__column">
+          <div class="customer-table__title d-block d-md-none">{% t "Shipping address" %}</div>
+          <div class="customer-table__text">
+            {{- customer_order.shipping_address.formatted -}}
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-2 customer-table__column">
+          <div class="customer-table__title d-block d-md-none">{% t "Delivery status" %}</div>
+          <div class="customer-table__label" data-label="{{ customer_order.shipment_status_code }}">
+            {{- customer_order.shipment_status -}}
+          </div>
+        </div>
+
+        <div class="col customer-table__column">
+          <div class="d-flex align-items-start customer-table__actions">
+            {% if order_repeat contains 'available' %}
+              <a
+                href="{{ customer_order.duplicate_url }}"
+                class="button customer-table__button"
+                title="{% t 'Reorder' %}"
+              >
+                <i class="theme-icon ph ph-repeat"></i> {% t "Reorder" -%}
+              </a>
+            {% endif %}
+
+            <a
+              role="button"
+              class="button customer-table__button"
+              title="{% t 'See more details' %}"
+              data-bs-toggle="modal"
+              data-bs-target="#order-modal-{{ customer_order.id }}"
+            >
+              <i class="theme-icon ph ph-info"></i> {% t 'Order details' -%}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {% render 'customer_orders_modal', customer_order: customer_order, order_repeat: order_repeat %}
+    {% endfor %}
+  </div>
+{% else %}
+  {% render 'theme_message' %}
+{% endif %}

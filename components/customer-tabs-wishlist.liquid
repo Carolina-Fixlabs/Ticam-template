@@ -1,0 +1,46 @@
+{% assign tab_id = 'customer-account-' | append: customer-tabs-wishlist.id %}
+{% assign tab_target = tab_id | append: '-content' %}
+{% capture tab_title_default %}{% t "Wishlist" %}{% endcapture %}
+
+{%- capture item -%}
+  <li
+    class="nav-item"
+    role="presentation"
+    {{ customer-tabs-wishlist.attributes }}
+  >
+    <button
+      class="nav-link customer-tabs__link{% if open_wishlist or tab_index.first %} active{% endif %}"
+      id="{{ tab_id }}"
+      data-bs-toggle="tab"
+      data-bs-target="#{{ tab_target }}"
+      type="button"
+      role="tab"
+      aria-controls="{{ tab_target }}"
+      aria-selected="true"
+    >
+      <i class="theme-icon {{ customer-tabs-wishlist.options.icon }}"></i>
+      <span {{ customer-tabs-wishlist.attributes.textfield.title }}>
+        {{- customer-tabs-wishlist.options.title | default: tab_title_default -}}
+      </span>
+      <span>
+        {{- customer.wishlisted_products.size | prepend: '(' | append: ')' -}}
+      </span>
+    </button>
+  </li>
+{%- endcapture -%}
+
+{% if tab_display == 'item' %}
+  {{ item }}
+{% else %}
+  <div
+    id="{{ tab_target }}"
+    class="tab-pane fade{% if open_wishlist or tab_index.first %} show active{% endif %} customer-tabs__panel"
+    role="tabpanel"
+    aria-labelledby="{{ tab_id }}"
+    tabindex="0"
+  >
+    <div class="row customer-tabs__row">
+      {% render 'customer_wishlist' %}
+    </div>
+  </div>
+{% endif %}

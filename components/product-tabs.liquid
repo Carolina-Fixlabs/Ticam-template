@@ -1,0 +1,151 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% case component.options.width %}
+  {% when 'full' %}
+    {% assign column_width = 'col-md-12' %}
+  {% when 'large' %}
+    {% assign column_width = 'col-md-10' %}
+  {% when 'medium' %}
+    {% assign column_width = 'col-md-8' %}
+  {% when 'small' %}
+    {% assign column_width = 'col-md-6' %}
+{% endcase %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+{% if product.description != blank or product.product_fields != blank or product.attachments != blank %}
+  <section
+    id="{{ section_id }}"
+    class="container-fluid theme-section"
+    data-bundle-color="{{ component.options.bundle_color }}"
+    {% if has_animation %}
+      data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+    {% endif %}
+    {{ component.attributes }}
+  >
+    <div class="container container--adjust theme-section__container">
+      <div class="row justify-content-{{ component.options.position_x }}">
+        <div class="col-12 {{ column_width }}">
+          <div class="nav nav-tabs justify-content-center" id="product-tabs" role="tablist">
+            {% for child in component.children %}
+              {% case child.property %}
+                {% when 'description' %}
+                  {% if product.description != blank %}
+                    <button
+                      class="product-tabs__button button button--style nav-link"
+                      id="product-tabs-description-pill-tab"
+                      data-bs-toggle="pill"
+                      data-bs-target="#product-tabs-description-pill"
+                      type="button"
+                      role="tab"
+                      aria-controls="product-tabs-description-pill"
+                      aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                      {{ child.attributes.textfield.title }}
+                    >
+                      {{ child.options.title }}
+                    </button>
+                  {% endif %}
+                {% when 'fields' %}
+                  {% if product.product_fields != blank %}
+                    <button
+                      class="product-tabs__button button button--style nav-link"
+                      id="product-tabs-fields-pill-tab"
+                      data-bs-toggle="pill"
+                      data-bs-target="#product-tabs-fields-pill"
+                      type="button"
+                      role="tab"
+                      aria-controls="product-tabs-fields-pill"
+                      aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                      {{ child.attributes.textfield.title }}
+                    >
+                      {{ child.options.title }}
+                    </button>
+                  {% endif %}
+                {% when 'attachments' %}
+                  {% if product.attachments != blank %}
+                    <button
+                      class="product-tabs__button button button--style nav-link"
+                      id="product-tabs-attachments-pill-tab"
+                      data-bs-toggle="pill"
+                      data-bs-target="#product-tabs-attachments-pill"
+                      type="button"
+                      role="tab"
+                      aria-controls="product-tabs-attachments-pill"
+                      aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                      {{ child.attributes.textfield.title }}
+                    >
+                      {{ child.options.title }}
+                    </button>
+                  {% endif %}
+              {% endcase %}
+            {% endfor %}
+          </div>
+          <div class="product-tabs__content row align-items-start theme-section__content tab-content" id="product-tabs-content">
+            {% for child in component.children %}
+              {% case child.property %}
+                {% when 'description' %}
+                  {% if product.description != blank %}
+                    <div
+                      class="tab-pane fade"
+                      id="product-tabs-description-pill"
+                      role="tabpanel"
+                      aria-labelledby="product-tabs-description-pill-tab"
+                    >
+                      {% render 'components/product-description', product-description: child, prod: product %}
+                    </div>
+                  {% endif %}
+                {% when 'fields' %}
+                  {% if product.product_fields != blank %}
+                    <div
+                      class="tab-pane fade"
+                      id="product-tabs-fields-pill"
+                      role="tabpanel"
+                      aria-labelledby="product-tabs-fields-pill-tab"
+                    >
+                      {% render 'components/product-fields', product-fields: child, prod: product %}
+                    </div>
+                  {% endif %}
+                {% when 'attachments' %}
+                  {% if product.attachments != blank %}
+                    <div
+                      class="tab-pane fade"
+                      id="product-tabs-attachments-pill"
+                      role="tabpanel"
+                      aria-labelledby="product-tabs-attachments-pill-tab"
+                    >
+                      {% render 'components/product-attachments', product-attachments: child, prod: product %}
+                    </div>
+                  {% endif %}
+              {% endcase %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    document.querySelector('.nav-tabs .button').classList.add('active', 'show');
+    document.querySelector('.product-tabs__content .tab-pane').classList.add('active', 'show');
+  </script>
+{% endif %}

@@ -1,0 +1,16 @@
+<section
+  class="container-fluid cart-page"
+  data-bundle-color="{{ options.cart_bundle_color }}"
+>
+  <div class="row cart-page__container">
+    <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 cart-page__content">
+      {% render 'cart_header' %}
+
+      {% render 'cart_success' %}
+
+      {{ index_for_components }}
+    </div>
+    <!-- end .cart-page__content -->
+  </div>
+</section>
+<!-- end #cart-page -->

@@ -1,0 +1,235 @@
+{
+  "name": "Text block",
+  "icon": "text",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-components/#-text-block).",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "home",
+    "product",
+    "category",
+    "page",
+    "searchresults",
+    "contactpage",
+    "error",
+    "checkout__cart",
+    "checkout__checkout",
+    "customer__account",
+    "customer__login"
+  ],
+  "options": {
+    "subtitle": {
+      "name": "Subtitle",
+      "type": "input",
+      "default": "Here you can add a small subtitle"
+    },
+    "title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Talk about whatever you want"
+    },
+    "text": {
+      "name": "Text",
+      "type": "text",
+      "default": "You can add information about your brand, shipping methods, promotions, company description, or even describe a product."
+    },
+    "group_link": {
+      "name": "Link options",
+      "type": "heading",
+      "default": false
+    },
+    "link": {
+      "name": "Link",
+      "type": "link",
+      "default": "/"
+    },
+    "link_text": {
+      "name": "Link text",
+      "type": "input",
+      "default": "Read more"
+    },
+    "link_outline": {
+      "name": "Use outline button style",
+      "type": "checkbox",
+      "default": false
+    },
+    "link_arrow": {
+      "name": "Show arrow in button",
+      "type": "checkbox",
+      "default": true
+    },
+    "link_external": {
+      "name": "Enable as external link",
+      "type": "checkbox",
+      "default": false
+    },
+    "group_appearance": {
+      "name": "Appearance",
+      "type": "heading",
+      "default": false
+    },
+    "width": {
+      "name": "Width",
+      "type": "select",
+      "default": "full",
+      "options": [
+        {
+          "label": "Small",
+          "value": "small"
+        },
+        {
+          "label": "Medium",
+          "value": "medium"
+        },
+        {
+          "label": "Large",
+          "value": "large"
+        },
+        {
+          "label": "Full width",
+          "value": "full"
+        }
+      ]
+    },
+    "alignment": {
+      "name": "Content alignment",
+      "type": "select",
+      "default": "text-center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "text-start"
+        },
+        {
+          "label": "Center",
+          "value": "text-center"
+        },
+        {
+          "label": "Right",
+          "value": "text-end"
+        }
+      ]
+    },
+    "position_x": {
+      "name": "Horizontal content position",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "end"
+        }
+      ]
+    },
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    },
+    "animate": {
+      "name": "Customize animation options",
+      "type": "checkbox",
+      "help": "Allows to override the animation options defined at **Theme settings > Design > Enable theme animations**.",
+      "default": false
+    },
+    "animate_type": {
+      "name": "Animation type",
+      "type": "select",
+      "default": "fade-up",
+      "options": [
+        {
+          "label": "From down",
+          "value": "fade-up"
+        },
+        {
+          "label": "From up",
+          "value": "fade-down"
+        },
+        {
+          "label": "From left",
+          "value": "fade-right"
+        },
+        {
+          "label": "From right",
+          "value": "fade-left"
+        },
+        {
+          "label": "Zoom in",
+          "value": "zoom-in"
+        },
+        {
+          "label": "Zoom out",
+          "value": "zoom-out"
+        }
+      ]
+    },
+    "animate_repeat": {
+      "name": "Do the animation once",
+      "type": "checkbox",
+      "default": true
+    },
+    "animate_delay": {
+      "name": "Animation delay",
+      "type": "slider",
+      "default": 50,
+      "min": 0,
+      "max": 300,
+      "step": 50,
+      "unit": "ms"
+    }
+  },
+  "nesting": {
+    "animate": [
+      "animate_type",
+      "animate_repeat",
+      "animate_delay"
+    ],
+    "group_link": [
+      "link",
+      "link_text",
+      "link_outline",
+      "link_arrow",
+      "link_external"
+    ],
+    "group_appearance": [
+      "width",
+      "alignment",
+      "position_x",
+      "margin_top",
+      "margin_bottom",
+      "bundle_color",
+      "animate"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

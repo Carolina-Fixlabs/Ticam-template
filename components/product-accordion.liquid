@@ -1,0 +1,50 @@
+{% assign section_id = 'product-accordion-' | append: product-accordion.id %}
+{% assign is_accordion_collapsed = product-accordion.options.collapse %}
+{% assign is_first = product-accordion.options.first %}
+
+<div id="{{ section_id }}" class="accordion theme-accordion" data-product-ref="{{ prod.id }}" {{ product-accordion.attributes }}>
+  {% for product-accordion-item in product-accordion.subcomponents.items %}
+    {% render 'components/product-accordion-item', product-accordion-item: product-accordion-item, section_id: section_id, accordion_index: forloop, is_accordion_collapsed: is_accordion_collapsed, is_first: is_first %}
+  {% else %}
+    {% for placeholder in (1..3) %}
+      <div class="accordion-item theme-accordion__item">
+        <button
+          type="button"
+          class="accordion-button button theme-accordion__button"
+          data-bs-toggle="collapse"
+          data-bs-target="#accordion-item-collapse-{{ forloop.index }}"
+          aria-expanded="{% if forloop.first and is_first %}true{% else %}false{% endif %}"
+          aria-controls="accordion-item-collapse-{{ forloop.index }}"
+        >
+          <i class="theme-icon ph ph-{% cycle 'icon': 'truck', 'info', 'credit-card' %} theme-accordion__icon"></i>
+
+          <span>{%- t "Example accordion item title" %} #{{ forloop.index }}</span>
+
+          <i class="ph ph-caret-down theme-accordion__caret"></i>
+        </button>
+        <div
+          id="accordion-item-collapse-{{ forloop.index }}"
+          class="accordion-collapse collapse{% if forloop.first and is_first %} show{% endif %}"
+          {% if is_accordion_collapsed %}
+            data-bs-parent="#{{ section_id }}"
+          {% endif %}
+        >
+          <div class="accordion-body theme-accordion__body">
+            <p>{%- t "Here goes the text, description or content for each one of the accordion items that you add." -%}</p>
+
+            <a
+              href="#"
+              class="theme-accordion__link"
+              title="{% t "Link text" %}"
+            >
+              <span>
+                {%- t "Link text" -%}
+              </span>
+              <i class="ph ph-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endfor %}
+</div>

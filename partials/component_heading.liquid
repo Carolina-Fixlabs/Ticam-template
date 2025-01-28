@@ -1,0 +1,29 @@
+{% if component.options.heading %}
+  {% assign align_desktop = options.heading_align_desktop %}
+  {% assign align_mobile = options.heading_align_mobile %}
+
+  <div class="row align-items-center theme-section__heading theme-section__heading--component">
+    <div class="col-12 {% if link != blank %}{% if align_desktop == 'center' %}col-md-8 offset-md-2 col-lg-6 offset-lg-3{% else %}col-md-10 col-lg-9{% endif %}{% endif %} text-{{ align_mobile }} text-md-{{ align_desktop }} theme-section__column">
+      <div class="theme-section__subtitle check-empty" {{ component.attributes.textfield.heading_subtitle }}>
+        {{- subtitle -}}
+      </div>
+
+      <h3 class="theme-section__title{% if options.heading_title_underline %} theme-section__title--underline{% endif %} check-empty" {{ component.attributes.textfield.heading_title }}>
+        {{- title -}}
+      </h3>
+
+      <div class="theme-section__description check-empty" {{ component.attributes.textfield.heading_description }}>
+        {{- description -}}
+      </div>
+    </div>
+
+    {% if link != blank %}
+      <div class="col-12 col-md-2 col-lg-3 text-{{ align_mobile }} text-md-end theme-section__column">
+        <a href="{{ link }}" class="theme-section__link" title="{{ link_text }}">
+          <span {{ component.attributes.textfield.heading_link_text }}>{{ link_text }}</span> <i class="ph ph-arrow-right"></i>
+        </a>
+      </div>
+    {% endif %}
+  </div>
+  <!-- end .theme-section__heading -->
+{% endif %}

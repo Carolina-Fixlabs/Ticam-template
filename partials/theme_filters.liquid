@@ -1,0 +1,226 @@
+{% assign collapse = options.filters_collapse %}
+{% assign collapse_status = options.filters_collapse_status %}
+{% assign filters_limit = options.filters_limit %}
+{% assign filters_limit_amount = options.filters_limit_amount %}
+{% assign filters_behavior = options.filters_behavior %}
+{% assign filters_desktop = options.filters_desktop %}
+
+{% capture selected_filters %}
+  {% for filter in filters %}
+    {% assign filter_values_sorted = filter.values | sort: 'name' %}
+    {% for filter_value in filter_values_sorted %}
+      {% if filter_value.selected %}
+        <div class="button theme-filters__tag">
+          <span>{{ filter.name }}: {{ filter_value.name }}</span>
+          <button
+            type="button"
+            class="button theme-filters__xmark"
+            onclick="$('#filter-{{ filter.type }}-{{ filter_value.id }}').removeAttr('checked'); submitFilters();"
+          >
+            <i class="ph ph-x"></i>
+          </button>
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+{% endcapture %}
+
+<div class="theme-filters">
+  <div class="theme-filters__heading">
+    {% if template == 'category' %}
+      <div class="theme-filters__title {% if filters_desktop %}d-none d-md-block{% else %}d-none{% endif %}">{%- t "Filter products" -%}</div>
+      {% paginate category.products by component.options.limit %}
+        <div class="theme-filters__count">
+          {% t "showing" %}
+          {{ paged.total }}
+          {% t "of" %}
+          {{ category.products_count }}
+          {% t "products" %}
+        </div>
+      {% endpaginate %}
+    {% elsif template == 'searchresults' %}
+      <div class="theme-filters__title {% if filters_desktop %}d-none d-md-block{% else %}d-none{% endif %}">{%- t "Filter results" -%}</div>
+      {% paginate search.results by component.options.limit %}
+        <div class="theme-filters__count">
+          {% t "showing" %}
+          {{ paged.total }}
+          {% t "of" %}
+          {{ search.results.size }}
+          {% t "products" %}
+        </div>
+      {% endpaginate %}
+    {% endif %}
+  </div>
+
+  {% if filters != empty or options.filters_price %}
+    <div class="theme-filters__block theme-filters__block--first">
+      {% if selected_filters != blank %}
+        <h6 class="theme-filters__subtitle">{% t "Applied filters" %}</h6>
+
+        <div class="theme-filters__group">
+          {{ selected_filters }}
+
+          <button
+            type="button"
+            class="button theme-filters__tag theme-filters__tag--remove"
+            onclick="clearAllFilters()"
+          >
+            {%- t "Remove filters" -%}
+          </button>
+        </div>
+      {% endif %}
+
+      {% unless template == 'searchresults' and filters == empty %}
+        <button
+          id="apply-filters"
+          type="button"
+          class="button button--style button--secondary w-100 text-center d-none{% if filters_desktop and filters_behavior == false %} d-md-block{% endif %}"
+          onclick="submitFilters()"
+        >
+          {%- t "Apply filters" -%}
+        </button>
+      {% endunless %}
+    </div>
+  {% endif %}
+
+  {% if options.filters_order %}
+    <div class="theme-filters__block">
+      <label for="filters-select" class="theme-filters__subtitle">{% t "Order by" %}</label>
+      <select id="filters-select" class="select theme-filters__select" onchange="window.location.href = this.value">
+        {% if template == 'category' %}
+          {% for sorting_option in category.sorting_options %}
+            <option
+              {% if sorting_option.selected %}
+                selected
+              {% endif %}
+              value="{{ sorting_option.url }}"
+            >
+              {{ sorting_option.text }}
+            </option>
+          {% endfor %}
+        {% elsif template == 'searchresults' %}
+          {% for sorting_option in search.sorting_options %}
+            <option
+              value="{{ sorting_option.url }}"
+              {% if sorting_option.selected %}
+                selected
+              {% endif %}
+            >
+              {{ sorting_option.text }}
+            </option>
+          {% endfor %}
+        {% endif %}
+      </select>
+    </div>
+    <!-- end .theme-filters__block -->
+  {% endif %}
+
+  {% if options.filters_categories and category.subcategories != empty and template == 'category' %}
+    <div class="theme-filters__block">
+      <h6 class="theme-filters__subtitle">{% t "Categories" %}</h6>
+
+      <ul class="no-bullet theme-filters__list">
+        {% for subcategory in category.subcategories %}
+          <li class="theme-filters__item">
+            <a href="{{ subcategory.url }}" class="theme-filters__link" title="{% t 'Go to' %} {{ subcategory.name }}">
+              {{- subcategory.name }}
+              {% if options.filters_counter -%}
+                <small class="theme-filters__counter">({{ subcategory.products_count }})</small>
+              {%- endif -%}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <form id="filters-form" class="theme-filters__form" method="get" action="{{ current_url }}" data-behavior="{{ filters_behavior }}">
+    <input type="hidden" name="q" value="{{ search.query }}">
+
+    {% render 'theme_filters_price', collapse: collapse, collapse_status: collapse_status, filters_behavior: filters_behavior %}
+
+    {% for filter in filters %}
+      {% unless filter.values == empty %}
+        {% assign filter_values_sorted = filter.values | sort: 'name' %}
+        {% assign filter_values_size = filter_values_sorted.size %}
+        {% assign filter_group_class = filter.id | remove: '[]' | replace: '[', '-' | replace: ']', '-' | replace: '--', '-' %}
+        {% assign filter_group_id = 'theme-filters__label--collapse-' | append: filter_group_class %}
+
+        <div class="theme-filters__block{% if forloop.last %} theme-filters__block--last{% endif %}">
+          {% if collapse %}
+            <button
+              type="button"
+              class="button theme-filters__subtitle"
+              data-bs-toggle="collapse"
+              data-bs-target="#{{ filter.id }}"
+              aria-expanded="{% if collapse_status == 'open' %}true{% else %}false{% endif %}"
+              aria-controls="{{ filter.id }}"
+            >
+              {{- filter.name -}}
+              <i class="ph ph-caret-down theme-filters__caret"></i>
+            </button>
+          {% else %}
+            <h6 class="theme-filters__subtitle">{{ filter.name }}</h6>
+          {% endif %}
+
+          <fieldset
+            id="{{ filter.id }}"
+            class="theme-filters__list{% if filter.type == 'color' %} theme-filters__list--inline flex-wrap{% endif %}{% if collapse %} collapse{% endif %}{% if collapse and collapse_status == 'open' %} show{% endif %}"
+          >
+            {% for filter_value in filter_values_sorted %}
+              <label class="theme-filters__label{% unless filter.type == 'color' %}{% if filters_limit and forloop.index > filters_limit_amount %} collapse {{ filter_group_id }}{% endif %}{% endunless %}">
+                <input
+                  type="checkbox"
+                  class="checkbox theme-filters__checkbox"
+                  id="filter-{{ filter.type }}-{{ filter_value.id }}"
+                  name="{{ filter.id }}"
+                  value="{{ filter_value.id }}"
+                  {% if filter_value.selected %}
+                    checked
+                  {% endif %}
+                >
+                {% if filter.type == 'option' %}
+                  <div class="theme-filters__square"></div>
+                  <span>
+                    {{- filter_value.name }}
+                    {% if options.filters_counter -%}
+                      <small class="theme-filters__counter">({{ filter_value.products_count }})</small>
+                    {%- endif -%}
+                  </span>
+                {% elsif filter.type == 'color' %}
+                  <div class="theme-filters__color trsn">
+                    <span
+                      style="background: {{ filter_value.custom }} !important;"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      data-bs-title="{{ filter_value.name }}"
+                      data-bs-custom-class="theme-filters__tooltip"
+                    >
+                      {{- filter_value.name -}}
+                    </span>
+                  </div>
+                {% endif %}
+              </label>
+            {% endfor %}
+
+            {% unless filter.type == 'color' %}
+              {% if filters_limit and filter_values_size > filters_limit_amount %}
+                <button
+                  type="button"
+                  class="button theme-filters__toggle"
+                  data-bs-toggle="collapse"
+                  data-bs-target=".{{ filter_group_id }}"
+                  aria-expanded="false"
+                >
+                  <span>{%- t "+ Show more" -%}</span>
+                  <span>{%- t "- Show less" -%}</span>
+                </button>
+              {% endif %}
+            {% endunless %}
+          </fieldset>
+        </div>
+      {% endunless %}
+    {% endfor %}
+  </form>
+</div>
+<!-- end .theme-filters__wrapper -->

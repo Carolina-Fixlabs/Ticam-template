@@ -1,0 +1,114 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+{% assign instagram_post_limit = component.options.limit %}
+{% assign display_option = component.options.display %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% capture feed_class -%}
+  row theme-section__content {% if component.options.spacing %}theme-section__content--wrap{% else %}theme-section__content--small{% endif -%}
+{%- endcapture %}
+
+{% if instagram_post_limit == 6 %}
+  {% assign columns_mobile = 'col-xs-6 col-4' %}
+{% elsif instagram_post_limit == 8 %}
+  {% assign columns_mobile = 'col-6 col-sm-3' %}
+{% elsif instagram_post_limit == 12 %}
+  {% assign columns_mobile = 'col-xs-6 col-4' %}
+{% endif %}
+
+{% if instagram_post_limit == 6 %}
+  {% assign columns_desktop = 'col-md-4 col-lg-2' %}
+{% elsif instagram_post_limit == 8 %}
+  {% assign columns_desktop = 'col-lg' %}
+{% elsif instagram_post_limit == 12 %}
+  {% assign columns_desktop = 'col-md-3 col-lg-2' %}
+{% endif %}
+
+{% capture sw_content %}
+  {% if social.instagram.url != blank %}
+    <instagram-feed
+      class="{% if display_option == 'carousel' %}swiper-wrapper{% else %}{{ feed_class }}{% endif %}"
+      ig-limit="{{ instagram_post_limit }}"
+      ig-class="{% if display_option == 'carousel' %}swiper-slide{% else %}{{ columns_desktop }} {{ columns_mobile }}{% endif %}"
+      ig-title="{% t 'See on Instagram' %}"
+    ></instagram-feed>
+  {% else %}
+    <div class="{% if display_option == 'carousel' %}swiper-wrapper{% else %}{{ feed_class }}{% endif %}">
+      {% for placeholder in (1..instagram_post_limit) %}
+        <div class="{% if display_option == 'carousel' %}swiper-slide{% else %}{{ columns_mobile }} {{ columns_desktop }}{% endif %} instagram-block">
+          <a href="{{ store.url }}/admin/settings/general/store_info" class="instagram-block__anchor" title="{% t 'Connect your Instagram account' %}" target="_blank">
+            <div class="theme-image-placeholder theme-image-placeholder--instagram"></div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endcapture %}
+
+{%- assign sw_columns = 'sw-columns-desktop="6" sw-columns-mobile="3"' %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+
+<section
+  id="{{ section_id }}"
+  class="container-fluid theme-section"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+  {{ component.attributes }}
+>
+  <div class="container container--adjust theme-section__container">
+    <div class="row align-items-center theme-section__heading theme-section__heading--component">
+      <div class="col-12 text-{{ options.heading_align_mobile }} text-md-{{ options.heading_align_desktop }} theme-section__column">
+        {% if component.options.title != blank %}
+          <div class="theme-section__subtitle">
+            <i class="theme-icon ph ph-instagram-logo"></i> <span {{ component.attributes.textfield.title }}>{{- component.options.title -}}</span>
+          </div>
+        {% endif %}
+
+        {% if social.instagram.url != blank %}
+          <a
+            href="{{ social.instagram.url }}"
+            class="theme-section__title theme-section__title--link{% if options.heading_title_underline %} theme-section__title--underline{% endif %}"
+            title="{% t 'Follow us on' %} @{{ social.instagram.handler }}"
+            target="_blank"
+          >
+            @
+            {{- social.instagram.handler -}}
+          </a>
+        {% else %}
+          <a href="{{ store.url }}/admin/settings/general/store_info" class="theme-section__title theme-section__title--link{% if options.heading_title_underline %} theme-section__title--underline{% endif %}" title="{% t 'Connect your instagram account' %}" target="_blank">
+            {%- t "Connect your instagram account" -%}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if display_option == 'carousel' %}
+      {% render 'component_swiper', sw_layout: 'instagram', sw_content: sw_content, sw_columns: sw_columns, sw_autoheight: 'false' %}
+    {% else %}
+      {{ sw_content }}
+    {% endif %}
+  </div>
+</section>

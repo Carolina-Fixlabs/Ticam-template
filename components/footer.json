@@ -1,0 +1,182 @@
+{
+  "name": "Footer",
+  "icon": "",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-customization/#footer).",
+  "max_usage": 1,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "home",
+    "product",
+    "category",
+    "page",
+    "searchresults",
+    "contactpage",
+    "error",
+    "customer__account",
+    "customer__address",
+    "customer__details",
+    "customer__login",
+    "customer__reset_password"
+  ],
+  "options": {
+    "width": {
+      "name": "Width",
+      "type": "select",
+      "help": "When choosing **Default**, the option defined at **Theme settings > Design > Theme styles > Maximum container width** will be applied.",
+      "default": "default",
+      "options": [
+        {
+          "label": "Default",
+          "value": "default"
+        },
+        {
+          "label": "Small",
+          "value": "1320px"
+        },
+        {
+          "label": "Medium",
+          "value": "1620px"
+        },
+        {
+          "label": "Large",
+          "value": "1920px"
+        },
+        {
+          "label": "Extra Large",
+          "value": "2220px"
+        },
+        {
+          "label": "Full width",
+          "value": "100%"
+        }
+      ]
+    },
+    "align_desktop": {
+      "name": "Desktop content alignment",
+      "type": "select",
+      "default": "text-md-start",
+      "options": [
+        {
+          "label": "Left",
+          "value": "text-md-start"
+        },
+        {
+          "label": "Center",
+          "value": "text-md-center"
+        },
+        {
+          "label": "Right",
+          "value": "text-md-end"
+        }
+      ]
+    },
+    "align_mobile": {
+      "name": "Mobile content alignment",
+      "type": "select",
+      "default": "text-start",
+      "options": [
+        {
+          "label": "Left",
+          "value": "text-start"
+        },
+        {
+          "label": "Center",
+          "value": "text-center"
+        },
+        {
+          "label": "Right",
+          "value": "text-end"
+        }
+      ]
+    },
+    "payment_methods": {
+      "name": "Show payment methods badges",
+      "type": "checkbox",
+      "default": true
+    },
+    "bank_transfer_payment": {
+      "name": "Show bank transfer badge",
+      "type": "checkbox",
+      "default": true
+    },
+    "store_payments": {
+      "name": "Show payment method badges",
+      "type": "checkbox",
+      "help": "Enable this option to show badges for the available payment methods.",
+      "default": false
+    },
+    "store_payments_options": {
+      "name": "Show payment options badges",
+      "type": "checkbox",
+      "help": "Enable this option to show badges for the payment options offered by the payment methods.",
+      "default": false
+    },
+    "partners": {
+      "name": "Payment methods list",
+      "type": "partners"
+    },
+    "group_appearance": {
+      "name": "Appearance",
+      "type": "heading",
+      "default": false
+    },
+    "titles_uppercase": {
+      "name": "Show titles in uppercase",
+      "type": "checkbox",
+      "default": true
+    },
+    "titles_underline": {
+      "name": "Show titles underlined",
+      "type": "checkbox",
+      "default": true
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "system-2",
+      "pack": "color"
+    }
+  },
+  "nesting": {
+    "payment_methods": [
+      "bank_transfer_payment",
+      "store_payments",
+      "store_payments_options",
+      "partners"
+    ],
+    "group_appearance": [
+      "titles_uppercase",
+      "titles_underline",
+      "bundle_color"
+    ]
+  },
+  "mode": "children",
+  "properties": {
+    "footer-about": {
+      "type": "footer-about",
+      "multiple": false
+    },
+    "footer-menu-1": {
+      "type": "footer-menu-1",
+      "multiple": false
+    },
+    "footer-menu-2": {
+      "type": "footer-menu-2",
+      "multiple": false
+    },
+    "footer-contact-information": {
+      "type": "footer-contact-information",
+      "multiple": false
+    },
+    "footer-locations": {
+      "type": "footer-locations",
+      "multiple": false
+    },
+    "footer-divider": {
+      "type": "footer-divider",
+      "multiple": true
+    }
+  }
+}

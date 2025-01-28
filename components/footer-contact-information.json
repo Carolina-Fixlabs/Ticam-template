@@ -1,0 +1,78 @@
+{
+  "name": "Contact information",
+  "icon": "circle-info",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-customization/#contact-information).",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "column_width": {
+      "name": "Column space",
+      "type": "select",
+      "default": "auto",
+      "options": [
+        {
+          "label": "Auto",
+          "value": "auto"
+        },
+        {
+          "label": "Half width",
+          "value": "half"
+        },
+        {
+          "label": "Full width",
+          "value": "full"
+        }
+      ]
+    },
+    "title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Contact us"
+    },
+    "show_email": {
+      "name": "Show contact email",
+      "type": "checkbox",
+      "default": false
+    },
+    "email_type": {
+      "name": "Email type",
+      "type": "select",
+      "default": "contact",
+      "options": [
+        {
+          "label": "Contact",
+          "value": "contact"
+        },
+        {
+          "label": "Location",
+          "value": "location"
+        }
+      ]
+    },
+    "show_whatsapp": {
+      "name": "Show WhatsApp number",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_phone": {
+      "name": "Show contact phone",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_address": {
+      "name": "Show store's main address",
+      "type": "checkbox",
+      "default": true
+    }
+  },
+  "nesting": {
+    "show_email": [
+      "email_type"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

@@ -1,0 +1,76 @@
+{% case footer-contact-information.options.column_width %}
+  {% when 'auto' -%}
+    {%- assign column_width = 'col-12 col-md' %}
+  {% when 'half' -%}
+    {%- assign column_width = 'col-12 col-md-6' %}
+  {% when 'full' -%}
+    {%- assign column_width = 'col-12' %}
+{% endcase %}
+
+<div class="{{ column_width }} footer__column" {{ footer-contact-information.attributes }}>
+  <div class="footer__content">
+    <h4 class="footer__title" {{ footer-contact-information.attributes.textfield.title }}>
+      {{- footer-contact-information.options.title -}}
+    </h4>
+
+    <ul class="no-bullet footer__menu">
+      {% if footer-contact-information.options.show_email %}
+        <li class="footer__item">
+          {% if footer-contact-information.options.email_type == 'location' and store.location.email %}
+            <a href="mailto:{{ store.location.email }}" class="footer__link" title="{% t 'Send us an email' %}">
+              <i class="theme-icon ph ph-envelope-simple footer__icon"></i>
+              {{- store.location.email -}}
+            </a>
+          {% else %}
+            <a href="mailto:{{ store.email }}" class="footer__link" title="{% t 'Send us an email' %}">
+              <i class="theme-icon ph ph-envelope-simple footer__icon"></i>
+              {{- store.email -}}
+            </a>
+          {% endif %}
+        </li>
+      {% endif %}
+
+      {% if store.location.phone != blank and footer-contact-information.options.show_phone %}
+        <li class="footer__item">
+          <a href="tel:{{ store.location.phone }}" class="footer__link" title="{% t 'Call us' %}">
+            <i class="theme-icon ph ph-phone footer__icon"></i>
+            {{- store.location.phone -}}
+          </a>
+        </li>
+      {% endif %}
+
+      {% if footer-contact-information.options.show_whatsapp and social.whatsapp.url != blank %}
+        <li class="footer__item">
+          <a href="{{ social.whatsapp.url }}&amp;text={% t 'Hello' %} {{ store.name }}!" class="footer__link" title="{% t 'Send us a WhatsApp message' %}">
+            <i class="theme-icon ph ph-whatsapp-logo footer__icon"></i>
+            {{- social.whatsapp.handler -}}
+          </a>
+        </li>
+      {% endif %}
+
+      {% if locations.all.size > 0 and footer-contact-information.options.show_address %}
+        <li class="footer__item">
+          {% for location in locations.all %}
+            {% if forloop.first %}
+              {% assign location_address = location.address_with_street_number %}
+              {% capture location_address_params -%}
+                {%- if location.complement != blank %}{{ location.complement }}, {% endif -%}
+                {%- if location.postal != blank %}{{ location.postal }}, {% endif -%}
+                {%- if location.municipality != blank %}{{ location.municipality }}, {% endif -%}
+                {{- location.city }}, {{ location.region }}, {{ location.country -}}
+              {%- endcapture %}
+              {% capture location_address_url -%}
+                https://maps.google.com/maps?q={{ location_address | replace: '#', '' | url_encode -}}
+                {{- location_address_params -}}
+              {%- endcapture %}
+              <a href="{{ location_address_url }}" class="footer__link" title="{% t 'See on Google Maps' %}" target="_blank">
+                <i class="theme-icon ph ph-map-pin footer__icon"></i>
+                {{- location.formatted -}}
+              </a>
+            {% endif %}
+          {% endfor %}
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</div>

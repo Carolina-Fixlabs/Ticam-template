@@ -1,0 +1,66 @@
+{
+  "name": "Top bar",
+  "icon": "rectangle-vertical-history",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-customization/#top-bar).",
+  "max_usage": 1,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "width": {
+      "name": "Width",
+      "type": "select",
+      "default": "grid",
+      "options": [
+        {
+          "label": "Header width",
+          "value": "grid"
+        },
+        {
+          "label": "Full width",
+          "value": "100%"
+        }
+      ]
+    },
+    "fixed": {
+      "name": "Fix Top bar",
+      "type": "checkbox",
+      "default": true
+    },
+    "autoplay": {
+      "name": "Enable Autoplay",
+      "type": "checkbox",
+      "help": "If enabled, slides will change automatically.",
+      "default": true
+    },
+    "autoplay_speed": {
+      "name": "Autoplay speed",
+      "type": "slider",
+      "help": "Allows to define the time interval at which slides change.",
+      "default": 3000,
+      "min": 1000,
+      "max": 6000,
+      "step": 500,
+      "unit": "ms"
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "system-1",
+      "pack": "color"
+    }
+  },
+  "nesting": {
+    "autoplay": [
+      "autoplay_speed"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {
+    "top-bar-slides": {
+      "type": "top-bar-slide",
+      "multiple": true
+    }
+  }
+}

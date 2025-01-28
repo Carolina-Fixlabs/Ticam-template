@@ -1,0 +1,107 @@
+{% for placeholder in (1..4) %}
+  {% assign link_url = store.url | append: '/admin/en/settings/locations/0' %}
+  {% capture link_text %}{% t "Create a location" %}{% endcapture %}
+
+  {% capture print_email %}
+    {% if component.options.show_email %}
+      <a href="{{ link_url }}" class="contact-location__link" title="{{ link_text }}" target="_blank"> <i class="theme-icon ph ph-envelope-simple"></i> {% t "email@domain.com" %} </a>
+    {% endif %}
+  {% endcapture %}
+
+  {% capture print_phone %}
+    {% if component.options.show_phone %}
+      <a href="{{ link_url }}" class="contact-location__link" title="{{ link_text }}" target="_blank"> <i class="theme-icon ph ph-phone"></i> +569 1234 5678 </a>
+    {% endif %}
+  {% endcapture %}
+
+  {% capture print_address %}
+    {% if component.options.show_address %}
+      <a href="https://maps.google.com" class="contact-location__link" title="{% t 'See on Google Maps' %}" target="_blank"> <i class="theme-icon ph ph-map-pin"></i> {% t "Location street address #123, Postal code, City, Municipality, Region, Country" %} </a>
+    {% endif %}
+  {% endcapture %}
+
+  <div
+    class="col-12 {% if column_amount == 2 %}col-md-6{% elsif column_amount == 3 %}col-md-6 col-lg-4{% endif %} contact-location contact-location--{{ component.options.alignment }}"
+    {% if has_animation %}
+      data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+    {% endif %}
+  >
+    <div class="contact-location__wrapper">
+      <h5 class="contact-location__title">
+        {%- t "Location name" %} #{{ forloop.index -}}
+        {%- if forloop.index == 2 %}
+          <span class="contact-location__badge">{% t "Pickup point" %}</span>
+        {%- endif %}
+      </h5>
+
+      {{ print_email }}
+      {{ print_phone }}
+      {{ print_address }}
+
+      {% if component.options.show_details %}
+        {% assign location_id = 'location-modal-' | append: forloop.index %}
+        <a
+          role="button"
+          class="contact-location__link"
+          title="{% t 'See instructions' %}"
+          data-bs-toggle="modal"
+          data-bs-target="#{{ location_id }}"
+        >
+          <i class="theme-icon ph ph-info"></i> {% t "See more details" %}
+        </a>
+
+        <div
+          id="{{ location_id }}"
+          class="modal fade theme-modal"
+          tabindex="-1"
+          aria-labelledby="{{ location_id }}-title"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-lg theme-modal__dialog" data-bundle-color="{{ component.options.bundle_color }}">
+            <div class="modal-content theme-modal__content">
+              <div class="modal-header theme-modal__header">
+                <h6 class="modal-title theme-modal__title" id="{{ location_id }}-title">{%- t "Location name" %} #{{ forloop.index -}}</h6>
+
+                <button type="button" class="button theme-modal__close" data-bs-dismiss="modal" aria-label="{% t 'Close' %}">
+                  <i class="ph ph-x-circle"></i>
+                </button>
+              </div>
+
+              <div class="modal-body theme-modal__body">
+                <div class="theme-modal__subtitle">{% t "Description" %}</div>
+                <div class="theme-modal__text">
+                  {% t "Here will display the description that you can add to each location, only if it's marked as Pickup point." %}
+                </div>
+
+                <div class="theme-modal__subtitle">{% t "Instructions" %}</div>
+                <div class="theme-modal__text check-empty">
+                  {% t "Here will display the instructions that you can add to each location, only if it's marked as Pickup point." %}
+                </div>
+
+                {% if component.options.show_email or component.options.show_phone or component.options.show_address %}
+                  <div class="theme-modal__subtitle">{% t "Contact details" %}</div>
+                  {{ print_email }}
+                  {{ print_phone }}
+                  {{ print_address }}
+                {% endif %}
+
+                {% if component.options.show_map %}
+                  <div class="theme-section__embed">
+                    <iframe
+                      title="{% t "Store address on Google Maps" %}"
+                      width="100%"
+                      height="350"
+                      class="border-0"
+                      src="https://maps.google.com&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                      loading="lazy"
+                    ></iframe>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}

@@ -1,0 +1,99 @@
+{% case component.options.image_dimension %}
+  {% when 'landscape' %}
+    {% if options.theme_width == '1320px' %}
+      {% assign image_width_and_height = 'width="306" height="172"' %}
+    {% else %}
+      {% assign size_xl = '576x324' %}
+      {% assign image_width_and_height = 'width="576" height="324"' %}
+    {% endif %}
+    {% assign size_lg = '306x172' %}
+    {% if component.options.columns_mobile == 1 %}{% assign size_sm = '527x296' %}{% elsif component.options.columns_mobile == 2 %}{% assign size_sm = '251x141' %}{% endif %}
+    {% assign size_xs = '366x205' %}
+  {% when 'portrait' %}
+    {% if options.theme_width == '1320px' %}
+      {% assign image_width_and_height = 'width="306" height="407"' %}
+    {% else %}
+      {% assign size_xl = '576x768' %}
+      {% assign image_width_and_height = 'width="576" height="768"' %}
+    {% endif %}
+    {% assign size_lg = '306x407' %}
+    {% if component.options.columns_mobile == 1 %}{% assign size_sm = '527x702' %}{% elsif component.options.columns_mobile == 2 %}{% assign size_sm = '251x335' %}{% endif %}
+    {% assign size_xs = '366x487' %}
+  {% when 'rectangular' %}
+    {% if options.theme_width == '1320px' %}
+      {% assign image_width_and_height = 'width="306" height="230"' %}
+    {% else %}
+      {% assign size_xl = '576x432' %}
+      {% assign image_width_and_height = 'width="576" height="432"' %}
+    {% endif %}
+    {% assign size_lg = '306x230' %}
+    {% if component.options.columns_mobile == 1 %}{% assign size_sm = '527x395' %}{% elsif component.options.columns_mobile == 2 %}{% assign size_sm = '251x188' %}{% endif %}
+    {% assign size_xs = '366x275' %}
+  {% when 'square' %}
+    {% if options.theme_width == '1320px' %}
+      {% assign image_width_and_height = 'width="306" height="306"' %}
+    {% else %}
+      {% assign size_xl = '576x576' %}
+      {% assign image_width_and_height = 'width="576" height="576"' %}
+    {% endif %}
+    {% assign size_lg = '306x306' %}
+    {% if component.options.columns_mobile == 1 %}{% assign size_sm = '527x527' %}{% elsif component.options.columns_mobile == 2 %}{% assign size_sm = '251x251' %}{% endif %}
+    {% assign size_xs = '366x366' %}
+{% endcase %}
+
+{% case component.options.image_display %}
+  {% when 'resize' %}
+    {% assign img_src_xs = logo.options.image.url | resize: size_xs %}
+    {% assign img_src_sm = logo.options.image.url | resize: size_sm %}
+    {% assign img_src_lg = logo.options.image.url | resize: size_lg %}
+    {% if options.theme_width != '1320px' %}
+      {% assign img_src_xl = logo.options.image.url | resize: size_xl %}
+    {% endif %}
+  {% when 'thumb' %}
+    {% assign img_src_xs = logo.options.image.url | thumb: size_xs %}
+    {% assign img_src_sm = logo.options.image.url | thumb: size_sm %}
+    {% assign img_src_lg = logo.options.image.url | thumb: size_lg %}
+    {% if options.theme_width != '1320px' %}
+      {% assign img_src_xl = logo.options.image.url | thumb: size_xl %}
+    {% endif %}
+{% endcase %}
+
+{% capture link_text_default %}{% t "See more" %}{% endcapture %}
+{% assign link_text = logo.options.link_text | default: link_text_default %}
+
+<div
+  class="{% if display_option == 'carousel' %}swiper-slide{% else %}{{ class_mobile }} {{ class_desktop }}{% endif %} logo-block"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+  {{ logo.attributes }}
+>
+  <div class="w-100 h-auto d-block position-relative">
+    {% render 'theme_hover_link', link: logo.options.link, link_text: link_text, link_external: logo.options.link_external %}
+
+    {% if logo.options.image.url != blank %}
+      {% if component.options.image_display == 'original' %}
+        <img src="{{ logo.options.image.url }}" alt="{{ logo.options.image.alt | default: store.name | escape }}" {{ logo.options.image.attributes.width_and_height }} loading="lazy">
+      {% else %}
+        <picture>
+          <source media="screen and (max-width: 414px)" srcset="{{ img_src_xs }}">
+          <source media="screen and (max-width: 575px)" srcset="{{ img_src_sm }}">
+          {% if options.theme_width == '1320px' %}
+            <source media="screen and (min-width: 576px)" srcset="{{ img_src_lg }}">
+          {% else %}
+            <source media="screen and (min-width: 576px) and (max-width: 1199px)" srcset="{{ img_src_lg }}">
+            <source media="screen and (min-width: 1200px)" srcset="{{ img_src_xl }}">
+          {% endif %}
+          <img
+            src="{{ img_src_lg }}"
+            {{ image_width_and_height }}
+            alt="{{ logo.options.image.alt | default: store.name | escape }}"
+            loading="lazy"
+          >
+        </picture>
+      {% endif %}
+    {% else %}
+      <div class="aspect-ratio-{{ component.options.image_dimension }} theme-image-placeholder"></div>
+    {% endif %}
+  </div>
+</div>

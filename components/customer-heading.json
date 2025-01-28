@@ -1,0 +1,39 @@
+{
+  "name": "Customer heading",
+  "icon": "user-check",
+  "max_usage": 1,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "customer__account"
+  ],
+  "options": {
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 40,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 24,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

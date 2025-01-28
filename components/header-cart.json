@@ -1,0 +1,42 @@
+{
+  "name": "Cart Menu",
+  "icon": "cart-shopping",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-customization/#cart-menu).",
+  "max_usage": null,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "icon": {
+      "name": "Show icon",
+      "type": "checkbox",
+      "help": "Allows to display an icon next to the menu title.",
+      "default": true
+    },
+    "actions": {
+      "name": "Buttons priority",
+      "type": "select",
+      "help": "Allows to define which of the buttons of the menu will be the one with higher priority to customers.",
+      "default": "checkout",
+      "options": [
+        {
+          "label": "Checkout",
+          "value": "checkout"
+        },
+        {
+          "label": "Cart",
+          "value": "cart"
+        }
+      ]
+    },
+    "actions_text": {
+      "name": "Actions text",
+      "type": "text",
+      "help": "Text that displays before the buttons to inform customers that Shipping & Taxes will be finally calculated at the Checkout. If not needed, just leave this field empty.",
+      "default": "Shipping costs will be calculated at Checkout."
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

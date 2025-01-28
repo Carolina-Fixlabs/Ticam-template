@@ -1,0 +1,276 @@
+{
+  "name": "Trust bar",
+  "icon": "info-circle",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-components/#-trust-bar).",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "home",
+    "product",
+    "category",
+    "page",
+    "searchresults",
+    "contactpage",
+    "error",
+    "checkout__cart",
+    "checkout__checkout",
+    "customer__account",
+    "customer__login"
+  ],
+  "options": {
+    "display": {
+      "name": "Display type",
+      "type": "select",
+      "default": "carousel",
+      "options": [
+        {
+          "label": "Carousel",
+          "value": "carousel"
+        },
+        {
+          "label": "Grid",
+          "value": "grid"
+        }
+      ]
+    },
+    "columns_desktop": {
+      "name": "Number of columns on desktop",
+      "type": "select",
+      "default": "4",
+      "options": [
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        },
+        {
+          "label": "3",
+          "value": "3"
+        },
+        {
+          "label": "4",
+          "value": "4"
+        }
+      ]
+    },
+    "columns_mobile": {
+      "name": "Number of columns on mobile",
+      "type": "select",
+      "default": "2",
+      "options": [
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        }
+      ]
+    },
+    "alignment": {
+      "name": "Content alignment",
+      "type": "select",
+      "default": "start",
+      "options": [
+        {
+          "label": "Left",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "end"
+        }
+      ]
+    },
+    "enable_icons": {
+      "name": "Show icons",
+      "type": "checkbox",
+      "default": true
+    },
+    "card": {
+      "name": "Apply Card style",
+      "type": "checkbox",
+      "default": false
+    },
+    "card_border": {
+      "name": "Enable Card border",
+      "type": "checkbox",
+      "default": true
+    },
+    "card_border_opacity": {
+      "name": "Card border opacity",
+      "type": "slider",
+      "default": 10,
+      "min": 10,
+      "max": 100,
+      "step": 10,
+      "unit": "%"
+    },
+    "card_bundle_color": {
+      "name": "Card content colors",
+      "type": "bundle",
+      "default": "system-1",
+      "pack": "color"
+    },
+    "group_carousel": {
+      "name": "Carousel settings",
+      "type": "heading",
+      "default": false
+    },
+    "autoplay": {
+      "name": "Enable autoplay",
+      "type": "checkbox",
+      "default": true
+    },
+    "autoplay_speed": {
+      "name": "Autoplay speed",
+      "type": "slider",
+      "default": 3000,
+      "min": 1000,
+      "max": 6000,
+      "step": 500,
+      "unit": "ms"
+    },
+    "show_arrows": {
+      "name": "Show Arrows",
+      "type": "checkbox",
+      "default": false
+    },
+    "show_arrows_hover": {
+      "name": "Show arrows on hover",
+      "type": "checkbox",
+      "default": false
+    },
+    "show_dots": {
+      "name": "Show Dots",
+      "type": "checkbox",
+      "default": false
+    },
+    "group_appearance": {
+      "name": "Appearance",
+      "type": "heading",
+      "default": false
+    },
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 32,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 32,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    },
+    "animate": {
+      "name": "Customize animation options",
+      "type": "checkbox",
+      "help": "Allows to override the animation options defined at **Theme settings > Design > Enable theme animations**.",
+      "default": false
+    },
+    "animate_type": {
+      "name": "Animation type",
+      "type": "select",
+      "default": "fade-up",
+      "options": [
+        {
+          "label": "From down",
+          "value": "fade-up"
+        },
+        {
+          "label": "From up",
+          "value": "fade-down"
+        },
+        {
+          "label": "From left",
+          "value": "fade-right"
+        },
+        {
+          "label": "From right",
+          "value": "fade-left"
+        },
+        {
+          "label": "Zoom in",
+          "value": "zoom-in"
+        },
+        {
+          "label": "Zoom out",
+          "value": "zoom-out"
+        }
+      ]
+    },
+    "animate_repeat": {
+      "name": "Do the animation once",
+      "type": "checkbox",
+      "default": true
+    },
+    "animate_delay": {
+      "name": "Animation delay",
+      "type": "slider",
+      "default": 50,
+      "min": 0,
+      "max": 300,
+      "step": 50,
+      "unit": "ms"
+    }
+  },
+  "nesting": {
+    "card": [
+      "card_border",
+      "card_border_opacity",
+      "card_bundle_color"
+    ],
+    "animate": [
+      "animate_type",
+      "animate_repeat",
+      "animate_delay"
+    ],
+    "autoplay": [
+      "autoplay_speed"
+    ],
+    "show_arrows": [
+      "show_arrows_hover"
+    ],
+    "group_carousel": [
+      "autoplay",
+      "show_arrows",
+      "show_dots"
+    ],
+    "group_appearance": [
+      "margin_top",
+      "margin_bottom",
+      "bundle_color",
+      "animate"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {
+    "trust-blocks": {
+      "type": "trust-block",
+      "multiple": true
+    }
+  }
+}

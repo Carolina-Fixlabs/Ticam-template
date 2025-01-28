@@ -1,0 +1,86 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+
+{% for subcategory in store.category[category.permalink].subcategories %}
+  {% if subcategory.products != empty %}
+    {% assign display_option = component.options.display %}
+
+    {% if options.theme_animate %}
+      {% assign has_animation = true %}
+
+      {% if component.options.animate %}
+        {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+        {% assign animate_repeat = component.options.animate_repeat %}
+        {% assign animate_type = component.options.animate_type %}
+      {% else %}
+        {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+        {% assign animate_repeat = options.theme_animate_repeat %}
+        {% assign animate_type = options.theme_animate_type %}
+      {% endif %}
+    {% else %}
+      {% assign has_animation = false %}
+    {% endif %}
+
+    {% assign link = subcategory.permalink %}
+    {% capture link_text_default %}{% t "See more products" %}{% endcapture %}
+    {% assign link_text = component.options.heading_link_text | default: link_text_default %}
+
+    {% capture sw_content %}
+      {% for prod in subcategory.products limit: component.options.limit %}
+        {% render 'product_block', prod: prod, display_option: display_option, has_animation: has_animation, animate_type: animate_type, animate_repeat: animate_repeat, animate_delay: animate_delay %}
+      {% endfor %}
+    {% endcapture %}
+
+    {%- capture sw_columns %}sw-columns-desktop="{{ options.pb_columns_desktop }}" sw-columns-mobile="{{ options.pb_columns_mobile }}"{% endcapture -%}
+
+    <section
+      id="{{ section_id }}"
+      class="container-fluid theme-section"
+      data-bundle-color="{{ component.options.bundle_color }}"
+      {{ component.attributes }}
+    >
+      <div class="container container--adjust theme-section__container">
+        {% assign align_desktop = options.heading_align_desktop %}
+        {% assign align_mobile = options.heading_align_mobile %}
+
+        <div class="row align-items-center theme-section__heading">
+          <div class="col-12 {% if link != blank %}{% if align_desktop == 'center' %}col-md-8 offset-md-2 col-lg-6 offset-lg-3{% else %}col-md-10 col-lg-9{% endif %}{% endif %} text-{{ align_mobile }} text-md-{{ align_desktop }} theme-section__column">
+            <h3 class="theme-section__title{% if options.heading_title_underline %} theme-section__title--underline{% endif %} check-empty">
+              {{- subcategory.name -}}
+            </h3>
+
+            {% if component.options.heading_description %}
+              <div class="theme-section__description check-empty">
+                {{- subcategory.description -}}
+              </div>
+            {% endif %}
+          </div>
+
+          {% if component.options.heading_link %}
+            <div class="col-12 col-md-2 col-lg-3 text-{{ align_mobile }} text-md-end theme-section__column">
+              <a href="{{ link }}" class="theme-section__link" title="{{ link_text }}" {{ component.attributes.textfield.heading_link_text }}>
+                <span>{{ link_text }}</span> <i class="ph ph-arrow-right"></i>
+              </a>
+            </div>
+          {% endif %}
+        </div>
+        <!-- end .theme-section__heading -->
+
+        <div class="row theme-section__content">
+          {% if display_option == 'carousel' %}
+            {% render 'component_swiper', sw_layout: 'products', sw_content: sw_content, sw_columns: sw_columns, sw_autoheight: 'false' %}
+          {% else %}
+            {{ sw_content }}
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endfor %}

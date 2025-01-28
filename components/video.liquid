@@ -1,0 +1,55 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+{% assign section_width = component.options.width %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% capture video_object %}
+  {% assign video_placeholder = '<div class="theme-image-placeholder theme-image-placeholder--video"></div>' -%}
+  <div class="theme-section__embed aspect-ratio-{{ component.options.ratio }}">
+    {{ component.options.video | default: video_placeholder }}
+  </div>
+{% endcapture %}
+
+<style>
+  #{{ section_id }} {
+    {% unless section_width == 'full' %}--theme-max-width: {{ options.theme_width }};{% endunless %}
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+
+<div
+  id="{{ section_id }}"
+  class="container-fluid theme-section theme-video"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+  {{ component.attributes }}
+>
+  <div class="{% if section_width == 'full' %}container-fluid{% else %}container container--adjust{% endif %} theme-section__container">
+    {% if section_width == 'full' %}
+      {{ video_object }}
+    {% else %}
+      <div class="row justify-content-{{ component.options.position_x }} theme-section__content">
+        <div class="col-12{% if section_width == 'small' %} col-md-7 col-lg-6{% elsif section_width == 'medium' %} col-md-11 col-lg-10{% endif %}">
+          {{ video_object }}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,114 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+{% assign display_option = 'grid' %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% capture empty_message %}
+  <div class="col-12 text-center theme-message">
+    <div class="theme-message__wrapper">
+      <h5 class="theme-message__title">{% t "No products matched the selected filters" %}.</h5>
+      <div class="theme-message__text">{% t "Try removing or using different filters." %}</div>
+    </div>
+  </div>
+{% endcapture %}
+
+{% capture category_feed %}
+  {% paginate category.products by component.options.limit %}
+    {% if filters != empty and paged.total == 0 %}
+      {{ empty_message }}
+    {% endif %}
+
+    {% for prod in paged.products %}
+      {% render 'product_block', prod: prod, display_option: display_option, has_animation: has_animation, animate_type: animate_type, animate_repeat: animate_repeat, animate_delay: animate_delay %}
+    {% endfor %}
+
+    {% if paged.total_pages > 1 %}
+      {{ pager }}
+    {% endif %}
+  {% endpaginate %}
+{% endcapture %}
+
+{% capture search_feed %}
+  {% paginate search.results by component.options.limit %}
+    {% if filters != empty and paged.total == 0 %}
+      {{ empty_message }}
+    {% endif %}
+
+    {% for prod in paged.results %}
+      {% render 'product_block', prod: prod, display_option: display_option, has_animation: has_animation, animate_type: animate_type, animate_repeat: animate_repeat, animate_delay: animate_delay %}
+    {% endfor %}
+
+    {% if paged.total_pages > 1 %}
+      {{ pager }}
+    {% endif %}
+  {% endpaginate %}
+{% endcapture %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+
+<section id="{{ section_id }}" class="container-fluid theme-section theme-section--feed" data-bundle-color="{{ component.options.bundle_color }}" {{ component.attributes }}>
+  <div class="container container--adjust theme-section__container">
+    <div class="row theme-section__content">
+      {% case template %}
+        {% when 'category' %}
+          {% if template == 'category' and category.products_count == 0 %}
+            {% render 'theme_message' %}
+          {% elsif template == 'category' and category.products_count > 0 and options.filters_desktop %}
+            <div class="col-md-4 col-lg-3 col-xl-2 d-none d-md-block theme-section__filters">
+              {% if request.preview_mode %}
+                {% render 'theme_filters' %}
+              {% endif %}
+            </div>
+
+            <div class="col-12 col-md-8 col-lg-9 col-xl-10 theme-section__feed">
+              <div class="row theme-section__content">
+                {{ category_feed }}
+              </div>
+            </div>
+          {% else %}
+            {{ category_feed }}
+          {% endif %}
+        {% when 'searchresults' %}
+          {% if search.results.size == 0 %}
+            {% render 'theme_message' %}
+          {% elsif search.results.size > 0 and options.filters_desktop %}
+            <div class="col-md-4 col-lg-3 col-xl-2 d-none d-md-block theme-section__filters">
+              {% if request.preview_mode %}
+                {% render 'theme_filters' %}
+              {% endif %}
+            </div>
+
+            <div class="col-12 col-md-8 col-lg-9 col-xl-10 theme-section__feed">
+              <div class="row theme-section__content">
+                {{ search_feed }}
+              </div>
+            </div>
+          {% else %}
+            {{ search_feed }}
+          {% endif %}
+      {% endcase %}
+    </div>
+  </div>
+</section>
+
+{% render 'sidebar_filters' %}

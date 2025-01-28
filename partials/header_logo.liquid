@@ -1,0 +1,52 @@
+{% assign logo_desktop = component.options.logo.url %}
+{% assign logo_desktop_alt = component.options.logo.alt %}
+{% assign logo_mobile = component.options.logo_mobile.url %}
+{% assign logo_mobile_alt = component.options.logo_mobile.alt %}
+
+{% assign logo_width_and_height = component.options.logo.attributes.width_and_height | default: component.options.logo_mobile.attributes.width_and_height | default: 'width="auto" height="auto"' %}
+
+{% assign logo_alt = logo_desktop_alt | default: logo_mobile_alt | default: store.name | escape %}
+
+{% if logo_position == 'desktop' %}
+  {% assign logo_class = 'header' %}
+{% else %}
+  {% assign logo_class = 'sidebar-header' %}
+{% endif %}
+
+{% capture logo %}
+  {%- if logo_desktop != blank and logo_mobile != blank %}
+    <picture class="{{ logo_class }}__picture">
+      <source media="screen and (max-width: 575px)" srcset="{{ logo_mobile }}">
+      <source media="screen and (min-width: 576px)" srcset="{{ logo_desktop }}">
+      <img src="{{ logo_desktop }}" alt="{{ logo_alt }}" class="{{ logo_class }}__logo" {{ logo_width_and_height }} loading="eager">
+    </picture>
+  {% elsif logo_desktop != blank and logo_mobile == blank %}
+    <img src="{{ logo_desktop }}" alt="{{ logo_alt }}" class="{{ logo_class }}__logo" {{ logo_width_and_height }} loading="eager">
+  {% elsif logo_desktop == blank and logo_mobile != blank %}
+    <img src="{{ logo_mobile }}" alt="{{ logo_alt }}" class="{{ logo_class }}__logo" {{ logo_width_and_height }} loading="eager">
+  {% elsif store.logo != blank %}
+    <img src="{{ store.logo }}" alt="{{ logo_alt }}" class="{{ logo_class }}__logo" {{ logo_width_and_height }} loading="eager">
+  {% else %}
+    {% case logo_position %}
+      {% when 'desktop' %}
+        {{- options.theme_store_name | default: store.name -}}
+      {% else %}
+        <h5 class="offcanvas-title sidebar-header__title theme-store-name" id="mobile-menu-label">{{ options.theme_store_name | default: store.name }}</h5>
+    {% endcase %}
+  {% endif -%}
+{% endcapture %}
+
+{% if logo_position == 'desktop' %}
+  {% case template %}
+    {% when 'home' %}
+      <h1 class="theme-store-name">
+        <a href="{{ store.url }}" class="header__brand" title="{% t 'Go to Home page' %}">{{- logo -}}</a>
+      </h1>
+    {% else %}
+      <div class="theme-store-name">
+        <a href="{{ store.url }}" class="header__brand" title="{% t 'Go to Home page' %}">{{- logo -}}</a>
+      </div>
+  {% endcase %}
+{% else %}
+  {{- logo -}}
+{% endif %}

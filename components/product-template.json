@@ -1,0 +1,307 @@
+{
+  "name": "Product template",
+  "icon": "archive",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-components/#-product-template).",
+  "max_usage": 1,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "product"
+  ],
+  "options": {
+    "content_alignment": {
+      "name": "Content alignment",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "end"
+        }
+      ]
+    },
+    "group_gallery": {
+      "name": "Image gallery options",
+      "type": "heading",
+      "default": false
+    },
+    "gallery_image_format": {
+      "name": "Format Images",
+      "type": "checkbox",
+      "default": true
+    },
+    "gallery_image_dimension": {
+      "name": "Image dimension",
+      "type": "select",
+      "default": "square",
+      "options": [
+        {
+          "label": "Landscape",
+          "value": "landscape"
+        },
+        {
+          "label": "Portrait",
+          "value": "portrait"
+        },
+        {
+          "label": "Rectangular",
+          "value": "rectangular"
+        },
+        {
+          "label": "Square",
+          "value": "square"
+        }
+      ]
+    },
+    "gallery_image_display": {
+      "name": "Image display",
+      "type": "select",
+      "default": "thumb",
+      "options": [
+        {
+          "label": "Resize",
+          "value": "resize"
+        },
+        {
+          "label": "Crop",
+          "value": "thumb"
+        }
+      ]
+    },
+    "gallery_image_size": {
+      "name": "Image desktop width",
+      "type": "slider",
+      "help": "Allows to define the width dimension for your product images on desktop devices.",
+      "default": 719,
+      "min": 366,
+      "max": 2000,
+      "step": 1,
+      "unit": ""
+    },
+    "gallery_thumbs": {
+      "name": "Show Gallery thumbnails",
+      "type": "checkbox",
+      "default": true
+    },
+    "gallery_thumbs_position": {
+      "name": "Gallery thumbnails desktop position",
+      "type": "select",
+      "default": "bottom",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        },
+        {
+          "label": "Bottom",
+          "value": "bottom"
+        }
+      ]
+    },
+    "gallery_zoom": {
+      "name": "Enable zoom on images",
+      "type": "checkbox",
+      "default": true
+    },
+    "gallery_zoom_size": {
+      "name": "Zoom amount",
+      "type": "slider",
+      "default": 2,
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "unit": ""
+    },
+    "sticky_product_image": {
+      "name": "Sticky product image",
+      "type": "checkbox",
+      "default": false
+    },
+    "group_appearance": {
+      "name": "Appearance",
+      "type": "heading",
+      "default": false
+    },
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 40,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 32,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    },
+    "animate": {
+      "name": "Customize animation options",
+      "type": "checkbox",
+      "help": "Allows to override the animation options defined at **Theme settings > Design > Enable theme animations**.",
+      "default": false
+    },
+    "animate_type": {
+      "name": "Animation type",
+      "type": "select",
+      "default": "fade-up",
+      "options": [
+        {
+          "label": "From down",
+          "value": "fade-up"
+        },
+        {
+          "label": "From up",
+          "value": "fade-down"
+        },
+        {
+          "label": "From left",
+          "value": "fade-right"
+        },
+        {
+          "label": "From right",
+          "value": "fade-left"
+        },
+        {
+          "label": "Zoom in",
+          "value": "zoom-in"
+        },
+        {
+          "label": "Zoom out",
+          "value": "zoom-out"
+        }
+      ]
+    },
+    "animate_repeat": {
+      "name": "Do the animation once",
+      "type": "checkbox",
+      "default": true
+    },
+    "animate_delay": {
+      "name": "Animation delay",
+      "type": "slider",
+      "default": 50,
+      "min": 0,
+      "max": 300,
+      "step": 50,
+      "unit": "ms"
+    }
+  },
+  "nesting": {
+    "animate": [
+      "animate_type",
+      "animate_repeat",
+      "animate_delay"
+    ],
+    "gallery_zoom": [
+      "gallery_zoom_size"
+    ],
+    "group_gallery": [
+      "gallery_image_format",
+      "gallery_thumbs",
+      "gallery_zoom",
+      "sticky_product_image"
+    ],
+    "gallery_thumbs": [
+      "gallery_thumbs_position"
+    ],
+    "group_appearance": [
+      "margin_top",
+      "margin_bottom",
+      "bundle_color",
+      "animate"
+    ],
+    "gallery_image_format": [
+      "gallery_image_dimension",
+      "gallery_image_display",
+      "gallery_image_size"
+    ]
+  },
+  "mode": "children",
+  "properties": {
+    "attributes": {
+      "type": "product-attributes",
+      "multiple": false
+    },
+    "title": {
+      "type": "product-title",
+      "multiple": false
+    },
+    "price": {
+      "type": "product-price",
+      "multiple": false
+    },
+    "reviews-stars": {
+      "type": "product-reviews-stars",
+      "multiple": false
+    },
+    "stock": {
+      "type": "product-stock",
+      "multiple": false
+    },
+    "form": {
+      "type": "product-form",
+      "multiple": false
+    },
+    "stock-locations": {
+      "type": "product-stock-locations",
+      "multiple": false
+    },
+    "wishlist": {
+      "type": "product-wishlist",
+      "multiple": false
+    },
+    "description": {
+      "type": "product-description",
+      "multiple": false
+    },
+    "accordion": {
+      "type": "product-accordion",
+      "multiple": false
+    },
+    "fields": {
+      "type": "product-fields",
+      "multiple": false
+    },
+    "attachments": {
+      "type": "product-attachments",
+      "multiple": false
+    },
+    "line-divider": {
+      "type": "product-line-divider",
+      "multiple": true
+    },
+    "share": {
+      "type": "product-share",
+      "multiple": false
+    },
+    "product-custom-code": {
+      "type": "product-custom-code",
+      "multiple": true
+    }
+  }
+}

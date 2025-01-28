@@ -1,0 +1,42 @@
+{
+  "name": "Top bar slide",
+  "icon": "square",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "icon": {
+      "name": "Icon",
+      "type": "ph_icon",
+      "help": "Allows to display an icon at the left side of the text.",
+      "default": ""
+    },
+    "text": {
+      "name": "Text",
+      "type": "text",
+      "help": "Mandatory",
+      "default": "This is the slide text"
+    },
+    "link": {
+      "name": "Link",
+      "type": "link",
+      "help": "Allows to add a link to any content of the store.",
+      "default": null
+    },
+    "link_text": {
+      "name": "Link text",
+      "type": "input",
+      "help": "Text that displays in the link.",
+      "default": "Read more"
+    },
+    "link_external": {
+      "name": "Enable as external link",
+      "type": "checkbox",
+      "default": false
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

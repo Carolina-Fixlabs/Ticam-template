@@ -1,0 +1,28 @@
+{
+  "name": "Product Accordion",
+  "icon": "arrows-from-dotted-line",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "collapse": {
+      "name": "Enable collapsible items",
+      "type": "checkbox",
+      "default": true
+    },
+    "first": {
+      "name": "First item opened",
+      "type": "checkbox",
+      "default": false
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {
+    "items": {
+      "type": "product-accordion-item",
+      "multiple": true
+    }
+  }
+}

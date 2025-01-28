@@ -1,0 +1,3 @@
+{% assign store_prod = products.product[store-product.options.permalink] %}
+
+{% render 'product_block', prod: store_prod, display_option: display_option, has_animation: has_animation, animate_type: animate_type, animate_repeat: animate_repeat, animate_delay: animate_delay %}

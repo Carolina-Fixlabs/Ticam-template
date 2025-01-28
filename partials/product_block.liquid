@@ -1,0 +1,267 @@
+{% case display_option %}
+  {% when 'carousel' %}
+    {% assign prod_class = 'swiper-slide' %}
+  {% when 'grid' %}
+    {% if options.pb_columns_mobile == 1 %}
+      {% assign prod_class_mobile = 'col-12 col-sm-6' %}
+    {% else %}
+      {% assign prod_class_mobile = 'col-6 col-sm-4' %}
+    {% endif %}
+
+    {% if options.pb_columns_desktop == 4 %}
+      {% assign prod_class_desktop = 'col-md-4 col-lg-3' %}
+    {% else %}
+      {% assign prod_class_desktop = 'col-md-4 col-lg-3 col-lg-by-5' %}
+    {% endif %}
+    {% capture prod_class -%}
+      {{- prod_class_mobile }}
+      {{ prod_class_desktop -}}
+    {%- endcapture %}
+{% endcase %}
+
+{% assign prod_sku = prod.variants.first.sku | default: prod.sku %}
+{% assign prod_brand = prod.brand %}
+
+{% capture prod_name %}
+  <a href="{{ prod.url }}" class="product-block__name" title="{% t 'Go to' %} {{ prod.name }}">{{ prod.name }}</a>
+{% endcapture %}
+
+{% case options.pb_image_dimension %}
+  {% when 'landscape' %}
+    {% if options.theme_width == '1320px' %}
+      {% assign image_width_and_height = 'width="306" height="172"' %}
+    {% else %}
+      {% assign size_xl = '576x324' %}
+      {% assign image_width_and_height = 'width="576" height="324"' %}
+    {% endif %}
+    {% assign size_lg = '306x172' %}
+    {% if options.pb_columns_mobile == 1 %}{% assign size_sm = '527x296' %}{% elsif options.pb_columns_mobile == 2 %}{% assign size_sm = '251x141' %}{% endif %}
+    {% assign size_xs = '366x205' %}
+  {% when 'portrait' %}
+    {% if options.theme_width == '1320px' %}
+      {% assign image_width_and_height = 'width="306" height="407"' %}
+    {% else %}
+      {% assign size_xl = '576x768' %}
+      {% assign image_width_and_height = 'width="576" height="768"' %}
+    {% endif %}
+    {% assign size_lg = '306x407' %}
+    {% if options.pb_columns_mobile == 1 %}{% assign size_sm = '527x702' %}{% elsif options.pb_columns_mobile == 2 %}{% assign size_sm = '251x335' %}{% endif %}
+    {% assign size_xs = '366x487' %}
+  {% when 'rectangular' %}
+    {% if options.theme_width == '1320px' %}
+      {% assign image_width_and_height = 'width="306" height="230"' %}
+    {% else %}
+      {% assign size_xl = '576x432' %}
+      {% assign image_width_and_height = 'width="576" height="432"' %}
+    {% endif %}
+    {% assign size_lg = '306x230' %}
+    {% if options.pb_columns_mobile == 1 %}{% assign size_sm = '527x395' %}{% elsif options.pb_columns_mobile == 2 %}{% assign size_sm = '251x188' %}{% endif %}
+    {% assign size_xs = '366x275' %}
+  {% when 'square' %}
+    {% if options.theme_width == '1320px' %}
+      {% assign image_width_and_height = 'width="306" height="306"' %}
+    {% else %}
+      {% assign size_xl = '576x576' %}
+      {% assign image_width_and_height = 'width="576" height="576"' %}
+    {% endif %}
+    {% assign size_lg = '306x306' %}
+    {% if options.pb_columns_mobile == 1 %}{% assign size_sm = '527x527' %}{% elsif options.pb_columns_mobile == 2 %}{% assign size_sm = '251x251' %}{% endif %}
+    {% assign size_xs = '366x366' %}
+{% endcase %}
+
+{% capture prod_buy_now %}
+  {% if options.pb_buy_now_link %}
+    <button
+      type="button"
+      class="button product-block__buy-now"
+      aria-label="{% t 'Buy now' %}"
+      onclick="productBlockBuyNow(this, '{{ prod.buy_now_url }}')"
+    >
+      {%- t "Buy now" -%}
+    </button>
+  {% endif %}
+{% endcapture %}
+
+{% capture prod_actions %}
+  {% if options.pb_show_buttons and options.disable_shopping_cart != true %}
+    <div class="product-block__actions{% if options.pb_show_buttons_hover %} product-block__actions--on-hover trsn{% endif %}">
+      {% if prod.status == 'not-available' and options.pb_show_buttons_status %}
+        <a href="{{ prod.url }}" class="button button--style button--secondary button--bordered product-block__button" title="{% t 'See details' %}">{% t 'See details' %}</a>
+      {% elsif prod.stock == 0 and prod.stock_unlimited == false and options.pb_show_buttons_status %}
+        <a href="{{ prod.url }}" class="button button--style button--secondary button--bordered product-block__button" title="{% t 'See details' %}">{% t 'See details' %}</a>
+      {% elsif prod.variants.size > 0 %}
+        <a href="{{ prod.url }}" class="button button--style button--main product-block__button" title="{% t 'See options' %}">{% t 'See options' %}</a>
+      {% else %}
+        <form action="{{ prod.add_to_cart_url }}" class="product-block__form" method="post" name="buy" data-product-id="{{ prod.id }}">
+          <div class="product-block__quantity {% if options.pb_show_quantity %}d-flex{% else %}d-none{% endif %}">
+            <button
+              type="button"
+              class="button product-block__handler quantity-down"
+              aria-label="{% t 'Decrease quantity' %}"
+              onclick="changeQuantityProductBlock(this, -1);checkBuyNowProductBlock(this)"
+            >
+              <i class="ph ph-minus-circle"></i>
+            </button>
+            <label for="product-block__input-{{ prod.id }}" class="sr-only">{% t "Quantity" %}</label>
+            <input
+              type="number"
+              min="1"
+              value="{{ prod.minimum_quantity | default: 1 | at_least: 1 }}"
+              {% if prod.maximum_quantity and prod.maximum_quantity > 0 %}
+                max="{{ prod.maximum_quantity }}"
+              {% elsif prod.stock_unlimited == false %}
+                max="{{ prod.stock }}"
+              {% endif %}
+              data-price="{{ prod.price | minus: prod.discount }}"
+              data-min="{{ prod.minimum_quantity | default: 1 | at_least: 1 }}"
+              data-max="{{ prod.maximum_quantity }}"
+              name="qty"
+              id="product-block__input-{{ prod.id }}"
+              class="text text--qty product-block__input"
+            >
+            <button
+              type="button"
+              class="button product-block__handler quantity-up"
+              aria-label="{% t 'Increase quantity' %}"
+              onclick="changeQuantityProductBlock(this, 1);checkBuyNowProductBlock(this)"
+            >
+              <i class="ph ph-plus-circle"></i>
+            </button>
+          </div>
+
+          <button
+            {% if options.display_cart_notification %}
+              type="button" onclick="addToCartProductBlock(this)"
+            {% else %}
+              type="submit"
+            {% endif %}
+            class="button button--style button--main product-block__button product-block__button--add-to-cart"
+            aria-label="{% t 'Add %{product_name} to cart', product_name: prod.name %}"
+            name="{% t 'Add to cart' %}"
+          >
+            <i class="theme-icon ph {{ options.theme_icon_cart }}"></i>
+            {% if options.pb_show_quantity == false %}
+              <span class="product-block__button-text product-block__button-text--large">{% t "Add to cart" %}</span>
+              <span class="product-block__button-text product-block__button-text--small">{% t "Add" %}</span>
+            {% endif %}
+          </button>
+        </form>
+
+        {{ prod_buy_now }}
+      {% endif %}
+    </div>
+  {% endif %}
+{% endcapture %}
+
+<article
+  class="{{ prod_class }} product-block product-block-{{ component.id }}"
+  data-mobile-display="{{ options.pb_columns_mobile }}"
+  data-product-id="{{ prod.id }}"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+>
+  <div class="product-block__wrapper">
+    <div class="product-block__gallery">
+      {% if options.enable_wishlist and options.wishlist_product_block and store.customers_enabled %}
+        {% render 'product_wishlist', prod: prod, display: 'block', attributes: component.attributes %}
+      {% endif %}
+
+      <a href="{{ prod.url }}" class="product-block__anchor" title="{% t 'Go to' %} {{ prod.name }}">
+        <div class="product-block__labels">
+          <div class="d-flex flex-column">
+            {% unless options.disable_prices %}
+              {% if prod.discount > 0 %}
+                {% capture prod_discount_text %}
+                  {%- if options.pb_label_discount != blank and options.pb_label_discount_shape == 'rectangular' %} {{ options.pb_label_discount | escape }}{% endif -%}
+                {%- endcapture %}
+                {% capture prod_discount %}
+                  {%- if options.pb_label_discount_percentage %}{{ prod.discount | divided_by: prod.price | times: 100 | round: 0 | prepend: '-' | append: '%' -}}{% endif -%}
+                  {{- prod_discount_text -}}
+                {% endcapture %}
+
+                <div class="product-block__label product-block__label--discount product-block__label--discount-{{ options.pb_label_discount_shape }} check-empty">
+                  {%- case options.pb_price_display %}
+                    {% when 'from' %}
+                      {%- if prod.variants != blank and prod.variant_with_min_price.discount > 0 %}
+                        {{ prod.variant_with_min_price.discount | divided_by: prod.variant_with_min_price.price | times: 100 | round: 0 | prepend: '-' | append: '%' -}}
+                        {{ prod_discount_text }}
+                      {% else %}
+                        {{- prod_discount -}}
+                      {% endif -%}
+                    {% when 'until' %}
+                      {%- if prod.variants != blank and prod.variant_with_max_price.discount > 0 %}
+                        {{ prod.variant_with_max_price.discount | divided_by: prod.variant_with_max_price.price | times: 100 | round: 0 | prepend: '-' | append: '%' -}}
+                        {{ prod_discount_text }}
+                      {% else %}
+                        {{- prod_discount -}}
+                      {% endif -%}
+                    {% when 'range' %}
+                      {%- if prod.discount > 0 %}
+                        {{- prod_discount -}}
+                      {% endif -%}
+                  {% endcase -%}
+                </div>
+              {% endif %}
+            {% endunless %}
+
+            {%- if options.pb_label_new %}
+              {% assign label_age = options.pb_label_new_limit | times: 86400 %}
+              {% assign label_compare = 'now' | date: '%s' | minus: label_age %}
+              {% assign label_creation = prod.created_at | date: '%s' | plus: 0 %}
+              {% if label_compare < label_creation -%}
+                <div class="product-block__label product-block__label--new">
+                  {%- if options.pb_label_new_value != blank -%}
+                    {{- options.pb_label_new_value -}}
+                  {%- else -%}
+                    {% t "New" %}
+                  {%- endif -%}
+                </div>
+              {%- endif %}
+            {% endif -%}
+          </div>
+
+          {% if prod.status == 'not-available' %}
+            <div class="product-block__label product-block__label--status">{% t "Not available" %}</div>
+          {% elsif prod.stock == 0 and prod.stock_unlimited == false %}
+            <div class="product-block__label product-block__label--status">{% t "Out of Stock" %}</div>
+          {% endif %}
+        </div>
+      </a>
+
+      {% render 'product_block_image', prod: prod, image_width_and_height: image_width_and_height, size_xl: size_xl, size_lg: size_lg, size_sm: size_sm, size_xs: size_xs %}
+    </div>
+    <!-- end .product-block__gallery -->
+
+    <div class="product-block__content">
+      <div class="product-block__attributes check-empty">
+        <span class="product-block__sku check-empty">{{- prod_sku -}}</span>
+        <span>|</span>
+        <span class="product-block__brand check-empty">{{- prod_brand -}}</span>
+      </div>
+
+      {% case template %}
+        {% when 'category', 'searchresults' %}
+          <h2 class="product-block__title">
+            {{- prod_name -}}
+          </h2>
+        {% else %}
+          {{ prod_name }}
+      {% endcase %}
+
+      {% unless options.disable_prices %}
+        {% render 'product_block_price', prod: prod %}
+      {% endunless %}
+
+      {% if options.pb_show_ratings and prod.reviews != blank %}
+        {% render 'product_rating', prod: prod %}
+      {% endif %}
+    </div>
+    <!-- end .product-block__content -->
+
+    {% if options.pb_show_buttons and options.disable_shopping_cart != true %}
+      {{ prod_actions }}
+    {% endif %}
+    <!-- end .product-block__content -->
+  </div>
+</article>

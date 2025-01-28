@@ -1,0 +1,75 @@
+{% for placeholder in (1..component.options.limit) %}
+  <div class="swiper-slide theme-pack" data-display="{{ display_option }}">
+    <div class="theme-pack__container">
+      <div class="theme-pack__products">
+        <div class="pack-item">
+          {% if product.images.size > 0 %}
+            <img
+              src="{{ product.images.first | thumb: '70x70' }}"
+              alt="{{ product.name }}"
+              class="pack-item__image"
+              width="70"
+              height="70"
+              loading="lazy"
+            >
+          {% else %}
+            <div class="pack-item__image-placeholder"><i class="ph ph-image"></i></div>
+          {% endif %}
+
+          <div class="pack-item__info">
+            <div class="small text-muted d-none" data-current-product="{{ product.id }}"></div>
+            <div class="pack-item__title">
+              {{- product.name -}}
+            </div>
+          </div>
+        </div>
+
+        {% for item in (1..3) %}
+          <div class="pack-item">
+            <div class="pack-item__image-placeholder"><i class="ph ph-image"></i></div>
+            <div class="pack-item__info">
+              <div class="pack-item__attributes">{% t "SKU" %}: 12345 / {% t "Brand" %}</div>
+
+              <a href="#" class="pack-item__title pack-item__title--clickable" title="{% t 'See product' %}">{%- t "This is the name for pack product" %} #{{ forloop.index -}}</a>
+
+              {% if forloop.index == 2 %}
+                <div class="pack-item__option">
+                  {% t "Color: Black" %}
+                </div>
+              {% elsif forloop.index == 3 %}
+                <div class="pack-item__option">
+                  {% t "Size: Large" %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <!-- end .theme-pack__products -->
+
+      <div class="theme-pack__actions">
+        <div>
+          {% if forloop.index == 1 or forloop.index == 3 %}
+            <div class="theme-pack__pricing">
+              <span class="theme-pack__price theme-pack__price--new">{{ 25 | price }}</span>
+              <span class="theme-pack__price theme-pack__price--old">{{ 50 | price }}</span>
+            </div>
+
+            <div class="theme-pack__text">
+              {%- t "Save 25% on this deal!" -%}
+            </div>
+          {% else %}
+            <div class="theme-pack__pricing">
+              <span class="theme-pack__price">{{ 50 | price }}</span>
+            </div>
+          {% endif %}
+        </div>
+
+        <a href="#" class="button button--style button--main theme-pack__button" title="{% t 'Add all to cart' %}">
+          {%- if options.theme_icon_cart_button %}<i class="theme-icon ph {{ options.theme_icon_cart }}"></i>{% endif -%}
+          {%- t 'Add all to cart' -%}
+        </a>
+      </div>
+    </div>
+  </div>
+{% endfor %}

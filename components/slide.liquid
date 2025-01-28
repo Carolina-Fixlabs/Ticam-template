@@ -1,0 +1,84 @@
+{% assign subtitle = slide.options.subtitle %}
+{% assign title = slide.options.title %}
+{% assign description = slide.options.description %}
+{% assign link = slide.options.link %}
+{% capture link_default %}{% t "Read more" %}{% endcapture %}
+{% assign link_text = slide.options.link_text | default: link_default %}
+{% assign link_external = slide.options.link_external %}
+
+{% capture slide_image %}
+  {% assign image_desktop = slide.options.image_desktop.url %}
+  {% assign image_desktop_alt = slide.options.image_desktop.alt %}
+  {% assign image_desktop_width_and_height = slide.options.image_desktop.attributes.width_and_height %}
+  {% assign image_mobile = slide.options.image_mobile.url %}
+  {% assign image_mobile_alt = slide.options.image_mobile.alt %}
+  {% assign image_mobile_width_and_height = slide.options.image_mobile.attributes.width_and_height %}
+  {% capture image_class -%}
+    w-100 d-block theme-slider__image{% if component.options.content_type == 'content' %} h-100 theme-slider__image--trsn{% endif -%}
+  {%- endcapture %}
+  {% assign image_alt = image_desktop_alt | default: image_mobile_alt | default: title | default: store.name | escape %}
+
+  {% if image_desktop != blank and image_mobile != blank %}
+    <picture class="theme-slider__picture{% if component.options.content_type == 'content' %} h-100{% endif %}">
+      <source media="screen and (max-width: 575px)" srcset="{{ image_mobile }}">
+      <source media="screen and (min-width: 576px)" srcset="{{ image_desktop }}">
+      <img class="{{ image_class }}" src="{{ image_desktop }}" alt="{{ image_alt }}" {{ image_desktop_width_and_height }} loading="eager">
+    </picture>
+  {% elsif image_desktop != blank and image_mobile == blank %}
+    <img class="{{ image_class }}" src="{{ image_desktop }}" alt="{{ image_alt }}" {{ image_desktop_width_and_height }} loading="eager">
+  {% elsif image_desktop == blank and image_mobile != blank %}
+    <img class="{{ image_class }}" src="{{ image_mobile }}" alt="{{ image_alt }}" {{ image_mobile_width_and_height }} loading="eager">
+  {% else %}
+    <div class="theme-image-placeholder"></div>
+  {% endif %}
+{% endcapture -%}
+
+<style>
+  #slide-{{ slide.id }} {
+    --theme-image-position: {{ slide.options.position_image_x }} {{ slide.options.position_image_y }};
+    --theme-overlay-opacity: {{ slide.options.image_overlay | divided_by: 100.0 }};
+  }
+</style>
+
+<div id="slide-{{ slide.id }}" class="swiper-slide h-auto position-relative theme-slider__block" data-bundle-color="{{ slide.options.bundle_color }}" {{ slide.attributes }}>
+  {% unless request.preview_mode %}{% render 'theme_hover_link', link: link, link_text: link_text, link_external: link_external %}{% endunless %}
+
+  {% if component.options.content_type == 'content' %}
+    <div class="theme-slider__container">
+      <div class="align-items-{{ slide.options.position_y_mobile }} align-items-md-{{ slide.options.position_y_desktop }} justify-content-{{ slide.options.position_x }} {{ slide.options.align_mobile }} {{ slide.options.align_desktop }} theme-slider__row">
+        <div class="theme-slider__content">
+          <div class="theme-section__subtitle check-empty" {{ slide.attributes.textfield.subtitle }}>{{ subtitle }}</div>
+
+          <h2 class="theme-section__title check-empty" {{ slide.attributes.textfield.title }}>{{ title }}</h2>
+
+          <div class="theme-section__description check-empty" {{ slide.attributes.textfield.description }}>{{- description | newline_to_br -}}</div>
+
+          {% if link != blank and slide.options.link_button %}
+            <a
+              href="{{ link }}"
+              class="button button--style button--main{% if slide.options.link_outline %} button--bordered{% endif %} theme-section__button"
+              title="{{ link_text }}"
+              {% if link_external %}
+                target="_blank"
+              {% endif %}
+              {{ slide.attributes.textfield.link_text }}
+            >
+              {{- link_text -}}
+              {% if slide.options.link_arrow %} <i class="ph ph-arrow-right"></i>{% endif %}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if component.options.content_type == 'content' %}
+    <div class="w-100 h-100 position-absolute z-1 overflow-hidden theme-slider__gallery">
+      <div class="theme-section__overlay"></div>
+
+      {{ slide_image }}
+    </div>
+  {% else %}
+    {{ slide_image }}
+  {% endif %}
+</div>

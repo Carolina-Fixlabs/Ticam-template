@@ -1,0 +1,28 @@
+{{ index_for_top_components }}
+
+{% render 'theme_breadcrumbs' %}
+
+<section class="container container--adjust theme-section">
+  <div class="row align-items-center justify-content-center theme-section__content">
+    <div class="col-12 col-md-6 col-lg-5 customer-form customer-form--center{% if current_url contains 'customer/edit' %} customer-form--details{% endif %}">
+      <div class="customer-form__wrapper">
+        <div class="w-100 text-center">
+          {% if current_url contains 'customer/edit' %}
+            <h1 class="theme-section__title">
+              {%- t "Edit your details" -%}
+            </h1>
+          {% else %}
+            <h1 class="theme-section__title">
+              {%- t "Create an account" -%}
+            </h1>
+          {% endif %}
+        </div>
+
+        {{ customer_details_form }}
+      </div>
+    </div>
+    <!-- end .customer-form -->
+  </div>
+</section>
+
+{{ index_for_bottom_components }}

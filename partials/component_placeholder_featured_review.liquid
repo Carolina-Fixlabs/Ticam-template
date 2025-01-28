@@ -1,0 +1,86 @@
+{% capture icon_alignment -%}
+  {%- if component.options.alignment == 'center' -%}
+    {%- case component.options.icon -%}
+      {%- when 'closing' -%}
+        start
+      {%- when 'opening' -%}
+        end
+      {%- else -%}
+        end
+    {%- endcase -%}
+  {%- elsif component.options.alignment == 'start' -%}
+    start
+  {%- else -%}
+    end
+  {%- endif -%}
+{%- endcapture %}
+
+{% for placeholder in (1..component.options.limit) %}
+  <div
+    class="{% if display_option == 'carousel' %}swiper-slide{% else %}col-12 {{ class_desktop }}{% endif %} review-block{% if component.options.review_card %} review-block--card{% endif %}"
+    {% if has_animation %}
+      data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+    {% endif %}
+  >
+    <div
+      class="review-block__wrapper"
+      {% if component.options.review_card %}
+        data-bundle-color="{{ component.options.review_card_bundle_color }}" data-border="{{ component.options.review_card_border }}"
+      {% endif %}
+    >
+      <div class="review-block__header{% if component.options.alignment == 'center' %} flex-column{% endif %}">
+        {% if component.options.show_icon %}
+          <div class="review-block__icon review-block__icon--{{ icon_alignment }} review-block__icon--{{ component.options.icon }}">
+            <i class="theme-icon ph ph-quotes"></i>
+          </div>
+        {% endif %}
+
+        {% if component.options.image %}
+          <a href="#" class="review-block__anchor{% if component.options.alignment == 'end' %} order-2{% endif %}">
+            <div class="d-flex align-items-center justify-content-center review-block__image-placeholder">
+              <i class="ph ph-image-square"></i>
+            </div>
+          </a>
+        {% endif %}
+
+        <div class="d-flex flex-column">
+          <a href="#" class="review-block__name">{% t "Product name" %}</a>
+
+          <div class="review-block__rating">
+            <div class="product-ratings">
+              <span class="product-ratings__score">3.5</span>
+
+              <span class="product-ratings__divider"></span>
+
+              <div class="product-ratings__stars">
+                <span class="ph-fill ph-star product-ratings__star product-ratings__star--filled"></span>
+                <span class="ph-fill ph-star product-ratings__star product-ratings__star--filled"></span>
+                <span class="ph-fill ph-star product-ratings__star product-ratings__star--filled"></span>
+                <span class="ph-fill ph-star product-ratings__star product-ratings__star--partial" style="--rating-partial-width: 50%"></span>
+                <span class="ph-fill ph-star product-ratings__star"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end .review-block__header -->
+
+      <div class="review-block__content">{% t "Here the comments of customers for each featured review of your products will be displayed." %}</div>
+
+      <div class="review-block__footer">
+        {% if component.options.show_name %}
+          <div class="review-block__customer">
+            {% if component.options.name_filter == 'first_name' %}
+              {% t "Customer first name" %}
+            {% else %}
+              {% t "Customer full name" %}
+            {% endif %}
+          </div>
+        {% endif %}
+        {%- if component.options.show_date %}
+          <div class="review-block__date">{{ 'now' | date: component.options.date }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endfor %}

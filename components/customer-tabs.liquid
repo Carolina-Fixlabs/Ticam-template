@@ -1,0 +1,54 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+
+{% if current_url contains 'target=wishlist' %}
+  {% assign open_wishlist = true %}
+{% else %}
+  {% assign open_wishlist = false %}
+{% endif %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+
+<section
+  id="{{ section_id }}"
+  class="container-fluid theme-section customer-tabs"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {{ component.attributes }}
+>
+  <div class="container container--adjust theme-section__container">
+    <ul class="nav nav-tabs customer-tabs__menu" id="customer-tabs-menu" role="tablist">
+      {%- for child in component.children %}
+        {% case child.property %}
+          {% when 'orders' %}
+            {% render 'components/customer-tabs-orders', customer-tabs-orders: child, tab_display: 'item', tab_index: forloop, open_wishlist: open_wishlist %}
+          {% when 'details' %}
+            {% render 'components/customer-tabs-details', customer-tabs-details: child, tab_display: 'item', tab_index: forloop, open_wishlist: open_wishlist %}
+          {% when 'wishlist' %}
+            {% if options.enable_wishlist and store.customers_enabled %}
+              {% render 'components/customer-tabs-wishlist', customer-tabs-wishlist: child, tab_display: 'item', tab_index: forloop, open_wishlist: open_wishlist %}
+            {% endif %}
+        {% endcase %}
+      {% endfor -%}
+    </ul>
+
+    <div class="tab-content customer-tabs__content" id="customer-tabs-content">
+      {% for child in component.children %}
+        {% case child.property %}
+          {% when 'orders' %}
+            {% render 'components/customer-tabs-orders', customer-tabs-orders: child, tab_display: 'content', tab_index: forloop, open_wishlist: open_wishlist %}
+          {% when 'details' %}
+            {% render 'components/customer-tabs-details', customer-tabs-details: child, tab_display: 'content', tab_index: forloop, open_wishlist: open_wishlist %}
+          {% when 'wishlist' %}
+            {% if options.enable_wishlist and store.customers_enabled %}
+              {% render 'components/customer-tabs-wishlist', customer-tabs-wishlist: child, tab_display: 'content', tab_index: forloop, open_wishlist: open_wishlist %}
+            {% endif %}
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</section>

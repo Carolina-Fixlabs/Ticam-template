@@ -1,0 +1,50 @@
+{
+  "name": "Wishlisted products",
+  "icon": "heart-circle-check",
+  "help": "If the logged in customer has products added to their wish list, they will be displayed here.",
+  "max_usage": 1,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "checkout__cart"
+  ],
+  "options": {
+    "title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Your wishlisted products"
+    },
+    "group_appearance": {
+      "name": "Appearance",
+      "type": "heading",
+      "default": false
+    },
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 0,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 0,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    }
+  },
+  "nesting": {
+    "group_appearance": [
+      "margin_top",
+      "margin_bottom"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

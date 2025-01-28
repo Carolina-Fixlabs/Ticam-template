@@ -1,0 +1,95 @@
+{% capture print_email %}
+  <a href="mailto:{{ location.email }}" class="contact-location__link" title="{% t 'Send an email' %}">
+    <i class="theme-icon ph ph-envelope-simple"></i>
+    {{- location.email -}}
+  </a>
+{% endcapture %}
+
+{% capture print_phone %}
+  <a href="tel:{{ location.phone }}" class="contact-location__link" title="{% t 'Call number' %}">
+    <i class="theme-icon ph ph-phone"></i>
+    {{- location.phone -}}
+  </a>
+{% endcapture %}
+
+{% assign location_address_full = location.address_with_street_number %}
+{% capture location_address_params -%}
+  {%- if location.complement != blank %}, {{ location.complement }}{% endif -%}
+  {%- if location.postal != blank %}, {{ location.postal }}{% endif %}, {{ location.municipality }}, {{ location.city }}, {{ location.region }}, {{ location.country -}}
+{%- endcapture %}
+{% capture location_address_url -%}
+  https://maps.google.com/maps?q={{ location_address_full | replace: '#', '' | url_encode -}}
+  {{- location_address_params -}}
+{%- endcapture %}
+
+{% capture print_address %}
+  <a href="{{ location_address_url }}" class="contact-location__link" title="{% t 'See on Google Maps' %}" target="_blank">
+    <i class="theme-icon ph ph-map-pin"></i>
+    {%- if location.street_address != blank %}{{- location_address_full -}}{% endif -%}
+    {{- location_address_params -}}
+  </a>
+{% endcapture %}
+
+<div
+  id="{{ location_id }}"
+  class="modal fade theme-modal"
+  tabindex="-1"
+  aria-labelledby="{{ location_id }}-title"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg theme-modal__dialog" data-bundle-color="{{ component.options.bundle_color }}">
+    <div class="modal-content theme-modal__content">
+      <div class="modal-header theme-modal__header">
+        <h6 class="modal-title theme-modal__title" id="{{ location_id }}-title">
+          {{- location.name -}}
+        </h6>
+
+        <button type="button" class="button theme-modal__close" data-bs-dismiss="modal" aria-label="{% t 'Close' %}">
+          <i class="ph ph-x-circle"></i>
+        </button>
+      </div>
+
+      <div class="modal-body theme-modal__body">
+        {% if location.description != blank %}
+          <div class="theme-modal__subtitle">{% t "Description" %}</div>
+          <div class="theme-modal__text">
+            {{- location.description | newline_to_br -}}
+          </div>
+        {% endif %}
+
+        {% if location.instructions != blank %}
+          <div class="theme-modal__subtitle">{% t "Instructions" %}</div>
+          <div class="theme-modal__text check-empty">
+            {{- location.instructions | newline_to_br -}}
+          </div>
+        {% endif %}
+
+        {% if location_email or location_phone or location_address %}
+          <div class="theme-modal__subtitle">{% t "Contact details" %}</div>
+          {% if location_email %}
+            {{ print_email }}
+          {% endif %}
+          {% if location_phone %}
+            {{ print_phone }}
+          {% endif %}
+          {% if location_address %}
+            {{ print_address }}
+          {% endif %}
+        {% endif %}
+
+        {% if location_map %}
+          <div class="theme-section__embed">
+            <iframe
+              title="{% t "Store address on Google Maps" %}"
+              width="100%"
+              height="350"
+              class="border-0"
+              src="{{ location_address_url }}&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              loading="lazy"
+            ></iframe>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

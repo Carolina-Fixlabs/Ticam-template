@@ -1,0 +1,73 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+{%- assign page_category = pages.categories.category[component.options.page_category] -%}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% assign display_option = component.options.display %}
+
+{% assign heading_subtitle = component.options.heading_subtitle %}
+{% assign heading_title = component.options.heading_title %}
+{% assign heading_description = component.options.heading_description %}
+{% assign heading_link = component.options.heading_link %}
+{% capture heading_link_text_default %}{% t "See more posts" %}{% endcapture %}
+{% assign heading_link_text = component.options.heading_link_text | default: heading_link_text_default %}
+
+{% case component.options.columns_desktop %}
+  {% when 3 %}
+    {% assign class_desktop = 'col-md-6 col-lg-4' %}
+  {% when 2 %}
+    {% assign class_desktop = 'col-md-6' %}
+  {% when 1 %}
+    {% assign class_desktop = 'col-12' %}
+{% endcase %}
+
+{% case component.options.columns_mobile %}
+  {% when 2 %}
+    {% assign class_mobile = 'col-xs-12 col-6' %}
+  {% when 1 %}
+    {% assign class_mobile = 'col-12' %}
+{% endcase %}
+
+{% capture sw_content %}
+  {% for blog_post in page_category.pages limit: component.options.limit %}
+    {% render 'blog_post', blog_post: blog_post, post_display: display_option, class_desktop: class_desktop, class_mobile: class_mobile, has_animation: has_animation, animate_type: animate_type, animate_repeat: animate_repeat, animate_delay: animate_delay %}
+  {% endfor %}
+{% endcapture %}
+
+{%- capture sw_columns %}sw-columns-desktop="{{ component.options.columns_desktop }}" sw-columns-mobile="{{ component.options.columns_mobile }}"{% endcapture -%}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+
+<section id="{{ section_id }}" class="container-fluid theme-section" data-bundle-color="{{ component.options.bundle_color }}" {{ component.attributes }}>
+  <div class="container container--adjust theme-section__container">
+    {% render 'component_heading', subtitle: heading_subtitle, title: heading_title, description: heading_description, link: heading_link, link_text: heading_link_text %}
+
+    <div class="row theme-section__content">
+      {% if display_option == 'carousel' %}
+        {% render 'component_swiper', sw_layout: 'latest-blog-posts', sw_content: sw_content, sw_columns: sw_columns, sw_autoheight: 'false' %}
+      {% else %}
+        {{ sw_content }}
+      {% endif %}
+    </div>
+  </div>
+</section>

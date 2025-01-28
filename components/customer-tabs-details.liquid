@@ -1,0 +1,43 @@
+{% assign tab_id = 'customer-account-' | append: customer-tabs-details.id %}
+{% assign tab_target = tab_id | append: '-content' %}
+{% capture tab_title_default %}{% t "Details" %}{% endcapture %}
+
+{%- capture item -%}
+  <li
+    class="nav-item"
+    role="presentation"
+    {{ customer-tabs-details.attributes }}
+  >
+    <button
+      class="nav-link customer-tabs__link{% if open_wishlist == false and tab_index.first %} active{% endif %}"
+      id="{{ tab_id }}"
+      data-bs-toggle="tab"
+      data-bs-target="#{{ tab_target }}"
+      type="button"
+      role="tab"
+      aria-controls="{{ tab_target }}"
+      aria-selected="true"
+    >
+      <i class="theme-icon {{ customer-tabs-details.options.icon }}"></i>
+      <span {{ customer-tabs-details.attributes.textfield.title }}>
+        {{- customer-tabs-details.options.title | default: tab_title_default -}}
+      </span>
+    </button>
+  </li>
+{%- endcapture -%}
+
+{% if tab_display == 'item' %}
+  {{ item }}
+{% else %}
+  <div
+    id="{{ tab_target }}"
+    class="tab-pane fade{% if open_wishlist == false and tab_index.first %} show active{% endif %} customer-tabs__panel"
+    role="tabpanel"
+    aria-labelledby="{{ tab_id }}"
+    tabindex="0"
+  >
+    <div class="row customer-tabs__row">
+      {% render 'customer_details' %}
+    </div>
+  </div>
+{% endif %}

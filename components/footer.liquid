@@ -1,0 +1,138 @@
+{% if component.options.width == 'default' %}
+  {% assign footer_width = options.theme_width %}
+{% else %}
+  {% assign footer_width = component.options.width %}
+{% endif %}
+
+{% assign align_desktop = component.options.align_desktop %}
+{% assign footer_payments = component.options.payment_methods %}
+
+<style>
+  .footer {
+    --theme-max-width: {{ footer_width }};
+    --footer-title-transform: {% if component.options.titles_uppercase %}uppercase{% else %}inherit{% endif %};
+  }
+</style>
+
+{% capture footer_copyright %}
+  <div class="footer__copyright">
+    <i class="ph ph-copyright"></i> {{ 'now' | date: '%Y' }}
+    {{ options.theme_store_name | default: store.name }}.<br>
+    {%- t "All Rights Reserved" -%}
+    . {{ powered_by -}}
+  </div>
+{% endcapture %}
+
+<footer
+  class="footer {{ component.options.align_mobile }} {{ align_desktop }}"
+  data-titles-underline="{{ component.options.titles_underline }}"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {{ component.attributes }}
+>
+  <div class="footer__container">
+    <div class="row align-items-start justify-content-start footer__wrapper">
+      {% for child in component.children %}
+        {% case child.property %}
+          {% when 'footer-about' %}
+            {% render 'components/footer-about', footer-about: child %}
+          {% when 'footer-menu-1' %}
+            {% render 'components/footer-menu-1', footer-menu-1: child %}
+          {% when 'footer-menu-2' %}
+            {% render 'components/footer-menu-2', footer-menu-2: child %}
+          {% when 'footer-contact-information' %}
+            {% render 'components/footer-contact-information', footer-contact-information: child %}
+          {% when 'footer-locations' %}
+            {% render 'components/footer-locations', footer-locations: child %}
+          {% when 'footer-divider' %}
+            {% render 'components/footer-divider', footer-divider: child %}
+        {% endcase %}
+      {% endfor %}
+    </div>
+
+    <div class="row align-items-center footer__wrapper">
+      <div class="col-12 order-1 footer__column">
+        <hr class="footer__divider">
+      </div>
+
+      {% if footer_payments %}
+        <div class="col-12 col-md order-2{% unless align_desktop == 'text-md-end' %} order-md-3{% endunless %} footer__column">
+          <div class="d-flex align-items-center justify-content-start justify-content-md-end flex-wrap">
+            {% for partner in component.options.partners %}
+              <div class="footer__payment">
+                <img
+                  src="{{ partner.badge }}"
+                  alt="{{ partner.name | escape }}"
+                  height="30"
+                  width="56"
+                  loading="lazy"
+                >
+              </div>
+            {% endfor %}
+
+            {% assign lang = languages.first.code %}
+
+            {% if component.options.store_payments %}
+              {% for partner in store.payment_methods_formatted %}
+                <div class="footer__payment">
+                  <img
+                    src="{{ partner.badge }}"
+                    alt="{{ partner.name | escape }}"
+                    height="30"
+                    width="56"
+                    loading="lazy"
+                  >
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            {% if component.options.store_payments_options %}
+              {% for partner in store.payment_options_images %}
+                <div class="footer__payment">
+                  <img
+                    src="{{ partner }}"
+                    alt="{{ partner | escape }}"
+                    height="30"
+                    width="56"
+                    loading="lazy"
+                  >
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            {% if component.options.bank_transfer_payment %}
+              <div class="footer__payment">
+                {% case lang %}
+                  {% when 'es', 'cl', 'mx', 'co', 'es-PE', 'es-AR' %}
+                    <img src="//assets.jumpseller.com/public/placeholder/themes/payments/pay-wire-es.png" alt="{% t 'Wire Transfer' %}" height="30" width="56" loading="lazy">
+                  {% when 'pt', 'br' %}
+                    <img src="//assets.jumpseller.com/public/placeholder/themes/payments/pay-wire-pt.png" alt="{% t 'Wire Transfer' %}" height="30" width="56" loading="lazy">
+                  {% else %}
+                    <img src="//assets.jumpseller.com/public/placeholder/themes/payments/pay-wire-en.png" alt="{% t 'Wire Transfer' %}" height="30" width="56" loading="lazy">
+                {% endcase %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+
+      {% case align_desktop %}
+        {% when 'text-md-center' %}
+          <div class="col-12 order-3 footer__column">
+            {{ footer_copyright }}
+          </div>
+        {% else %}
+          {% if footer_payments %}
+            <div class="col-12 col-md-auto order-3 order-md-2 footer__column">
+              {{ footer_copyright }}
+            </div>
+          {% else %}
+            <div class="col-12{% unless align_desktop == 'text-md-end' %} order-2 text-md-center{% endunless %} footer__column">
+              {{ footer_copyright }}
+            </div>
+          {% endif %}
+      {% endcase %}
+    </div>
+  </div>
+  <!-- end .footer__container -->
+</footer>
+<!-- end .footer -->

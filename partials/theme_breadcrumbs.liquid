@@ -1,0 +1,34 @@
+{% unless options.bc_display == 'none' %}
+  {% assign section_id = 'theme-section-breadcrumbs' %}
+
+  <style>
+    #{{ section_id }} {
+      --section-margin-top: var(--breadcrumbs-margin-top);
+      --section-margin-bottom: var(--breadcrumbs-margin-bottom);
+    }
+  </style>
+
+  <section id="{{ section_id }}" class="container-fluid theme-section{% if options.bc_display == 'mobile' %} d-block d-md-none{% elsif options.bc_display == 'desktop' %} d-none d-md-block{% endif %}" data-bundle-color="{{ options.bc_bundle_color }}">
+    <div class="container container--adjust theme-section__container">
+      <ul class="no-bullet align-items-center justify-content-{{ options.bc_alignment }} theme-breadcrumbs">
+        {% for breadcrumb in breadcrumbs %}
+          {% if forloop.last %}
+            <li class="theme-breadcrumbs__item theme-breadcrumbs__item--current">
+              {{- breadcrumb.text -}}
+            </li>
+          {% else %}
+            <li class="theme-breadcrumbs__item">
+              <a href="{{ breadcrumb.url }}" class="theme-breadcrumbs__link" title="{% t 'Go back to' %} {{ breadcrumb.text }}">
+                {{- breadcrumb.text -}}
+              </a>
+            </li>
+
+            <li class="theme-breadcrumbs__item">
+              <span class="theme-breadcrumbs__arrow"><i class="ph ph-caret-right"></i></span>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+{% endunless %}

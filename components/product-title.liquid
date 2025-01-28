@@ -1,0 +1,13 @@
+<div class="w-100 check-empty{% if product-title.options.mobile_first %} mobile-first{% endif %}" data-name="product-title" {{ product-title.attributes }}>
+  {% if template == 'product' %}
+    <h1 class="theme-section__title product-page__title{% if product-title.options.uppercase %} uppercase{% endif %}">
+      {{- prod.name -}}
+    </h1>
+  {% else %}
+    <h3 class="theme-section__title product-page__title{% if product-title.options.uppercase %} uppercase{% endif %}">
+      <a href="{{ prod.url }}" title="{% t 'Go to' %} {{ prod.name }}" class="hover:underline">
+        {{- prod.name -}}
+      </a>
+    </h3>
+  {% endif %}
+</div>

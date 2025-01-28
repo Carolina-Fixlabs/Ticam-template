@@ -1,0 +1,130 @@
+<script type="application/json" id="theme-data">
+  {
+    "is_preview": {{ request.preview_mode | json }},
+    "template": {{ template | json }},
+    "cart": {
+      "url": {{ cart.url | json }},
+      "debounce": {{ 50 | json }}
+    },
+    "language": {{ languages.first.code | json }},
+    "order": {
+      "totalOutstanding": {{ order.total_outstanding | json }},
+      "productsCount": {{ order.products_count | json }},
+      "checkoutUrl": {{ order.checkout_url | json }},
+      "url": {{ order.url | json }},
+      "remainingForFreeShippingMessage": {{ order.remaining_for_free_shipping_message | json }},
+      "minimumPurchase": {
+        "conditionType": {{ order.minimum_purchase.condition_type | json }},
+        "conditionValue": {{ order.minimum_purchase.condition_value | json }}
+      }
+    },
+    "currency_code": {{ store.currency_code | json }},
+    "translations": {
+      "added_singular": "{% t '1 unit of %{name} has been added.' %}",
+      "added_qty_plural": "{% t '%{qty} units of %{name} have been added.' %}",
+      "added_to_cart": "{% t 'added to the cart' %}",
+      "add_to_cart": "{% t 'Add to cart' %}",
+      "added_to_wishlist": "{% t '%{name} was added to your Wishlist' %}",
+      "available_in_stock": "{% t 'Available in stock' %}",
+      "buy_now": "{% t 'Buy now' %}",
+      "buy_now_not_allowed": "{% t 'You cannot buy now with the current choosen quantity.' %}",
+      "check_this": "{% t 'Check this out:' %}",
+      "contact_us": "{% t 'Contact us' %}",
+      "continue_shopping": "{% t 'Continue shopping' %}",
+      "copy_to_clipboard": "{% t 'Copy to clipboard' %}",
+      "coupons_list_title": "{% t 'Applied discount codes' %}",
+      "coupons_list_success_text1": "{% t 'Your code' %}",
+      "coupons_list_success_text2": "{% t 'has been successfully removed. This page will now reload.' %}",
+      "customer_register_back_link_url": "{{ customer_login_url }}",
+      "customer_register_back_link_text": "{% t "Already have an account? Log in here" %}",
+      "decrease_quantity": "{% t 'Decrease quantity' %}",
+      "discount_message": "{% t 'This promotion is valid from %{date_begins} to %{date_expires}' %}",
+      "error_adding_to_cart": "{% t 'Error adding to cart' %}",
+      "error_downloading": "{% t 'Error trying to download' %}",
+      "error_fetching_cart": "{% t 'Error fetching cart' %}",
+      "error_updating_to_cart": "{% t 'Error updating to cart' %}",
+      "error_adding_to_wishlist": "{% t 'Error adding to Wishlist' %}",
+      "error_removing_from_wishlist": "{% t 'Error removing from Wishlist' %}",
+      "files_too_large": "{% t 'The sum of the size of the selected files must be lower than 10MB.' %}",
+      "fill_country_region_shipping": "{% t 'Please fill in the country and region to calculate the shipping costs.' %}",
+      "go_to_cart": "{% t 'Go to cart' %}",
+      "go_to_shopping_cart": "{% t 'Go to Shopping Cart' %}",
+      "go_to_wishlist": "{% t 'See your Wishlist' %}",
+      "increase_quantity": "{% t 'Increase quantity' %}",
+      "low_stock_basic": "{% t 'Low stock' %}",
+      "low_stock_limited": "{% t 'Hurry! Few units left' %}",
+      "low_stock_alert": "{% t 'Hurry! Almost sold out' %}",
+      "low_stock_basic_exact": "{% t '%{qty} units left' %}",
+      "low_stock_limited_exact": "{% t 'Hurry! Only %{qty} units left' %}",
+      "low_stock_alert_exact": "{% t 'Hurry! Only %{qty} in stock' %}",
+      "more_info": "{% t 'I would like more information about this product:' %}",
+      "notify_me_when_available": "{% t 'Notify me when available' %}",
+      "no_shipping_methods": "{% t 'No shipping methods available for your shipping address.' %}",
+      "OFF": "{% t 'OFF' %}",
+      "out_of_stock": "{% t 'Out of Stock' %}",
+      "proceed_to_checkout": "{% t 'Proceed to Checkout' %}",
+      "product_stock_locations_link_text": "{% t "See in Google Maps" %}",
+      "quantity": "{% t 'Quantity' %}",
+      "remove": "{% t 'Remove' %}",
+      "removed_from_wishlist": "{% t '%{name} was removed from your Wishlist' %}",
+      "send_us_a_message": "{% t 'Send us a message' %}",
+      "share_on": "{% t 'Share on' %}",
+      "show_more": "{% t 'Show More' %}",
+      "show_less": "{% t 'Show Less' %}",
+      "success": "{% t 'Success' %}",
+      "success_adding_to_cart": "{% t 'Success adding to cart' %}",
+      "success_adding_to_wishlist": "{% t 'Added to Wishlist!' %}",
+      "success_removing_from_wishlist": "{% t 'Removed from Wishlist' %}",
+      "SKU": "{% t 'SKU' %}",
+      "variant_out_of_stock": "{% t 'This option currently has no stock.' %}",
+      "x_units_in_stock": "{% t '%{qty} units in stock' %}",
+      "your_cart_is_empty": "{% t 'Your cart is currently empty' %}",
+      "newsletter_message_success": "{% t 'Successfully registered' %}",
+      "newsletter_message_error": "{% t 'Error registering, please try again later.' %}",
+      "newsletter_message_success_captcha": "{% t 'Success in captcha' %}",
+      "newsletter_message_error_captcha": "{% t 'Error in captcha' %}",
+      "newsletter_text_placeholder": "{% t 'email@domain.com' %}",
+      "newsletter_text_button": "{% t 'Subscribe' %}"
+    },
+    "options": {
+      "av_popup_button_reject_redirect": {{ options.av_popup_button_reject_redirect | json }},
+      "display_cart_notification": {{ options.display_cart_notification | json }},
+      "filters_desktop": {{ options.filters_desktop | json }}
+    }
+  }
+</script>
+
+<script>
+  function callonDOMLoaded(callback) {
+    document.readyState === 'loading' ? window.addEventListener('DOMContentLoaded', callback) : callback();
+  }
+  function callonComplete(callback) {
+    document.readyState === 'complete' ? callback() : window.addEventListener('load', callback);
+  }
+  Object.defineProperty(window, 'theme', {
+    value: Object.freeze(JSON.parse(document.querySelector('#theme-data').textContent)),
+    writable: false,
+    configurable: false,
+  });
+</script>
+
+{% if store.currencies_codes.size > 1 %}
+  <script>
+    if (typeof Storage !== 'undefined') {
+      if (localStorage.getItem('global_currency') === null) {
+        const currency = window.theme.currency_code;
+        localStorage.setItem('global_currency', currency);
+        localStorage.setItem('store_currency', currency);
+      }
+    } else {
+      console.warn('Unable to use multi-currency on this store. Please update your browser.');
+      callonDOMLoaded(() => {
+        const headerCurrencyDropdown = document.querySelector('#header-dropdown-currency');
+        if (headerCurrencyDropdown) headerCurrencyDropdown.style.display = 'none';
+
+        const mobileCurrencyDropdown = document.querySelector('#sidebar-dropdown-currency');
+        if (mobileCurrencyDropdown) mobileCurrencyDropdown.parentElement.parentElement.classList = 'w-50 d-none';
+      });
+    }
+  </script>
+{% endif %}

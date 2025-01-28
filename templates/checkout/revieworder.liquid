@@ -1,0 +1,23 @@
+<script src="{{ 'checkout.js' | asset }}" defer></script>
+
+<section
+  class="container-fluid cart-page"
+  data-bundle-color="{{ options.cart_bundle_color }}"
+>
+  <div class="row cart-page__container">
+    <div class="col-12 col-lg-8 cart-page__content">
+      {% render 'cart_header' %}
+
+      {% render 'cart_review' %}
+
+      {{ index_for_components }}
+    </div>
+    <!-- end .cart-page__content -->
+
+    <div class="col-12 col-lg-4 cart-summary{% if order.products_count == 0 %} cart-summary--empty{% endif %}">
+      {% render 'cart_summary' %}
+    </div>
+    <!-- end .cart-summary -->
+  </div>
+</section>
+<!-- end #cart-page -->

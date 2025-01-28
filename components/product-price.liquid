@@ -1,0 +1,56 @@
+{% if prod.variants == blank %}
+  {% assign first_id = prod.id %}
+{% else %}
+  {% assign first_id = prod.variants.first.id %}
+{% endif %}
+
+<product-price
+  class="product-price product-price-{{ component.id }} w-100 check-empty{% if product-price.options.mobile_first %} mobile-first{% endif %}"
+  data-name="product-price"
+  data-display="{{ product-price.options.display }}"
+  data-productid="{{ first_id }}"
+  {{ product-price.attributes }}
+>
+  <script type="application/json" class="product-price-json">
+    {
+      "options": {
+        "disablePrices": {{ options.disable_prices | json }},
+        "display": {{ product-price.options.display | json }},
+        "mobileFirst": {{ product-price.options.mobile_first | json }},
+        "showDiscountBadge": {{ product-price.options.show_discount_badge | json }},
+        "showDiscountBadgeText": {{ options.pb_label_discount | json }},
+        "showDiscountMessage": {{ product-price.options.show_discount_message | json }}
+      },
+      "info": {
+        "product": {
+          "id": {{ prod.id | json }},
+          "price": {{ prod.price | json }},
+          "status": {{ prod.status | json }},
+          "discount": {{ prod.discount | json }},
+          "price_formatted": {{ prod.price | price | json }},
+          "price_with_discount_formatted": {{ prod.price | minus: prod.discount | price | json }},
+          "discount_begins": {{ prod.discount_begins | json }},
+          "discount_expires": {{ prod.discount_expires | json }},
+          "date_begins": {{ prod.discount_begins | date: '%d-%m-%Y' | json }},
+          "date_expires": {{ prod.discount_expires | date: '%d-%m-%Y' | json }},
+          "percentage_off": {% if prod.discount > 0 %}{{ prod.discount | divided_by: prod.price | times: 100 | round: 0 | json }}{% else %}0{% endif %}
+        },
+        "variants": [{% for variant in prod.variants %}
+          {
+            "id": {{ variant.id | json }},
+            "price": {{ variant.price | json }},
+            "status": {{ variant.status | json }},
+            "discount": {{ variant.discount | json }},
+            "price_formatted": {{ variant.price | price | json }},
+            "price_with_discount_formatted": {{ variant.price | minus: variant.discount | price | json }},
+            "discount_begins": {{ variant.discount_begins | json }},
+            "discount_expires": {{ variant.discount_expires | json }},
+            "date_begins": {{ variant.discount_begins | date: '%d-%m-%Y' | json }},
+            "date_expires": {{ variant.discount_expires | date: '%d-%m-%Y' | json }},
+            "percentage_off": {% if variant.discount > 0 %}{{ variant.discount | divided_by: variant.price | times: 100 | round: 0 | json }}{% else %}0{% endif %}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}]
+      }
+    }
+  </script>
+</product-price>

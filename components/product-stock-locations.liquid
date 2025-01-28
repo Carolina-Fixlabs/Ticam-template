@@ -1,0 +1,61 @@
+{% assign section_id = 'product-stock-locations-sidebar-' | append: prod.id %}
+{% assign button_icon = product-stock-locations.options.button_icon %}
+
+{% if prod.variants == blank %}
+  {% assign first_id = prod.id %}
+{% else %}
+  {% assign first_id = prod.variants.first.id %}
+{% endif %}
+
+<product-stock-locations
+  class="w-100 product-stock-locations product-stock-locations-{{ component.id }}"
+  data-productid="{{ first_id }}"
+  {{ product-stock-locations.attributes }}
+>
+  <script type="application/json" class="product-stock-locations-json">
+    {
+      "info": {
+        {% capture stock_origins %}
+          {% for location in locations.all %}
+            {% if location.stock_origin %}
+              {{ location | json }},
+            {% endif %}
+          {% endfor %}
+        {% endcapture %}
+        "stockOrigins": [{{ stock_origins | remove_last: ',' }}],
+        "product": {
+          "status": {{ prod.status | json }},
+          "stock": {{ prod.stock | json }},
+          "stock_notification": {{ prod.stock_notification | json }},
+          "stock_threshold": {{ prod.stock_threshold | json }},
+          "stock_unlimited": {{ prod.stock_unlimited | json }},
+          "stock_locations": [
+            {% for stock_location in prod.stock_locations %}
+              {{ stock_location | json }}{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+          ]
+        },
+        "variants": [{% for variant in prod.variants %}
+          {
+            "id": {{ variant.id | json }},
+            "status": {{ variant.status | json }},
+            "stock": {{ variant.stock | json }},
+            "stock_notification": {{ variant.stock_notification | json }},
+            "stock_threshold": {{ variant.stock_threshold | json }},
+            "stock_unlimited": {{ variant.stock_unlimited | json }},
+            "stock_locations": [
+              {% for stock_location in variant.stock_locations %}
+                {{ stock_location | json }}{% unless forloop.last %},{% endunless %}
+              {% endfor %}
+            ]
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}]
+      }
+    }
+  </script>
+
+  <button class="button product-stock-locations__button" type="button" data-bs-toggle="offcanvas" data-bs-target="#{{ section_id }}" aria-controls="{{ section_id }}">
+    <i class="theme-icon {{ button_icon }}"></i>
+    <span {{ product-stock-locations.attributes.textfield.button_text }}>{{- product-stock-locations.options.button_text -}}</span>
+  </button>
+</product-stock-locations>

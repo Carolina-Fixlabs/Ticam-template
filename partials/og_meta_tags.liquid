@@ -1,0 +1,83 @@
+{% assign og_image = store.cover | default: store.logo %}
+
+<!-- Facebook Meta tags for Product -->
+<meta property="fb:app_id" content="283643215104248">
+{% case template %}
+  {% when 'product' %}
+    <meta property="og:id" content="{{ product.id }}">
+    <meta property="og:title" content="{{ product.name | escape }}">
+    <meta property="og:type" content="product">
+    {% if product.selected_variant != blank and product.selected_variant.image != blank %}
+      <meta property="og:image" content="{{ product.selected_variant.image }}">
+    {% elsif product.images != blank %}
+      {% if product.image.width < 1200 or product.image.height < 630 %}
+        <meta property="og:image" content="{{ product.image | resize: '1200x630' }}">
+      {% else %}
+        <meta property="og:image" content="{{ product.image }}">
+      {% endif %}
+
+    {% else %}
+      <meta property="og:image" content="{{ og_image }}">
+    {% endif %}
+
+    {% if product.brand != blank %}
+      <meta property="og:brand" content="{{ product.brand }}">
+    {% endif %}
+
+    <meta property="product:is_product_shareable" content="1">
+
+    {% if product.selected_variant != blank %}
+      <meta property="product:original_price:amount" content="{{ product.selected_variant.price }}">
+      <meta property="product:price:amount" content="{{ product.selected_variant.price | minus: product.selected_variant.discount }}">
+      {% if product.selected_variant.stock > 0 or product.selected_variant.stock_unlimited %}
+        <meta property="product:availability" content="instock">
+      {% else %}
+        <meta property="product:availability" content="oos">
+      {% endif %}
+    {% else %}
+      <meta property="product:original_price:amount" content="{{ product.price }}">
+      <meta property="product:price:amount" content="{{ product.price | minus: product.discount }}">
+      {% if product.stock == 0 and product.stock_unlimited == false %}
+        <meta property="product:availability" content="oos">
+      {% elsif product.status == 'not-available' %}
+        <meta property="product:availability" content="pending">
+      {% else %}
+        <meta property="product:availability" content="instock">
+      {% endif %}
+    {% endif %}
+
+    <meta property="product:original_price:currency" content="{{ store.currency_code }}">
+    <meta property="product:price:currency" content="{{ store.currency_code }}">
+  {% when 'page' %}
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:type" content="article">
+    {% for image in page.images %}
+      <meta property="og:image" content="{{ image }}">
+    {% endfor %}
+  {% when 'category' %}
+    <meta property="og:title" content="{{ category.name }}">
+    <meta property="og:type" content="website">
+    {% if category.images == blank %}
+      {% assign image = category.products.first.images.first %}
+      {% if image != blank %}
+        <meta property="og:image" content="{{ image | resize: '1200x1200' }}">
+      {% endif %}
+    {% else %}
+      {% for image in category.images %}
+        <meta property="og:image" content="{{ image | resize: '1200x1200' }}">
+      {% endfor %}
+    {% endif %}
+  {% else %}
+    <meta property="og:title" content="{{ store.name }}">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ og_image }}">
+{% endcase %}
+
+<meta property="og:description" content="{{ meta_description }}">
+<meta property="og:url" content="{{ store.base_url }}{{ current_url }}">
+<meta property="og:site_name" content="{{ store.name }}">
+<meta name="twitter:card" content="summary">
+
+{% for language in languages %}
+  <meta property="og:locale{% unless forloop.first %}:alternate{% endunless %}" content="{{ language.locale | replace: '-', '_' }}">
+{% endfor %}

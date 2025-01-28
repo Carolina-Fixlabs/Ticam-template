@@ -1,0 +1,52 @@
+{
+  "name": "Customer information",
+  "icon": "user-pen",
+  "max_usage": 1,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "customer__account"
+  ],
+  "options": {
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 16,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 40,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    }
+  },
+  "mode": "children",
+  "properties": {
+    "orders": {
+      "type": "customer-tabs-orders",
+      "multiple": false
+    },
+    "details": {
+      "type": "customer-tabs-details",
+      "multiple": false
+    },
+    "wishlist": {
+      "type": "customer-tabs-wishlist",
+      "multiple": false
+    }
+  }
+}

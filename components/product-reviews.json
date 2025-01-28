@@ -1,0 +1,299 @@
+{
+  "name": "Product reviews",
+  "icon": "star",
+  "max_usage": 1,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "product"
+  ],
+  "options": {
+    "group_layout": {
+      "name": "Layout options",
+      "type": "heading",
+      "default": true
+    },
+    "display": {
+      "name": "Display type",
+      "type": "select",
+      "default": "grid",
+      "options": [
+        {
+          "label": "Carousel",
+          "value": "carousel"
+        },
+        {
+          "label": "Grid",
+          "value": "grid"
+        }
+      ]
+    },
+    "limit": {
+      "name": "Quantity of items to display",
+      "type": "slider",
+      "help": "Set the number of reviews to show initially within each product.",
+      "default": 6,
+      "min": 1,
+      "max": 9,
+      "step": 1,
+      "unit": ""
+    },
+    "columns_desktop": {
+      "name": "Amount of reviews on Desktop",
+      "type": "select",
+      "default": "3",
+      "options": [
+        {
+          "label": "1 review",
+          "value": "1"
+        },
+        {
+          "label": "2 reviews",
+          "value": "2"
+        },
+        {
+          "label": "3 reviews",
+          "value": "3"
+        }
+      ]
+    },
+    "alignment": {
+      "name": "Reviews alignment",
+      "type": "select",
+      "default": "start",
+      "options": [
+        {
+          "label": "Left",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "end"
+        }
+      ]
+    },
+    "name_filter": {
+      "name": "Customer name",
+      "type": "select",
+      "default": "full_name",
+      "options": [
+        {
+          "label": "Full name",
+          "value": "full_name"
+        },
+        {
+          "label": "First name",
+          "value": "first_name"
+        }
+      ]
+    },
+    "group_carousel": {
+      "name": "Carousel settings",
+      "type": "heading",
+      "default": false
+    },
+    "autoplay": {
+      "name": "Enable autoplay",
+      "type": "checkbox",
+      "default": false
+    },
+    "autoplay_speed": {
+      "name": "Autoplay speed",
+      "type": "slider",
+      "default": 4000,
+      "min": 1000,
+      "max": 6000,
+      "step": 500,
+      "unit": "ms"
+    },
+    "show_arrows": {
+      "name": "Show arrows",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_arrows_hover": {
+      "name": "Show arrows on hover",
+      "type": "checkbox",
+      "default": false
+    },
+    "show_dots": {
+      "name": "Show dots",
+      "type": "checkbox",
+      "default": true
+    },
+    "review_card": {
+      "name": "Apply Card style to reviews",
+      "type": "checkbox",
+      "default": true
+    },
+    "review_card_border": {
+      "name": "Enable Card border",
+      "type": "checkbox",
+      "default": true
+    },
+    "review_card_border_opacity": {
+      "name": "Card border opacity",
+      "type": "slider",
+      "default": 10,
+      "min": 10,
+      "max": 100,
+      "step": 10,
+      "unit": "%"
+    },
+    "review_card_bundle_color": {
+      "name": "Card content colors",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    },
+    "group_heading": {
+      "name": "Heading options",
+      "type": "heading",
+      "default": false
+    },
+    "heading_subtitle": {
+      "name": "Subtitle",
+      "type": "input",
+      "default": ""
+    },
+    "heading_title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Product Reviews"
+    },
+    "heading_description": {
+      "name": "Description",
+      "type": "text",
+      "default": "",
+      "placeholder": "Add a description to provide more information about these reviews"
+    },
+    "group_appearance": {
+      "name": "Appearance",
+      "type": "heading",
+      "default": false
+    },
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "system-2",
+      "pack": "color"
+    },
+    "animate": {
+      "name": "Customize animation options",
+      "type": "checkbox",
+      "help": "Allows to override the animation options defined at **Theme settings > Design > Enable theme animations**.",
+      "default": false
+    },
+    "animate_type": {
+      "name": "Animation type",
+      "type": "select",
+      "default": "fade-up",
+      "options": [
+        {
+          "label": "From down",
+          "value": "fade-up"
+        },
+        {
+          "label": "From up",
+          "value": "fade-down"
+        },
+        {
+          "label": "From left",
+          "value": "fade-right"
+        },
+        {
+          "label": "From right",
+          "value": "fade-left"
+        },
+        {
+          "label": "Zoom in",
+          "value": "zoom-in"
+        },
+        {
+          "label": "Zoom out",
+          "value": "zoom-out"
+        }
+      ]
+    },
+    "animate_repeat": {
+      "name": "Do the animation once",
+      "type": "checkbox",
+      "default": true
+    },
+    "animate_delay": {
+      "name": "Animation delay",
+      "type": "slider",
+      "default": 50,
+      "min": 0,
+      "max": 300,
+      "step": 50,
+      "unit": "ms"
+    }
+  },
+  "nesting": {
+    "animate": [
+      "animate_type",
+      "animate_repeat",
+      "animate_delay"
+    ],
+    "autoplay": [
+      "autoplay_speed"
+    ],
+    "review_card": [
+      "review_card_border",
+      "review_card_border_opacity",
+      "review_card_bundle_color"
+    ],
+    "show_arrows": [
+      "show_arrows_hover"
+    ],
+    "group_layout": [
+      "display",
+      "limit",
+      "columns_desktop",
+      "alignment",
+      "name_filter"
+    ],
+    "group_heading": [
+      "heading_subtitle",
+      "heading_title",
+      "heading_description"
+    ],
+    "group_carousel": [
+      "autoplay",
+      "show_arrows",
+      "show_dots"
+    ],
+    "group_appearance": [
+      "margin_top",
+      "margin_bottom",
+      "bundle_color",
+      "animate"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

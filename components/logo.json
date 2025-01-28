@@ -1,0 +1,32 @@
+{
+  "name": "Logo",
+  "icon": "image",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "image": {
+      "name": "Image",
+      "type": "image"
+    },
+    "link": {
+      "name": "Link",
+      "type": "link",
+      "default": null
+    },
+    "link_text": {
+      "name": "Link text",
+      "type": "input",
+      "default": "See more"
+    },
+    "link_external": {
+      "name": "Enable as external link",
+      "type": "checkbox",
+      "default": false
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

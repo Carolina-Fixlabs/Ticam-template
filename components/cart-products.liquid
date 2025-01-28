@@ -1,0 +1,31 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+
+<style>
+  #{{ section_id }} {
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+
+<section id="{{ section_id }}" class="theme-section theme-section__content" {{ component.attributes }}>
+  <cart-area>
+    <div class="position-relative">
+      <div class="loading-spinner__wrapper">
+        <div class="loading-spinner"></div>
+      </div>
+
+      <div class="cart-area__content">
+        {% if order.products_count > 0 %}
+          <h3 class="cart-page__title" {{ component.attributes.textfield.title }}>{{ component.options.title }}</h3>
+          <div class="row cart-products">
+            {% for prod in order.products %}
+              {% render 'store_product', prod: prod, prod_type: 'normal' %}
+            {% endfor %}
+          </div>
+        {% else %}
+          {% render 'theme_message' %}
+        {% endif %}
+      </div>
+    </div>
+  </cart-area>
+</section>

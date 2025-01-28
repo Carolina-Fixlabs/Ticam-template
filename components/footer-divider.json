@@ -1,0 +1,38 @@
+{
+  "name": "Footer divider",
+  "icon": "xmarks-lines",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-customization/#footer-divider).",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "show": {
+      "name": "Display",
+      "type": "select",
+      "default": "d-block",
+      "options": [
+        {
+          "label": "All devices",
+          "value": "d-block"
+        },
+        {
+          "label": "Only desktop",
+          "value": "d-none d-md-block"
+        },
+        {
+          "label": "Only mobile",
+          "value": "d-block d-md-none"
+        }
+      ]
+    },
+    "hide_line": {
+      "name": "Hide line",
+      "type": "checkbox",
+      "default": false
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

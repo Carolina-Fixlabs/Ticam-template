@@ -1,0 +1,119 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+{% assign display_option = component.options.display %}
+{% assign alignment_option = component.options.alignment %}
+{% assign has_icons = component.options.enable_icons %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% capture desktop_classname -%}
+  {%- case component.options.columns_desktop -%}
+    {%- when 1 -%}
+      col-md-12
+    {%- when 2 -%}
+      col-md-6
+    {%- when 3 -%}
+      col-md-4
+    {%- when 4 -%}
+      col-md-6 col-lg-3
+  {%- endcase -%}
+{%- endcapture %}
+{% capture mobile_classname -%}
+  {%- case component.options.columns_mobile -%}
+    {%- when 1 -%}
+      col-12
+    {%- when 2 -%}
+      col-xs-12 col-6
+  {%- endcase -%}
+{%- endcapture %}
+{% capture section_classname -%}
+  {%- if display_option == 'carousel' -%}
+    swiper-slide
+  {%- elsif display_option == 'grid' -%}
+    {{- mobile_classname | strip }}
+    {{ desktop_classname | strip -}}
+  {%- endif -%}
+{%- endcapture %}
+
+{% capture sw_content %}
+  {% for trust-block in component.subcomponents['trust-blocks'] %}
+    {% render 'components/trust-block', trust-block: trust-block, section_classname: section_classname, alignment_option: alignment_option, has_icons: has_icons, has_animation: has_animation, animate_type: animate_type, animate_repeat: animate_repeat, animate_delay: animate_delay %}
+  {% endfor %}
+{% endcapture %}
+
+{% assign show_arrows = component.options.show_arrows %}
+{% assign show_arrows_hover = component.options.show_arrows_hover %}
+{% assign show_dots = component.options.show_dots %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+  	--section-margin-top: {{ component.options.margin_top }}px;
+  	--section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+
+  #{{ section_id }} .trustbar-block .trustbar-block__wrapper[data-border="true"]:after {
+    --review-block-card-border: {{ component.options.card_border_opacity | divided_by: 100.00 }};
+  }
+</style>
+
+<section id="{{ section_id }}" class="container-fluid theme-section" data-bundle-color="{{ component.options.bundle_color }}" {{ component.attributes }}>
+  <div class="container container--adjust theme-section__container">
+    <div class="row theme-section__content">
+      {% if display_option == 'carousel' %}
+        <swiper-slider
+          class="swiper theme-slider__carousel"
+          sw-layout="trust-bar"
+          sw-columns-desktop="{{ component.options.columns_desktop }}"
+          sw-columns-mobile="{{ component.options.columns_mobile }}"
+          sw-autoplay="{{ component.options.autoplay }}"
+          sw-speed="{{ component.options.autoplay_speed }}"
+        >
+          <div class="swiper-wrapper">
+            {{ sw_content }}
+          </div>
+        </swiper-slider>
+
+        {% if show_arrows or show_dots %}
+          <div
+            class="d-flex align-items-center justify-content-between theme-navigation"
+            {% if show_arrows and show_arrows_hover %}
+              data-arrows-hover="true"
+            {% endif %}
+          >
+            {% if show_arrows %}
+              <button type="button" class="button swiper-button-prev theme-navigation__arrow theme-navigation__arrow--prev" aria-label="{% t 'Previous' %}">
+                <i class="ph ph-caret-left"></i>
+              </button>
+            {% endif %}
+
+            {% if show_dots %}
+              <div class="swiper-pagination d-flex flex-wrap align-items-center justify-content-center theme-navigation__pagination"></div>
+            {% endif %}
+
+            {% if show_arrows %}
+              <button type="button" class="button swiper-button-next theme-navigation__arrow theme-navigation__arrow--next" aria-label="{% t 'Next' %}">
+                <i class="ph ph-caret-right"></i>
+              </button>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% else %}
+        {{ sw_content }}
+      {% endif %}
+    </div>
+  </div>
+</section>

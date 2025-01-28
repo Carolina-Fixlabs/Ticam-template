@@ -1,0 +1,45 @@
+{% assign rating_score = prod.reviews.rating | round: 1 %}
+{% assign rating_floor = prod.reviews.rating | floor %}
+{% assign rating_remainder = 5 | minus: rating_floor | minus: 1 %}
+{% assign rating_decimal = prod.reviews.rating | minus: rating_floor %}
+
+{% if rating_decimal != 0 %}
+  {% assign rating_decimal_percentage = 100 | times: rating_decimal %}
+{% else %}
+  {% assign rating_decimal_percentage = 0 %}
+{% endif %}
+
+<div class="product-ratings">
+  <span class="product-ratings__score" data-score="{{ prod.reviews.rating }}">{{ rating_score }}</span>
+
+  <span class="product-ratings__divider"></span>
+
+  <div class="product-ratings__stars">
+    {% for _ in (1..rating_floor) %}
+      <span class="ph-fill ph-star product-ratings__star product-ratings__star--filled"></span>
+    {% endfor %}
+
+    {% unless rating_floor == 5 %}
+      <span class="ph-fill ph-star product-ratings__star product-ratings__star--partial" style="--rating-partial-width: {{ rating_decimal_percentage }}%"></span>
+    {% endunless %}
+
+    {% for _ in (1..rating_remainder) %}
+      <span class="ph-fill ph-star product-ratings__star"></span>
+    {% endfor %}
+  </div>
+
+  <span class="product-ratings__divider"></span>
+
+  <button
+    type="button"
+    class="button product-ratings__link"
+    aria-label="{% t 'See all reviews' %}"
+    onclick="smoothScrollToElement('#product-reviews');"
+  >
+    <span>
+      {{- prod.reviews.count }}
+      {% if prod.reviews.count == 1 %}{% t "review" %}{% else %}{% t "reviews" %}{% endif -%}
+    </span>
+    <i class="ph ph-caret-down"></i>
+  </button>
+</div>

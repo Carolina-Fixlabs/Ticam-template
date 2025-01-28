@@ -1,0 +1,189 @@
+{
+  "home": {
+    "Default": {
+      "components": [
+        "header",
+        "slider",
+        "featured-products",
+        "categories(2)",
+        "featured-category",
+        "banners(2)",
+        "media-with-text(3)",
+        "instagram",
+        "trust-bar",
+        "footer"
+      ]
+    }
+  },
+  "product": {
+    "Default": {
+      "components": [
+        "header",
+        "product-template",
+        "product-reviews",
+        "recommended-products",
+        "footer"
+      ]
+    }
+  },
+  "category": {
+    "Default": {
+      "components": [
+        "header",
+        "category-heading",
+        "template-image",
+        "product-feed",
+        "footer"
+      ]
+    },
+    "Brands": {
+      "components": [
+        "header",
+        "category-heading",
+        "template-image",
+        "category-brands-template",
+        "footer"
+      ]
+    },
+    "Show subcategories": {
+      "components": [
+        "header",
+        "category-heading",
+        "template-image",
+        "category-subcategories-template",
+        "footer"
+      ]
+    }
+  },
+  "page": {
+    "Default": {
+      "components": [
+        "header",
+        "template-heading",
+        "template-image",
+        "page-body",
+        "footer"
+      ]
+    },
+    "Blog": {
+      "components": [
+        "header",
+        "template-heading",
+        "template-image",
+        "page-body",
+        "page-blog-template",
+        "footer"
+      ]
+    },
+    "Post": {
+      "components": [
+        "header",
+        "template-heading",
+        "template-image",
+        "page-body(2)",
+        "line-divider",
+        "page-share",
+        "footer"
+      ]
+    },
+    "Quienes somos": {
+      "components": [
+        "header",
+        "template-heading(2)",
+        "template-image(2)",
+        "page-body(3)",
+        "big-banner",
+        "media-with-text",
+        "trust-bar(3)",
+        "media-with-text(2)",
+        "footer"
+      ]
+    }
+  },
+  "searchresults": {
+    "Default": {
+      "components": [
+        "header",
+        "category-heading",
+        "product-feed",
+        "footer"
+      ]
+    }
+  },
+  "contactpage": {
+    "Default": {
+      "components": [
+        "header",
+        "contact-form",
+        "contact-map",
+        "footer"
+      ]
+    }
+  },
+  "error": {
+    "Default": {
+      "components": [
+        "header",
+        "footer"
+      ]
+    }
+  },
+  "checkout__cart": {
+    "Default": {
+      "components": [
+        "cart-products",
+        "cart-cross-selling"
+      ]
+    }
+  },
+  "checkout__checkout": {
+    "Default": {
+      "components": [
+        "checkout-form"
+      ]
+    }
+  },
+  "customer__account": {
+    "Default": {
+      "components": [
+        "header",
+        "customer-heading",
+        "customer-tabs",
+        "footer"
+      ]
+    }
+  },
+  "customer__address": {
+    "Default": {
+      "components": [
+        "header",
+        "footer"
+      ]
+    }
+  },
+  "customer__details": {
+    "Default": {
+      "components": [
+        "header",
+        "footer"
+      ]
+    }
+  },
+  "customer__login": {
+    "Default": {
+      "components": [
+        "header",
+        "customer-login",
+        "footer"
+      ]
+    }
+  },
+  "customer__reset_password": {
+    "Default": {
+      "components": [
+        "header",
+        "footer"
+      ]
+    }
+  }
+}

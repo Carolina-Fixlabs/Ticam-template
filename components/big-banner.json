@@ -1,0 +1,381 @@
+{
+  "name": "Big banner",
+  "icon": "image-landscape",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-components/#-big-banner).",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "home",
+    "product",
+    "category",
+    "page",
+    "searchresults",
+    "contactpage",
+    "error",
+    "customer__account",
+    "customer__login"
+  ],
+  "options": {
+    "width": {
+      "name": "Width",
+      "type": "select",
+      "help": "When choosing **Default**, the option defined at **Theme settings > Design > Theme styles > Maximum container width** will be applied.",
+      "default": "default",
+      "options": [
+        {
+          "label": "Default",
+          "value": "default"
+        },
+        {
+          "label": "Small",
+          "value": "1320px"
+        },
+        {
+          "label": "Medium",
+          "value": "1620px"
+        },
+        {
+          "label": "Large",
+          "value": "1920px"
+        },
+        {
+          "label": "Extra Large",
+          "value": "2220px"
+        },
+        {
+          "label": "Full width",
+          "value": "100%"
+        }
+      ]
+    },
+    "height": {
+      "name": "Height",
+      "type": "select",
+      "default": "medium",
+      "options": [
+        {
+          "label": "Fit to content",
+          "value": "auto"
+        },
+        {
+          "label": "Small",
+          "value": "small"
+        },
+        {
+          "label": "Medium",
+          "value": "medium"
+        },
+        {
+          "label": "Large",
+          "value": "large"
+        },
+        {
+          "label": "Browser",
+          "value": "browser"
+        }
+      ]
+    },
+    "show_content": {
+      "name": "Show Banner content",
+      "type": "checkbox",
+      "default": false
+    },
+    "align_desktop": {
+      "name": "Desktop content alignment",
+      "type": "select",
+      "default": "text-md-center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "text-md-start"
+        },
+        {
+          "label": "Center",
+          "value": "text-md-center"
+        },
+        {
+          "label": "Right",
+          "value": "text-md-end"
+        }
+      ]
+    },
+    "align_mobile": {
+      "name": "Mobile content alignment",
+      "type": "select",
+      "default": "text-center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "text-start"
+        },
+        {
+          "label": "Center",
+          "value": "text-center"
+        },
+        {
+          "label": "Right",
+          "value": "text-end"
+        }
+      ]
+    },
+    "position_x": {
+      "name": "Horizontal content position",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "end"
+        }
+      ]
+    },
+    "subtitle": {
+      "name": "Subtitle",
+      "type": "input",
+      "default": "",
+      "placeholder": "Add an optional subtitle to your banner"
+    },
+    "title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Section title"
+    },
+    "description": {
+      "name": "Description",
+      "type": "text",
+      "default": "Here you can add a text or description to provide more context on what the section is about."
+    },
+    "group_images": {
+      "name": "Images",
+      "type": "heading",
+      "default": false
+    },
+    "image_desktop": {
+      "name": "Image (desktop)",
+      "type": "image"
+    },
+    "image_mobile": {
+      "name": "Image (mobile)",
+      "type": "image"
+    },
+    "image_overlay": {
+      "name": "Image overlay",
+      "type": "slider",
+      "default": 50,
+      "min": 0,
+      "max": 90,
+      "step": 10,
+      "unit": ""
+    },
+    "position_image_x": {
+      "name": "Horizontal image position",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    "position_image_y": {
+      "name": "Vertical image position",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "label": "Top",
+          "value": "top"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Bottom",
+          "value": "bottom"
+        }
+      ]
+    },
+    "group_link": {
+      "name": "Link options",
+      "type": "heading",
+      "default": false
+    },
+    "link": {
+      "name": "Link",
+      "type": "link",
+      "default": "/"
+    },
+    "link_text": {
+      "name": "Link text",
+      "type": "input",
+      "default": "Read more"
+    },
+    "link_external": {
+      "name": "Enable as external link",
+      "type": "checkbox",
+      "default": false
+    },
+    "link_button": {
+      "name": "Show link as button",
+      "type": "checkbox",
+      "default": true
+    },
+    "link_outline": {
+      "name": "Use outline button style",
+      "type": "checkbox",
+      "default": false
+    },
+    "link_arrow": {
+      "name": "Show arrow in button",
+      "type": "checkbox",
+      "default": true
+    },
+    "group_appearance": {
+      "name": "Appearance",
+      "type": "heading",
+      "default": false
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "system-1",
+      "pack": "color"
+    },
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 0,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 0,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "bundle_color_background": {
+      "name": "Component background color",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    },
+    "animate": {
+      "name": "Customize animation options",
+      "type": "checkbox",
+      "help": "Allows to override the animation options defined at **Theme settings > Design > Enable theme animations**.",
+      "default": false
+    },
+    "animate_type": {
+      "name": "Animation type",
+      "type": "select",
+      "default": "fade-up",
+      "options": [
+        {
+          "label": "From down",
+          "value": "fade-up"
+        },
+        {
+          "label": "From up",
+          "value": "fade-down"
+        },
+        {
+          "label": "From left",
+          "value": "fade-right"
+        },
+        {
+          "label": "From right",
+          "value": "fade-left"
+        },
+        {
+          "label": "Zoom in",
+          "value": "zoom-in"
+        },
+        {
+          "label": "Zoom out",
+          "value": "zoom-out"
+        }
+      ]
+    },
+    "animate_repeat": {
+      "name": "Do the animation once",
+      "type": "checkbox",
+      "default": true
+    },
+    "animate_delay": {
+      "name": "Animation delay",
+      "type": "slider",
+      "default": 50,
+      "min": 0,
+      "max": 300,
+      "step": 50,
+      "unit": "ms"
+    }
+  },
+  "nesting": {
+    "animate": [
+      "animate_type",
+      "animate_repeat",
+      "animate_delay"
+    ],
+    "group_link": [
+      "link",
+      "link_text",
+      "link_external",
+      "link_button"
+    ],
+    "link_button": [
+      "link_outline",
+      "link_arrow"
+    ],
+    "group_images": [
+      "image_desktop",
+      "image_mobile",
+      "image_overlay",
+      "position_image_x",
+      "position_image_y"
+    ],
+    "show_content": [
+      "align_desktop",
+      "align_mobile",
+      "position_x",
+      "subtitle",
+      "title",
+      "description"
+    ],
+    "group_appearance": [
+      "bundle_color",
+      "margin_top",
+      "margin_bottom",
+      "bundle_color_background",
+      "animate"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

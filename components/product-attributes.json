@@ -1,0 +1,38 @@
+{
+  "name": "Attributes",
+  "icon": "circle-info",
+  "max_usage": null,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "mobile_first": {
+      "name": "Show before product image on Mobile",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_sku": {
+      "name": "Show product SKU",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_sku_text": {
+      "name": "Show text before SKU",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_brand": {
+      "name": "Show product brand",
+      "type": "checkbox",
+      "default": true
+    }
+  },
+  "nesting": {
+    "show_sku": [
+      "show_sku_text"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

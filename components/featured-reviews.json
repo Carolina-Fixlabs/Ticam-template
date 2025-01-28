@@ -1,0 +1,395 @@
+{
+  "name": "Featured reviews",
+  "icon": "stars",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-components/#-featured-reviews).",
+  "max_usage": 1,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "home",
+    "product",
+    "category",
+    "page",
+    "searchresults",
+    "contactpage",
+    "error",
+    "checkout__cart",
+    "checkout__checkout",
+    "customer__account",
+    "customer__login"
+  ],
+  "options": {
+    "limit": {
+      "name": "Quantity of items to display",
+      "type": "slider",
+      "default": 6,
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "unit": ""
+    },
+    "display": {
+      "name": "Display type",
+      "type": "select",
+      "default": "carousel",
+      "options": [
+        {
+          "label": "Carousel",
+          "value": "carousel"
+        },
+        {
+          "label": "Grid",
+          "value": "grid"
+        }
+      ]
+    },
+    "columns_desktop": {
+      "name": "Number of columns on desktop",
+      "type": "select",
+      "default": "3",
+      "options": [
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        },
+        {
+          "label": "3",
+          "value": "3"
+        }
+      ]
+    },
+    "heading": {
+      "name": "Enable heading",
+      "type": "checkbox",
+      "default": true
+    },
+    "heading_subtitle": {
+      "name": "Subtitle",
+      "type": "input",
+      "default": ""
+    },
+    "heading_title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Featured Reviews"
+    },
+    "heading_description": {
+      "name": "Description",
+      "type": "text",
+      "default": "",
+      "placeholder": "Add a description to provide more information about these reviews"
+    },
+    "heading_link": {
+      "name": "Link",
+      "type": "link",
+      "default": null
+    },
+    "heading_link_text": {
+      "name": "Link text",
+      "type": "input",
+      "default": "See more reviews"
+    },
+    "group_reviews": {
+      "name": "Reviews options",
+      "type": "heading",
+      "default": false
+    },
+    "alignment": {
+      "name": "Reviews alignment",
+      "type": "select",
+      "default": "start",
+      "options": [
+        {
+          "label": "Left",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "end"
+        }
+      ]
+    },
+    "image": {
+      "name": "Display product image",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_date": {
+      "name": "Show review date",
+      "type": "checkbox",
+      "default": true
+    },
+    "date": {
+      "name": "Review date format",
+      "type": "select",
+      "default": "%d-%m-%Y",
+      "options": [
+        {
+          "label": "Day-Month-Year",
+          "value": "%d-%m-%Y"
+        },
+        {
+          "label": "Month-Day-Year",
+          "value": "%m-%d-%Y"
+        },
+        {
+          "label": "Year-Month-Day",
+          "value": "%Y-%m-%d"
+        }
+      ]
+    },
+    "show_name": {
+      "name": "Show customer name",
+      "type": "checkbox",
+      "default": true
+    },
+    "name_filter": {
+      "name": "Customer name",
+      "type": "select",
+      "default": "full_name",
+      "options": [
+        {
+          "label": "Full name",
+          "value": "full_name"
+        },
+        {
+          "label": "First name",
+          "value": "first_name"
+        }
+      ]
+    },
+    "show_icon": {
+      "name": "Show Quote icon",
+      "type": "checkbox",
+      "default": true
+    },
+    "icon": {
+      "name": "Icon type",
+      "type": "select",
+      "default": "closing",
+      "options": [
+        {
+          "label": "Opening quote",
+          "value": "opening"
+        },
+        {
+          "label": "Closing quote",
+          "value": "closing"
+        }
+      ]
+    },
+    "icon_size": {
+      "name": "Icon size",
+      "type": "slider",
+      "default": 24,
+      "min": 16,
+      "max": 40,
+      "step": 4,
+      "unit": "px"
+    },
+    "review_card": {
+      "name": "Apply Card style to reviews",
+      "type": "checkbox",
+      "default": true
+    },
+    "review_card_border": {
+      "name": "Enable Card border",
+      "type": "checkbox",
+      "default": true
+    },
+    "review_card_border_opacity": {
+      "name": "Card border opacity",
+      "type": "slider",
+      "default": 10,
+      "min": 10,
+      "max": 100,
+      "step": 10,
+      "unit": "%"
+    },
+    "review_card_bundle_color": {
+      "name": "Card content colors",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    },
+    "group_carousel": {
+      "name": "Carousel settings",
+      "type": "heading",
+      "default": false
+    },
+    "autoplay": {
+      "name": "Enable autoplay",
+      "type": "checkbox",
+      "default": false
+    },
+    "autoplay_speed": {
+      "name": "Autoplay speed",
+      "type": "slider",
+      "default": 4000,
+      "min": 1000,
+      "max": 6000,
+      "step": 500,
+      "unit": "ms"
+    },
+    "show_arrows": {
+      "name": "Show arrows",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_arrows_hover": {
+      "name": "Show arrows on hover",
+      "type": "checkbox",
+      "default": false
+    },
+    "show_dots": {
+      "name": "Show dots",
+      "type": "checkbox",
+      "default": true
+    },
+    "group_appearance": {
+      "name": "Appearance",
+      "type": "heading",
+      "default": false
+    },
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    },
+    "animate": {
+      "name": "Customize animation options",
+      "type": "checkbox",
+      "help": "Allows to override the animation options defined at **Theme settings > Design > Enable theme animations**.",
+      "default": false
+    },
+    "animate_type": {
+      "name": "Animation type",
+      "type": "select",
+      "default": "fade-up",
+      "options": [
+        {
+          "label": "From down",
+          "value": "fade-up"
+        },
+        {
+          "label": "From up",
+          "value": "fade-down"
+        },
+        {
+          "label": "From left",
+          "value": "fade-right"
+        },
+        {
+          "label": "From right",
+          "value": "fade-left"
+        },
+        {
+          "label": "Zoom in",
+          "value": "zoom-in"
+        },
+        {
+          "label": "Zoom out",
+          "value": "zoom-out"
+        }
+      ]
+    },
+    "animate_repeat": {
+      "name": "Do the animation once",
+      "type": "checkbox",
+      "default": true
+    },
+    "animate_delay": {
+      "name": "Animation delay",
+      "type": "slider",
+      "default": 50,
+      "min": 0,
+      "max": 300,
+      "step": 50,
+      "unit": "ms"
+    }
+  },
+  "nesting": {
+    "animate": [
+      "animate_type",
+      "animate_repeat",
+      "animate_delay"
+    ],
+    "heading": [
+      "heading_subtitle",
+      "heading_title",
+      "heading_description",
+      "heading_link",
+      "heading_link_text"
+    ],
+    "autoplay": [
+      "autoplay_speed"
+    ],
+    "show_date": [
+      "date"
+    ],
+    "show_icon": [
+      "icon",
+      "icon_size"
+    ],
+    "show_name": [
+      "name_filter"
+    ],
+    "review_card": [
+      "review_card_border",
+      "review_card_border_opacity",
+      "review_card_bundle_color"
+    ],
+    "show_arrows": [
+      "show_arrows_hover"
+    ],
+    "group_reviews": [
+      "alignment",
+      "image",
+      "show_date",
+      "show_name",
+      "show_icon",
+      "review_card"
+    ],
+    "group_carousel": [
+      "autoplay",
+      "show_arrows",
+      "show_dots"
+    ],
+    "group_appearance": [
+      "margin_top",
+      "margin_bottom",
+      "bundle_color",
+      "animate"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

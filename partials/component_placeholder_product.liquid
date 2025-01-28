@@ -1,0 +1,124 @@
+{% case display_option %}
+  {% when 'carousel' %}
+    {% assign prod_class = 'swiper-slide' %}
+  {% when 'grid' %}
+    {% if options.pb_columns_mobile == 1 %}
+      {% assign prod_class_mobile = 'col-12 col-sm-6' %}
+    {% else %}
+      {% assign prod_class_mobile = 'col-6 col-sm-4' %}
+    {% endif %}
+
+    {% if options.pb_columns_desktop == 4 %}
+      {% assign prod_class_desktop = 'col-md-4 col-lg-3' %}
+    {% else %}
+      {% assign prod_class_desktop = 'col-md-4 col-lg-3 col-lg-by-5' %}
+    {% endif %}
+    {% capture prod_class -%}
+      {{- prod_class_mobile }}
+      {{ prod_class_desktop -}}
+    {%- endcapture %}
+{% endcase %}
+
+{% capture prod_colors %}
+  <div class="product-block__options">
+    {% for prod_color in (1..5) %}
+      <button
+        type="button"
+        class="button product-block__color{% if forloop.first %} product-block__color--active{% endif %}"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        data-bs-title="{% cycle 'prod_color_name': 'Black', 'White', 'Blue', 'Pink', 'Red' %}"
+        data-bs-custom-class="product-block__tooltip"
+        aria-label="{% cycle 'prod_color_name': 'Black', 'White', 'Blue', 'Pink', 'Red' %}"
+      >
+        <div class="w-100 h-100 d-block" style="background: {% cycle 'prod_color_code': 'black', 'white', 'blue', 'pink', 'red' %};"></div>
+      </button>
+    {% endfor %}
+    <div class="product-block__color product-block__color--remaining">+2</div>
+  </div>
+{% endcapture %}
+
+{% for placeholder in (1..component.options.limit) %}
+  <article
+    class="{{ prod_class | strip }} product-block"
+    data-mobile-display="{{ options.pb_columns_mobile }}"
+    {% if has_animation %}
+      data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+    {% endif %}
+  >
+    <div class="product-block__wrapper">
+      <div class="w-100 position-relative product-block__gallery">
+        {% if options.pb_show_color_options and forloop.index == 2 %}
+          {{ prod_colors }}
+        {% endif %}
+        <a href="#" class="product-block__anchor" title="{% t 'Go to product' %}">
+          <div class="product-block__labels">
+            <div class="d-flex flex-column">
+              {% if forloop.index == 1 %}
+                <div class="product-block__label product-block__label--discount product-block__label--discount-{{ options.pb_label_discount_shape }}">
+                  {% case options.pb_label_discount_shape %}
+                    {% when 'circular' %}
+                      -25%
+                    {% when 'rectangular' %}
+                      -25%{% if options.pb_label_discount != blank %} {{ options.pb_label_discount | escape }}{% endif %}
+                  {% endcase %}
+                </div>
+              {% endif %}
+              <div class="product-block__label product-block__label--new">{% t "New" %}</div>
+            </div>
+            {% if forloop.index == 3 %}
+              <div class="product-block__label">{% t "Out of Stock" %}</div>
+            {% endif %}
+          </div>
+          <div class="theme-image-placeholder"></div>
+        </a>
+      </div>
+      <!-- end .product-block__gallery -->
+
+      <div class="product-block__content">
+        <div class="product-block__attributes check-empty">
+          <span class="product-block__sku">SKU: 1234</span>
+          <span>|</span>
+          <span class="product-block__brand">{% t "Brand name" %}</span>
+        </div>
+
+        <a href="#" class="product-block__name">
+          {%- if forloop.index == 2 %}
+            {%- t "This is the name for a product with color options" %} #{{ forloop.index }}
+          {% elsif forloop.index == 4 %}
+            {%- t "This is a very very long name for product" %} #{{ forloop.index }}
+          {% else %}
+            {%- t "This is the name for product" %} #{{ forloop.index }}
+          {% endif -%}
+        </a>
+
+        <div class="product-block__pricing product-block__pricing--horizontal">
+          {% if forloop.index == 1 %}
+            <div class="product-block__price product-block__price--new">{{ 25 | price }}</div>
+            <div class="product-block__price product-block__price--old">{{ 50 | price }}</div>
+          {% elsif forloop.index == 4 %}
+            <div class="product-block__price product-block__price--new">
+              {% if options.pb_price_from_until -%}
+                <small class="product-block__price product-block__price--from">{% t "from" %}</small>
+              {% endif -%}
+              {{- 25 | price }}
+            </div>
+            <div class="product-block__price product-block__price--old align-content-end">{{ 50 | price }}</div>
+          {% else %}
+            <div class="product-block__price">
+              {% if forloop.index == 2 and options.pb_price_from_until -%}
+                <small class="product-block__price product-block__price--from px-1">{% t "from" %}</small>
+              {%- endif %}
+              {{- placeholder | times: 1337 | modulo: 300 | plus: 15 | price -}}
+            </div>
+          {% endif %}
+        </div>
+
+        {% if options.pb_show_ratings %}
+          <div class="product-ratings"></div>
+        {% endif %}
+      </div>
+      <!-- end .product-block__content -->
+    </div>
+  </article>
+{% endfor %}

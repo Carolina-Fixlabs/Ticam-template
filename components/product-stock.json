@@ -1,0 +1,13 @@
+{
+  "name": "Stock",
+  "icon": "boxes-stacked",
+  "help": "This subcomponent allows to display the **Stock** of the product. You can customize its behavior in **Theme settings > Product Form**. For more details, visit [this article](landing?url=support/theme-customization/#product-form).",
+  "max_usage": null,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {},
+  "mode": "subcomponents",
+  "properties": {}
+}

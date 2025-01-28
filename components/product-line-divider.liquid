@@ -1,0 +1,12 @@
+{% assign section_id = 'product-page-line-' | append: product-line-divider.id %}
+
+<style>
+  #{{ section_id }} {
+    --section-margin-top: {{ product-line-divider.options.margin_top }}px;
+    --section-margin-bottom: {{ product-line-divider.options.margin_bottom }}px;
+    --section-line-divider-thickness: {{ product-line-divider.options.thickness | append: 'px' }};
+    --section-line-divider-opacity: {{ product-line-divider.options.opacity | divided_by: 100.0 }};
+  }
+</style>
+
+<div id="{{ section_id }}" class="w-100 theme-section__line-divider product-page__line-divider" data-product-ref="{{ prod.id }}" {{ product-line-divider.attributes }}></div>

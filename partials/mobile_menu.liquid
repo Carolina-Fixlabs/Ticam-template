@@ -1,0 +1,43 @@
+<div class="offcanvas offcanvas-start sidebar" tabindex="-1" id="mobile-menu" aria-labelledby="mobile-menu-label" data-bundle-color="{{ component.options.bundle_color }}">
+  <div class="offcanvas-header sidebar-header sidebar-header--transparent">
+    {% render 'header_logo', logo_position: 'mobile' %}
+
+    <button type="button" class="button sidebar-header__close" data-bs-dismiss="offcanvas" aria-label="{% t 'Close' %}"><i class="ph ph-x-circle"></i></button>
+  </div>
+  <!-- end .sidebar-header -->
+
+  <div class="offcanvas-body sidebar-body">
+    {% render 'sidebar_accordion' %}
+
+    {% if component.options.show_social %}
+      {% render 'store_social', position: 'mobile-menu' %}
+    {% endif %}
+
+    {% if languages.size > 1 or store.currencies_codes.size > 1 %}
+      <div class="sidebar-menu">
+        <div class="d-flex align-items-start justify-content-between sidebar-menu__wrapper">
+          {% if languages.size > 1 %}
+            <div class="w-50 d-block">
+              <div class="sidebar-menu__title">{% t "Languages" %}</div>
+
+              <div class="dropup">
+                {% render 'dropdown_language', dropdown_position: 'sidebar' %}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if store.currencies_codes.size > 1 %}
+            <div class="w-50 d-block">
+              <div class="sidebar-menu__title">{% t "Currency" %}</div>
+
+              <div class="dropup">
+                {% render 'dropdown_currency', dropdown_position: 'sidebar' %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+  <!-- end .sidebar-body -->
+</div>

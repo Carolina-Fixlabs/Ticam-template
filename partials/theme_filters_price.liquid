@@ -1,0 +1,72 @@
+{% if options.filters_price and template == 'category' %}
+  {% capture filters_price_reset %}
+    <button
+      type="button"
+      class="button theme-filters__tag theme-filters__tag--remove theme-filters__tag--remove-price"
+      onclick="removePriceFilters()"
+    >
+      {%- t "Reset" -%}
+    </button>
+  {% endcapture %}
+
+  <div id="theme-filters-price" class="theme-filters__block" data-url="price">
+    <div>
+      {% if collapse %}
+        <button
+          type="button"
+          class="button theme-filters__subtitle"
+          data-bs-toggle="collapse"
+          data-bs-target="#theme-filters-price-group"
+          aria-expanded="{% if collapse_status == 'open' %}true{% else %}false{% endif %}"
+          aria-controls="theme-filters-price-group"
+        >
+          {%- t "Filter by price" -%}
+          <i class="ph ph-caret-down theme-filters__caret"></i>
+        </button>
+      {% else %}
+        <h6 class="theme-filters__subtitle">{% t "Filter by price" %}</h6>
+
+        {{ filters_price_reset }}
+      {% endif %}
+    </div>
+
+    <div
+      {% if collapse %}
+        id="theme-filters-price-group"
+      {% endif %}
+      class="theme-filters__list{% if collapse %} collapse{% endif %}{% if collapse and collapse_status == 'open' %} show{% endif %}"
+    >
+      {% if collapse %}
+        <div class="w-100 d-block">
+          {{ filters_price_reset }}
+        </div>
+      {% endif %}
+
+      <div class="theme-filters__price-group">
+        <div class="w-50 d-block">
+          <label class="theme-filters__label" for="min-price">
+            <small>{% t "From" %}</small>
+          </label>
+          <input id="min-price" placeholder="{{ category.products_min_price | price }}" class="text theme-filters__input" name="min" type="number" min="0">
+        </div>
+
+        <div class="w-50 d-block">
+          <label class="theme-filters__label" for="max-price">
+            <small>{% t "To" %}</small>
+          </label>
+          <input id="max-price" placeholder="{{ category.products_max_price | price }}" class="text theme-filters__input" name="max" type="number" min="0" max="{{ category.products_max_price | price }}">
+        </div>
+      </div>
+
+      {% if filters_behavior %}
+        <div class="w-100 d-none d-md-block">
+          <button class="button button--style button--secondary w-100 text-center" type="submit">{%- t "Apply price filter" -%}</button>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="theme-filters__list">
+      <div class="theme-filters__message d-none">{%- t "The maximum price cannot be lower than the minimum price" %}.</div>
+    </div>
+  </div>
+{% endif %}

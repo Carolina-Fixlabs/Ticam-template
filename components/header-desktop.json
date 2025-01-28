@@ -1,0 +1,137 @@
+{
+  "name": "Desktop Menu",
+  "icon": "bars",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-customization/#desktop-menu).",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "group_layout": {
+      "name": "Layout options",
+      "type": "heading",
+      "default": true
+    },
+    "width": {
+      "name": "Width",
+      "type": "select",
+      "default": "full",
+      "options": [
+        {
+          "label": "Header width",
+          "value": "grid"
+        },
+        {
+          "label": "Full width",
+          "value": "full"
+        }
+      ]
+    },
+    "border": {
+      "name": "Show top border",
+      "type": "checkbox",
+      "help": "Allows to display a border at the top to create a division with the content above.",
+      "default": true
+    },
+    "spacing": {
+      "name": "Remove left and right spacing",
+      "type": "checkbox",
+      "default": false
+    },
+    "alignment": {
+      "name": "Menu alignment",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "end"
+        }
+      ]
+    },
+    "custom_bundle_color": {
+      "name": "Customize menu colors",
+      "type": "checkbox",
+      "help": "If enabled, the menu colors will be overwritten with this color pack.",
+      "default": false
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "system-2",
+      "pack": "color"
+    },
+    "group_submenus": {
+      "name": "Submenus options",
+      "type": "heading",
+      "default": false
+    },
+    "event": {
+      "name": "Submenus open event",
+      "type": "select",
+      "help": "Allows to define the mouse event that will open Submenus.",
+      "default": "hover",
+      "options": [
+        {
+          "label": "On click",
+          "value": "click"
+        },
+        {
+          "label": "On hover",
+          "value": "hover"
+        }
+      ]
+    },
+    "submenu": {
+      "name": "Submenus style",
+      "type": "select",
+      "default": "flyout",
+      "options": [
+        {
+          "label": "Flyout",
+          "value": "flyout"
+        },
+        {
+          "label": "Mega menu",
+          "value": "megamenu"
+        }
+      ]
+    }
+  },
+  "traits": [
+    {
+      "type": "menu_links",
+      "menus": [
+        "main"
+      ]
+    }
+  ],
+  "nesting": {
+    "border": [
+      "spacing"
+    ],
+    "group_layout": [
+      "width",
+      "border",
+      "alignment"
+    ],
+    "group_submenus": [
+      "event",
+      "submenu"
+    ],
+    "custom_bundle_color": [
+      "bundle_color"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

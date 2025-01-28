@@ -1,0 +1,64 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+{% assign display_option = component.options.display %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% assign heading_subtitle = component.options.heading_subtitle %}
+{% assign heading_title = component.options.heading_title %}
+{% assign heading_description = component.options.heading_description %}
+{% assign heading_link = component.options.heading_link %}
+{% capture heading_link_text_default %}{% t "See more products" %}{% endcapture %}
+{% assign heading_link_text = component.options.heading_link_text | default: heading_link_text_default %}
+
+{% assign sw_content = '<div class="swiper-wrapper product-blocks-wrapper"></div>' %}
+
+{%- capture sw_columns %}sw-columns-desktop="{{ options.pb_columns_desktop }}" sw-columns-mobile="{{ options.pb_columns_mobile }}"{% endcapture -%}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+    --carousel-nav-size: {{ component.options.nav_size }}px;
+  }
+</style>
+
+{% # Mark this component as dependent on product block options %}
+{% if false %}{% render 'product_block', _marker: true %}{% endif %}
+
+<section
+  id="{{ section_id }}"
+  class="container-fluid theme-section"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+  {{ component.attributes }}
+>
+  <recently-viewed data-display="{{ display_option }}" data-limit="{{ component.options.limit }}">
+    <div class="container container--adjust theme-section__container">
+      {% render 'component_heading', subtitle: heading_subtitle, title: heading_title, description: heading_description, link: heading_link, link_text: heading_link_text %}
+      {% if display_option == 'carousel' %}
+        <div class="row theme-section__content">
+          {% render 'component_swiper', sw_layout: 'recently-viewed', sw_content: sw_content, sw_columns: sw_columns, sw_autoheight: 'false' %}
+        </div>
+      {% else %}
+        <div class="row theme-section__content product-blocks-wrapper"></div>
+      {% endif %}
+    </div>
+  </recently-viewed>
+</section>

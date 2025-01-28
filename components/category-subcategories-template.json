@@ -1,0 +1,214 @@
+{
+  "name": "Category Subcategories content",
+  "icon": "th",
+  "help": "This template is dedicated to display products from the subcategories of the visited category.",
+  "max_usage": 1,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "category"
+  ],
+  "options": {
+    "group_layout": {
+      "name": "Layout options",
+      "type": "heading",
+      "default": true
+    },
+    "limit": {
+      "name": "Quantity of items to display",
+      "type": "slider",
+      "default": 12,
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "unit": ""
+    },
+    "display": {
+      "name": "Display type",
+      "type": "select",
+      "default": "carousel",
+      "options": [
+        {
+          "label": "Carousel",
+          "value": "carousel"
+        },
+        {
+          "label": "Grid",
+          "value": "grid"
+        }
+      ]
+    },
+    "heading": {
+      "name": "Heading options",
+      "type": "heading",
+      "default": false
+    },
+    "heading_description": {
+      "name": "Category description",
+      "type": "checkbox",
+      "default": true
+    },
+    "heading_link": {
+      "name": "Category link",
+      "type": "checkbox",
+      "default": true
+    },
+    "heading_link_text": {
+      "name": "Link text",
+      "type": "input",
+      "default": "See more products"
+    },
+    "group_carousel": {
+      "name": "Carousel settings",
+      "type": "heading",
+      "default": false
+    },
+    "autoplay": {
+      "name": "Enable autoplay",
+      "type": "checkbox",
+      "default": false
+    },
+    "autoplay_speed": {
+      "name": "Autoplay speed",
+      "type": "slider",
+      "default": 4000,
+      "min": 1000,
+      "max": 6000,
+      "step": 500,
+      "unit": "ms"
+    },
+    "show_arrows": {
+      "name": "Show arrows",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_arrows_hover": {
+      "name": "Show arrows on hover",
+      "type": "checkbox",
+      "default": false
+    },
+    "show_dots": {
+      "name": "Show dots",
+      "type": "checkbox",
+      "default": true
+    },
+    "group_appearance": {
+      "name": "Appearance",
+      "type": "heading",
+      "default": false
+    },
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    },
+    "animate": {
+      "name": "Customize animation options",
+      "type": "checkbox",
+      "help": "Allows to override the animation options defined at **Theme settings > Design > Enable theme animations**.",
+      "default": false
+    },
+    "animate_type": {
+      "name": "Animation type",
+      "type": "select",
+      "default": "fade-up",
+      "options": [
+        {
+          "label": "From down",
+          "value": "fade-up"
+        },
+        {
+          "label": "From up",
+          "value": "fade-down"
+        },
+        {
+          "label": "From left",
+          "value": "fade-right"
+        },
+        {
+          "label": "From right",
+          "value": "fade-left"
+        },
+        {
+          "label": "Zoom in",
+          "value": "zoom-in"
+        },
+        {
+          "label": "Zoom out",
+          "value": "zoom-out"
+        }
+      ]
+    },
+    "animate_repeat": {
+      "name": "Do the animation once",
+      "type": "checkbox",
+      "default": true
+    },
+    "animate_delay": {
+      "name": "Animation delay",
+      "type": "slider",
+      "default": 50,
+      "min": 0,
+      "max": 300,
+      "step": 50,
+      "unit": "ms"
+    }
+  },
+  "nesting": {
+    "animate": [
+      "animate_type",
+      "animate_repeat",
+      "animate_delay"
+    ],
+    "heading": [
+      "heading_description",
+      "heading_link"
+    ],
+    "autoplay": [
+      "autoplay_speed"
+    ],
+    "show_arrows": [
+      "show_arrows_hover"
+    ],
+    "group_layout": [
+      "limit",
+      "display"
+    ],
+    "heading_link": [
+      "heading_link_text"
+    ],
+    "group_carousel": [
+      "autoplay",
+      "show_arrows",
+      "show_dots"
+    ],
+    "group_appearance": [
+      "margin_top",
+      "margin_bottom",
+      "bundle_color",
+      "animate"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Price",
+  "icon": "dollar-sign",
+  "max_usage": null,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "mobile_first": {
+      "name": "Show before product image on Mobile",
+      "type": "checkbox",
+      "default": false
+    },
+    "display": {
+      "name": "Price display",
+      "type": "select",
+      "default": "horizontal",
+      "options": [
+        {
+          "label": "Horizontal",
+          "value": "horizontal"
+        },
+        {
+          "label": "Stacked",
+          "value": "stack"
+        }
+      ]
+    },
+    "show_discount_badge": {
+      "name": "Show discount label",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_discount_message": {
+      "name": "Show promotions's date limit message",
+      "type": "checkbox",
+      "default": true
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

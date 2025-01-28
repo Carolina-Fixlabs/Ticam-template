@@ -1,0 +1,154 @@
+{% if product.reviews != empty %}
+  {% assign section_id = 'theme-section-' | append: component.id %}
+  {% assign display_option = component.options.display %}
+
+  {% if options.theme_animate %}
+    {% assign has_animation = true %}
+
+    {% if component.options.animate %}
+      {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+      {% assign animate_repeat = component.options.animate_repeat %}
+      {% assign animate_type = component.options.animate_type %}
+    {% else %}
+      {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+      {% assign animate_repeat = options.theme_animate_repeat %}
+      {% assign animate_type = options.theme_animate_type %}
+    {% endif %}
+  {% else %}
+    {% assign has_animation = false %}
+  {% endif %}
+
+  {% assign align_desktop = options.heading_align_desktop %}
+  {% assign align_mobile = options.heading_align_mobile %}
+
+  {% capture sw_content %}
+    {% if display_option == 'carousel' %}
+      <div class="swiper-wrapper product-reviews__wrapper"></div>
+    {% else %}
+      <div class="col-12">
+        <div class="row theme-section__wrapper product-reviews__wrapper"></div>
+      </div>
+    {% endif %}
+  {% endcapture %}
+
+  {%- capture sw_columns %}sw-columns-desktop="{{ component.options.columns_desktop }}" sw-columns-mobile="1"{% endcapture -%}
+
+  <style>
+    #{{ section_id }} {
+      --section-margin-top: {{ component.options.margin_top }}px;
+      --section-margin-bottom: {{ component.options.margin_bottom }}px;
+      --review-block-alignment: {{ component.options.alignment }};
+    }
+    #{{ section_id }} .review-block--card .review-block__wrapper[data-border="true"]:after {
+      --review-block-card-border: {{ component.options.review_card_border_opacity | divided_by: 100.00 }};
+    }
+  </style>
+
+  <section
+    id="{{ section_id }}"
+    class="container-fluid theme-section"
+    data-bundle-color="{{ component.options.bundle_color }}"
+    {% if has_animation %}
+      data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+    {% endif %}
+    {{ component.attributes }}
+  >
+    <product-reviews
+      id="product-reviews"
+      class="container theme-section__container d-block"
+      data-productid="{{ product.id }}"
+      data-limit="{{ component.options.limit }}"
+      data-reviews-class="{% if display_option == 'carousel' %}swiper-slide{% else %}col-12 col-md-6 col-lg-{{ 12 | plus: 0 | divided_by: component.options.columns_desktop }}{% endif %}"
+      data-reviews-style="{{ component.options.review_card }}"
+      {% if component.options.review_card %}
+        data-reviews-style-bundle="{{ component.options.review_card_bundle_color }}" data-reviews-style-border="{{ component.options.review_card_border }}"
+      {% endif %}
+      data-name-filter="{{ component.options.name_filter }}"
+      {{ component.attributes }}
+    >
+      <div class="row align-items-center theme-section__heading">
+        <div class="col-12 col-md-8 col-lg-6 text-{{ align_mobile }} text-md-{{ align_desktop }} order-md-2 theme-section__column">
+          <div class="theme-section__subtitle check-empty" {{ component.attributes.textfield.heading_subtitle }}>
+            {{- component.options.heading_subtitle -}}
+          </div>
+
+          <h3 class="theme-section__title{% if options.heading_title_underline %} theme-section__title--underline{% endif %} check-empty" {{ component.attributes.textfield.heading_title }}>
+            {{- component.options.heading_title -}}
+          </h3>
+
+          <div class="theme-section__description check-empty" {{ component.attributes.textfield.heading_description }}>
+            {{- component.options.heading_description -}}
+          </div>
+        </div>
+
+        <div class="col-12 col-md-2 col-lg-3 order-md-1 theme-section__column">
+          {% render 'product_rating', prod: product %}
+        </div>
+
+        <div class="col-12 col-md-2 col-lg-3 text-{{ align_mobile }} text-md-end order-md-3 theme-section__column">
+          <div class="dropdown theme-section__dropdown-wrapper">
+            <button
+              type="button"
+              id="sort-reviews-dropdown"
+              class="button dropdown-toggle theme-section__toggle"
+              data-bs-toggle="dropdown"
+              data-bs-display="static"
+              aria-expanded="false"
+            >
+              <span>{% t "Sort by:" %}</span>
+              <span class="product-reviews__current-sort">{% t "Latest" %}</span>
+              <i class="ph ph-caret-down"></i>
+            </button>
+
+            <ul class="dropdown-menu dropdown-menu-end theme-dropdown" aria-labelledby="sort-reviews-dropdown">
+              <li>
+                <a role="button" class="dropdown-item theme-dropdown__link theme-dropdown__link--active" pr-sort="date_desc">
+                  <span>{%- t "Latest" -%}</span>
+                  <i class="ph ph-check"></i>
+                </a>
+              </li>
+              <li>
+                <a role="button" class="dropdown-item theme-dropdown__link" pr-sort="date_asc">
+                  <span>{%- t "Oldest" -%}</span>
+                  <i class="ph ph-check"></i>
+                </a>
+              </li>
+              <li>
+                <a role="button" class="dropdown-item theme-dropdown__link" pr-sort="rating_desc">
+                  <span>{%- t "Best ratings" -%}</span>
+                  <i class="ph ph-check"></i>
+                </a>
+              </li>
+              <li>
+                <a role="button" class="dropdown-item theme-dropdown__link" pr-sort="rating_asc">
+                  <span>{%- t "Lowest ratings" -%}</span>
+                  <i class="ph ph-check"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- end .theme-section__heading -->
+
+      <div class="row theme-section__content">
+        {% if display_option == 'carousel' %}
+          {% render 'component_swiper', sw_layout: 'product-reviews', sw_content: sw_content, sw_columns: sw_columns, sw_autoheight: 'false' %}
+        {% else %}
+          {{ sw_content }}
+        {% endif %}
+      </div>
+
+      {% if display_option == 'grid' %}
+        <div class="row">
+          <div class="col-12 text-center">
+            <button type="button" id="load-more-reviews" class="button button--style button--secondary button--bordered">
+              {%- t "Load more reviews" %}
+              <i class="ph ph-plus-circle ph--push"></i>
+            </button>
+          </div>
+        </div>
+      {% endif %}
+    </product-reviews>
+  </section>
+{% endif %}

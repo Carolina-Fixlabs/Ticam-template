@@ -1,0 +1,27 @@
+{
+  "name": "Testimony",
+  "icon": "quote-right",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "quote": {
+      "name": "Quote",
+      "type": "text",
+      "default": "Replace this text with your testimony."
+    },
+    "author": {
+      "name": "Author",
+      "type": "input",
+      "default": "Author name"
+    },
+    "image": {
+      "name": "Avatar image",
+      "type": "image"
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

@@ -1,0 +1,74 @@
+{
+  "name": "Footer locations",
+  "icon": "location-dot",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-customization/#footer-locations).",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "display": {
+      "name": "Locations to display",
+      "type": "select",
+      "default": "all",
+      "options": [
+        {
+          "label": "All locations",
+          "value": "all"
+        },
+        {
+          "label": "Pickup locations",
+          "value": "pickups"
+        }
+      ]
+    },
+    "column_width": {
+      "name": "Column space",
+      "type": "select",
+      "default": "auto",
+      "options": [
+        {
+          "label": "Auto",
+          "value": "auto"
+        },
+        {
+          "label": "Half width",
+          "value": "half"
+        },
+        {
+          "label": "Full width",
+          "value": "full"
+        }
+      ]
+    },
+    "show_email": {
+      "name": "Show location email",
+      "type": "checkbox",
+      "default": false
+    },
+    "show_phone": {
+      "name": "Show location phone",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_address": {
+      "name": "Show location address",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_map": {
+      "name": "Show address map on popup window",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_more_details_link": {
+      "name": "Show a 'more details' link",
+      "type": "checkbox",
+      "help": "Allows to open a popup window with detailed information of the location.",
+      "default": true
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

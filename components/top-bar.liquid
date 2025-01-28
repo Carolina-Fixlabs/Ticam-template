@@ -1,0 +1,75 @@
+{% assign section_id = 'theme-section-' | append: top-bar.id %}
+
+{% case top-bar.options.width %}
+  {% when 'grid' %}
+    {% if component.options.width == 'default' %}
+      {% assign section_width = options.theme_width %}
+    {% else %}
+      {% assign section_width = component.options.width %}
+    {% endif %}
+  {% else %}
+    {% assign section_width = '100%' %}
+{% endcase %}
+
+{% if languages.size > 1 or store.currencies_codes.size > 1 %}
+  {% assign has_actions = true %}
+{% else %}
+  {% assign has_actions = false %}
+{% endif %}
+
+{% assign actions_position = component.options.actions_position %}
+
+{% if actions_position == 'top-bar' and has_actions %}
+  {% assign alignment_class = 'justify-content-lg-start justify-content-center text-center' %}
+{% else %}
+  {% assign alignment_class = 'justify-content-center text-center' %}
+{% endif %}
+
+{% if top-bar.options.fixed and actions_position == 'top-bar' and has_actions %}
+  {% assign fixed_class = 'top-bar--fixed top-bar--fixed-actions' %}
+{% elsif top-bar.options.fixed %}
+  {% assign fixed_class = 'top-bar--fixed' %}
+{% endif %}
+
+{% capture top_bar_slider %}
+  <swiper-slider
+    class="swiper w-100 top-bar"
+    sw-layout="one"
+    sw-autoplay="{{ top-bar.options.autoplay }}"
+    sw-speed="{{ top-bar.options.autoplay_speed }}"
+  >
+    <div class="swiper-wrapper">
+      {% for top-bar-slide in component.subcomponents['top-bar-slides'] %}
+        {% render 'components/top-bar-slide', top-bar-slide: top-bar-slide, alignment_class: alignment_class %}
+      {% endfor %}
+    </div>
+  </swiper-slider>
+{% endcapture %}
+
+<style>
+  #{{ section_id }} .top-bar__container {
+    --theme-max-width: {{ section_width }};
+  }
+</style>
+
+<div
+  id="{{ section_id }}"
+  class="top-bar {{ fixed_class }}"
+  data-bundle-color="{{ top-bar.options.bundle_color }}"
+  {{ top-bar.attributes }}
+>
+  <div class="container container--adjust top-bar__container">
+    <div class="row top-bar__row">
+      <div class="col-12 {% if actions_position == 'top-bar' and has_actions %}col-lg-9{% endif %} top-bar__column">
+        {{ top_bar_slider }}
+      </div>
+      {%- if actions_position == 'top-bar' and has_actions -%}
+        <div class="col-12 col-lg-3 d-none d-lg-block top-bar__column">
+          <ul class="justify-content-lg-end justify-content-center header__menu">
+            {%- render 'header_language_currency' -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

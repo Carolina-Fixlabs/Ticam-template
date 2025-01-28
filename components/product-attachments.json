@@ -1,0 +1,18 @@
+{
+  "name": "Attachments",
+  "icon": "paperclip",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Attachments"
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

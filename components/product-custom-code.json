@@ -1,0 +1,20 @@
+{
+  "name": "Custom code",
+  "icon": "rectangle-code",
+  "help": "Use this for external apps or your custom design, here you can include code, tools, plugins, app, etc. you need to display in the component.",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "custom_code": {
+      "name": "Code",
+      "type": "html",
+      "help": "Here you need to add the external code. Liquid code is not supported.",
+      "default": ""
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

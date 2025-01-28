@@ -1,0 +1,143 @@
+{% assign menu_event = header-desktop.options.event %}
+
+{% if component.options.categories %}
+  {% case component.options.categories_display %}
+    {% when 'desktop' %}
+      {% assign nav_visibility = 'd-none d-lg-block' %}
+    {% when 'mobile' %}
+      {% assign nav_visibility = 'd-block' %}
+    {% when 'both' %}
+      {% assign nav_visibility = 'd-block' %}
+  {% endcase %}
+{% else %}
+  {% assign nav_visibility = 'd-none d-lg-block' %}
+{% endif %}
+
+{% case header-desktop.options.alignment %}
+  {% when 'start' %}
+    {% assign nav_alignment = 'justify-content-between' %}
+    {% assign social_alignment = 'justify-content-end' %}
+  {% when 'center' %}
+    {% assign nav_alignment = 'justify-content-center' %}
+    {% assign social_alignment = 'justify-content-center' %}
+  {% when 'end' %}
+    {% assign nav_alignment = 'justify-content-between flex-row-reverse' %}
+    {% assign social_alignment = 'justify-content-start' %}
+{% endcase %}
+
+{% if header-desktop.options.width == 'full' %}
+  <style>
+    .header-navigation {
+      --theme-max-width: 100%;
+    }
+  </style>
+{% endif %}
+
+<div
+  class="{{ nav_visibility }} container-fluid header-navigation{% if header-desktop.options.spacing %} header-navigation--no-spacing{% endif %}"
+  {% if header-desktop.options.custom_bundle_color %}
+    data-bundle-color="{{ header-desktop.options.bundle_color }}"
+  {% endif %}
+>
+  <nav
+    class="d-flex align-items-start {{ nav_alignment }} header-nav"
+    data-border="{{ header-desktop.options.border }}"
+    data-uppercase="{{ component.options.items_uppercase }}"
+    {% if component.options.categories %}
+      data-categories-menu="{{ component.options.categories_display }}"
+    {% endif %}
+    {{ header-desktop.attributes }}
+  >
+    <ul class="no-bullet justify-content-{{ header-desktop.options.alignment }} header-nav__menu header-nav__menu--{{ header-desktop.options.alignment }}">
+     {%comment%} {% if component.options.categories %}
+        {% render 'header_menu_categories',
+          categories_display: component.options.categories_display,
+          categories_title: component.options.categories_title,
+          categories_icon: component.options.categories_icon,
+          submenu_type: header-desktop.options.submenu,
+          menu_event: menu_event,
+          header_version: header_version
+        %}
+      {% endif %}
+      {%endcomment%}
+
+      {% for item in menu.main.items %}
+        <li class="header-nav__item{% if item.dropdown %} dropdown{% if menu_event == 'hover' %} header-nav__item--hover{% endif %}{% if header-desktop.options.submenu == 'megamenu' %} header-nav__item--inherit{% endif %}{% endif %}">
+          {% if item.dropdown %}
+            {% case menu_event %}
+              {% when 'click' %}
+                <a
+                  role="button"
+                  class="button dropdown-toggle header-nav__anchor{% if item.active %} header-nav__anchor--active{% endif %}"
+                  data-bs-toggle="dropdown"
+                  data-bs-auto-close="outside"
+                  aria-expanded="false"
+                  aria-label="{{ item.name }}"
+                  data-event="click"
+                >
+                  {{- item.name -}}
+                  <i class="ph ph-caret-down header-nav__caret"></i>
+                </a>
+              {% when 'hover' %}
+                <a
+                  {%- if item.type == 'no_url' %}
+                    role="button"
+                  {% else %}
+                    href="{{ item.url }}"
+                  {% endif -%}
+                  class="button header-nav__anchor{% if item.active %} header-nav__anchor--active{% endif %}"
+                  title="{% t 'Go to' %} {{ item.name }}"
+                  data-event="hover"
+                  {% if item.external %}
+                    target="_blank"
+                  {% endif %}
+                >
+                  {{- item.name -}}
+                  <i class="ph ph-caret-down header-nav__caret"></i>
+                </a>
+            {% endcase %}
+
+            {% if header-desktop.options.submenu == 'flyout' %}
+              {% render 'header_flyout', item: item, menu_event: menu_event %}
+            {% elsif header-desktop.options.submenu == 'megamenu' %}
+              {% render 'header_megamenu', item: item %}
+            {% endif %}
+          {% else %}
+            <a
+              {% if item.type == 'no_url' %}
+                role="button"
+              {% else %}
+                href="{{ item.url }}"
+              {% endif %}
+              class="button header-nav__anchor{% if item.active %} header-nav__anchor--active{% endif %}"
+              title="{% t 'Go to' %} {{ item.name }}"
+              {% if item.external %}
+                target="_blank"
+              {% endif %}
+            >
+              {{- item.name -}}
+            </a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% unless header_version == 'v3' or header_version == 'v4' %}
+      {% if component.options.show_social %}
+        <ul class="no-bullet d-none d-lg-flex {{ social_alignment }} header-nav__menu header-nav__menu--social">
+          {%- render 'store_social', position: 'header-desktop' -%}
+        </ul>
+      {% endif %}
+    {% endunless %}
+  </nav>
+  {% if component.options.categories %}
+        {% render 'header_menu_categories',
+          categories_display: component.options.categories_display,
+          categories_title: component.options.categories_title,
+          categories_icon: component.options.categories_icon,
+          submenu_type: header-desktop.options.submenu,
+          menu_event: menu_event,
+          header_version: header_version
+        %}
+      {% endif %}
+</div>

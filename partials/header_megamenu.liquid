@@ -1,0 +1,71 @@
+{% assign columns = item.items.size %}
+
+<div class="header-megamenu dropdown-menu">
+  <div class="container header-megamenu__container">
+    <div class="row">
+      {% for item in item.items %}
+        <div class="col{% if columns > 6 %}-2{% endif %} header-megamenu__column">
+          <a
+            {% if item.type == 'no_url' %}
+              role="button"
+            {% else %}
+              href="{{ item.url }}"
+            {% endif %}
+            class="header-megamenu__title"
+            title="{% t 'Go to' %} {{ item.name }}"
+          >
+            {{- item.name -}}
+          </a>
+
+          <ul class="no-bullet d-flex flex-column header-megamenu__list">
+            {% for item in item.items %}
+              <li class="header-megamenu__item">
+                <a
+                  href="{{ item.url }}"
+                  class="header-megamenu__link"
+                  title="{% t 'Go to' %} {{ item.name }}"
+                  {% if item.external %}
+                    target="_blank"
+                  {% endif %}
+                >
+                  {{- item.name -}}
+                </a>
+              </li>
+            {% endfor %}
+
+            {% unless item.type == 'no_url' %}
+              <li class="header-megamenu__item">
+                <a href="{{ item.url }}" class="header-megamenu__link header-megamenu__link--last" title="{% t 'View all in' %} {{ item.name }}">
+                  {%- t "View all" %}
+                  <i class="ph ph-arrow-right"></i
+                ></a>
+              </li>
+            {% endunless %}
+          </ul>
+        </div>
+      {% endfor %}
+
+      {% unless item.type == 'no_url' %}
+        {% capture last_item_text %}
+          {%- t "Go to" %}
+          {{ item.name -}}
+        {%- endcapture %}
+        <div class="col-12 text-center header-megamenu__column header-megamenu__column--last">
+          <hr class="header-megamenu__divider">
+
+          <a
+            href="{{ item.url }}"
+            class="header-megamenu__link header-megamenu__link--all"
+            title="{{ last_item_text }}"
+            {% if item.external %}
+              target="_blank"
+            {% endif %}
+          >
+            {{- last_item_text }}
+            <i class="ph ph-arrow-right"></i>
+          </a>
+        </div>
+      {% endunless %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+{% capture default_quote %}{% t "You need to add a text for this testimony." %}{% endcapture %}
+
+<div
+  class="{% if display == 'carousel' %}swiper-slide{% else %}{{ class_mobile }} {{ class_desktop }}{% endif %} text-{{ component.options.alignment }} testimony {% if component.options.testimony_card %} testimony--card{% endif %}"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+  {{ testimony.attributes }}
+>
+  <div
+    class="d-flex flex-column align-items-{{ component.options.alignment }} testimony__content"
+    {% if component.options.testimony_card %}
+      data-bundle-color="{{ component.options.testimony_card_bundle_color }}" data-border="{{ component.options.testimony_card_border }}"
+    {% endif %}
+  >
+    {% if component.options.icons %}
+      <div class="testimony__icon"><i class="theme-icon ph ph-quotes"></i></div>
+    {% endif %}
+
+    <div class="testimony__quote" {{ testimony.attributes.textfield.quote }}>
+      {{- testimony.options.quote | default: default_quote | newline_to_br -}}
+    </div>
+
+    {% if testimony.options.image.url != blank %}
+      <img
+        src="{{ testimony.options.image.url | thumb: avatar_image_size }}"
+        alt="{{ testimony.options.image.alt | default: testimony.options.author | default: store.name | escape }}"
+        class="testimony__avatar"
+        width="{{ avatar_image_size }}"
+        height="{{ avatar_image_size }}"
+        loading="lazy"
+      >
+    {% endif %}
+
+    <div class="testimony__author check-empty" {{ testimony.attributes.textfield.author }}>
+      {{- testimony.options.author -}}
+    </div>
+  </div>
+</div>

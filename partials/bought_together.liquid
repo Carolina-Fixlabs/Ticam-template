@@ -1,0 +1,167 @@
+{% assign num_packs_displayed = 0 %}
+
+{% for btr_pack in bought_together.packs %}
+  {% unless btr_pack.stock? %}{% continue %}{% endunless %}
+  <!-- Limit number of packs shown with the option fbt_packs_to_show -->
+  {% if num_packs_displayed >= component.options.limit %}{% break %}{% endif %}
+  {% assign num_packs_displayed = num_packs_displayed | plus: 1 %}
+
+  <!-- Ids of all products of the pack -->
+  {% assign pack_ids = btr_pack.products | map: 'id' %}
+
+  <div class="swiper-slide theme-pack" data-display="{{ display_option }}">
+    <form
+      id="form-add-multiple-{{ product.id }}-{{ pack_ids | join: '-' }}"
+      class="theme-pack__container"
+      action="{{ store.add_multiple_to_cart_url }}"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input type="hidden" name="products[][id]" value="{{ product.id }}">
+      <input type="hidden" name="products[][qty]" value="1">
+      <input type="hidden" name="products[][options]">
+
+      <div class="theme-pack__products">
+        <!-- Current product -->
+        <div class="pack-item">
+          {% if product.images.size > 0 %}
+            <img src="{{ product.images.first | thumb: '70x70' }}" alt="{{ product.name }}" class="pack-item__image" width="70" height="70" loading="lazy">
+          {% else %}
+            <div class="pack-item__image-placeholder"><i class="ph ph-image"></i></div>
+          {% endif %}
+
+          <div class="pack-item__info">
+            {% assign prod_names = product.name | replace: "'", '' | escape %}
+            <div class="small text-muted d-none" data-current-product="{{ product.id }}"></div>
+            <div class="pack-item__title">{{ product.name }}</div>
+
+            {% if options.pb_show_ratings and product.reviews != empty %}
+              {% render 'product_rating', prod: product %}
+            {% endif %}
+          </div>
+        </div>
+        <!-- end .pack-item -->
+
+        {% for btr_prod in btr_pack.products %}
+          <!-- Current Recommended Product inside the pack -->
+          <div class="pack-item">
+            <input type="hidden" name="products[][id]" value="{{ btr_prod.id }}">
+            <input type="hidden" name="products[][qty]" value="1">
+
+            {% if btr_prod.variant != blank %}
+              {% assign variant_value = btr_prod.variant.values.first %}
+              <input
+                type="hidden"
+                name="products[][options]"
+                value='{"{{ variant_value.option.id }}": "{{ variant_value.id }}"}'
+              >
+            {% else %}
+              <input type="hidden" name="products[][options]" value="">
+            {% endif %}
+
+            {% if btr_prod.images.size > 0 %}
+              <img
+                src="{{ btr_prod.images.first | resize: '70x70' }}"
+                alt="{{ btr_prod.name }}"
+                class="bg-light"
+                width="70"
+                height="70"
+                loading="lazy"
+              >
+            {% else %}
+              <div class="pack-item__image-placeholder"><i class="ph ph-image"></i></div>
+            {% endif %}
+
+            <div class="pack-item__info">
+              {% assign prod_names = prod_names | append: ',' | append: btr_prod.name | replace: "'", '' | escape %}
+
+              <a
+                href="{{ btr_prod.url }}"
+                class="pack-item__title pack-item__title--clickable"
+                title="{% t 'Go to' %} {{ btr_prod.name }}"
+                target="_blank"
+              >
+                {{- btr_prod.name -}}
+              </a>
+
+              {% if btr_prod.variant != blank %}
+                {% for variant_value in btr_prod.variant.values %}
+                  <div
+                    data-bought-together="{{ btr_prod.id }}"
+                    data-option="{{ variant_value.option.id }}"
+                    data-variant="{{ variant_value.id }}"
+                    class="pack-item__option"
+                  >
+                    {{- variant_value.option.name }}: {{ variant_value.name -}}
+                  </div>
+                {% endfor %}
+              {% endif %}
+
+              {% if options.pb_show_ratings and btr_prod.reviews != empty %}
+                {% render 'product_rating', prod: btr_prod %}
+              {% endif %}
+            </div>
+          </div>
+          <!-- end .pack-item -->
+        {% endfor %}
+      </div>
+      <!-- end .theme-pack__products -->
+
+      <div class="theme-pack__actions">
+        {% unless options.disable_prices %}
+          <div>
+            {% assign discount_value = 0 %}
+
+            {% if product.discount > 0 or btr_pack.discount? %}
+              {% assign discount_value = product.discount | plus: btr_pack.pack_discount %}
+              {% assign discount_percentage = discount_value | divided_by: product.price | times: 100 | round: 0 | append: '%' %}
+
+              <div class="theme-pack__pricing">
+                <span class="theme-pack__price theme-pack__price--new" {{ btr_pack.pack_price | minus: btr_pack.pack_discount }}>
+                  {{- product.price | plus: btr_pack.pack_price | minus: discount_value | price -}}
+                </span>
+                <span class="theme-pack__price theme-pack__price--old" data-price="{{ btr_pack.pack_price }}">
+                  {{- product.price | plus: btr_pack.pack_price | price -}}
+                </span>
+              </div>
+
+              <div class="theme-pack__text">
+                {%- t "Save %{discount_percentage} on this deal!", discount_percentage: discount_percentage -%}
+              </div>
+            {% else %}
+              <div class="theme-pack__pricing">
+                <span class="theme-pack__price" data-price="{{ btr_pack.pack_price }}">
+                  {{- product.price | plus: btr_pack.pack_price | price -}}
+                </span>
+              </div>
+            {% endif %}
+          </div>
+        {% endunless %}
+
+        {% unless options.disable_shopping_cart %}
+          {% if product.status != 'not-available' or product.stock > 0 and product.stock_unlimited == false %}
+            {% if options.display_cart_notification %}
+              <button
+                type="button"
+                class="button button--style button--main theme-pack__button"
+                onclick="addMultipleToCart(Jumpseller.aggregateProducts([{{ product.id }}, {{ pack_ids | join: ',' }}]), {{ prod_names | split: ',' | json | replace: '"', "'" }})"
+              >
+                {%- if options.theme_icon_cart_button %}<i class="theme-icon ph {{ options.theme_icon_cart }}"></i>{% endif -%}
+                {%- t 'Add all to cart' -%}
+              </button>
+            {% else %}
+              <button
+                type="submit"
+                class="button button--style button--main theme-pack__button"
+              >
+                {%- if options.theme_icon_cart_button %}<i class="theme-icon ph {{ options.theme_icon_cart }}"></i>{% endif -%}
+                {%- t 'Add all to cart' -%}
+              </button>
+            {% endif %}
+          {% endif %}
+        {% endunless %}
+      </div>
+      <!-- end .theme-pack__actions -->
+    </form>
+  </div>
+{% endfor %}

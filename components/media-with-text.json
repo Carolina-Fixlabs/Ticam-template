@@ -1,0 +1,278 @@
+{
+  "name": "Media with text",
+  "icon": "photo-film",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-components/#-media-with-text).",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "home",
+    "product",
+    "category",
+    "page",
+    "searchresults",
+    "contactpage",
+    "error",
+    "customer__account",
+    "customer__login"
+  ],
+  "options": {
+    "columns": {
+      "name": "Columns order",
+      "type": "select",
+      "default": "media-content",
+      "options": [
+        {
+          "label": "Content / Media",
+          "value": "content-media"
+        },
+        {
+          "label": "Media / Content",
+          "value": "media-content"
+        }
+      ]
+    },
+    "columns_mobile": {
+      "name": "Respect columns order on Mobile",
+      "type": "checkbox",
+      "help": "If disabled, the image will always position before the content on Mobile devices.",
+      "default": false
+    },
+    "group_media": {
+      "name": "Media options",
+      "type": "heading",
+      "default": false
+    },
+    "image_desktop": {
+      "name": "Image (desktop)",
+      "type": "image",
+      "help": "Minimum recommended width: 715px."
+    },
+    "image_mobile": {
+      "name": "Image (mobile)",
+      "type": "image",
+      "help": "Minimum recommended width: 527px."
+    },
+    "video": {
+      "name": "Video",
+      "type": "video",
+      "help": "Allows to add a 'YouTube' or 'Vimeo' video. If added, there's no need to upload any of the images above.",
+      "default": ""
+    },
+    "ratio": {
+      "name": "Video ratio",
+      "type": "select",
+      "default": "aspect-ratio-landscape",
+      "options": [
+        {
+          "label": "4 / 3",
+          "value": "aspect-ratio-rectangular"
+        },
+        {
+          "label": "16 / 9",
+          "value": "aspect-ratio-landscape"
+        }
+      ]
+    },
+    "group_content": {
+      "name": "Content options",
+      "type": "heading",
+      "default": false
+    },
+    "alignment": {
+      "name": "Content alignment",
+      "type": "select",
+      "default": "start",
+      "options": [
+        {
+          "label": "Left",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "end"
+        }
+      ]
+    },
+    "position_y": {
+      "name": "Vertical position",
+      "type": "select",
+      "help": "Allows to define the vertical position between the component Media and Content.",
+      "default": "center",
+      "options": [
+        {
+          "label": "Top",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Bottom",
+          "value": "end"
+        }
+      ]
+    },
+    "subtitle": {
+      "name": "Subtitle",
+      "type": "input",
+      "default": "",
+      "placeholder": "Add a subtitle to your content"
+    },
+    "title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Section title"
+    },
+    "text": {
+      "name": "Text",
+      "type": "text",
+      "default": "You can use this section to describe a store feature, an article or a product."
+    },
+    "group_link": {
+      "name": "Link options",
+      "type": "heading",
+      "default": false
+    },
+    "link": {
+      "name": "Link button",
+      "type": "link",
+      "default": "/"
+    },
+    "link_text": {
+      "name": "Link text",
+      "type": "input",
+      "default": "Read more"
+    },
+    "link_outline": {
+      "name": "Use outline button style",
+      "type": "checkbox",
+      "default": false
+    },
+    "link_arrow": {
+      "name": "Show arrow in button",
+      "type": "checkbox",
+      "default": true
+    },
+    "group_appearance": {
+      "name": "Appearance",
+      "type": "heading",
+      "default": false
+    },
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    },
+    "animate": {
+      "name": "Customize animation options",
+      "type": "checkbox",
+      "help": "Allows to override the animation options defined at **Theme settings > Design > Enable theme animations**.",
+      "default": false
+    },
+    "animate_type": {
+      "name": "Animation type",
+      "type": "select",
+      "default": "fade-up",
+      "options": [
+        {
+          "label": "From down",
+          "value": "fade-up"
+        },
+        {
+          "label": "From up",
+          "value": "fade-down"
+        },
+        {
+          "label": "From left",
+          "value": "fade-right"
+        },
+        {
+          "label": "From right",
+          "value": "fade-left"
+        },
+        {
+          "label": "Zoom in",
+          "value": "zoom-in"
+        },
+        {
+          "label": "Zoom out",
+          "value": "zoom-out"
+        }
+      ]
+    },
+    "animate_repeat": {
+      "name": "Do the animation once",
+      "type": "checkbox",
+      "default": true
+    },
+    "animate_delay": {
+      "name": "Animation delay",
+      "type": "slider",
+      "default": 50,
+      "min": 0,
+      "max": 300,
+      "step": 50,
+      "unit": "ms"
+    }
+  },
+  "nesting": {
+    "animate": [
+      "animate_type",
+      "animate_repeat",
+      "animate_delay"
+    ],
+    "group_link": [
+      "link",
+      "link_text",
+      "link_outline",
+      "link_arrow"
+    ],
+    "group_media": [
+      "image_desktop",
+      "image_mobile",
+      "video",
+      "ratio"
+    ],
+    "group_content": [
+      "alignment",
+      "position_y",
+      "subtitle",
+      "title",
+      "text"
+    ],
+    "group_appearance": [
+      "margin_top",
+      "margin_bottom",
+      "bundle_color",
+      "animate"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

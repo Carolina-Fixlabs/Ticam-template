@@ -1,0 +1,53 @@
+{% assign blog_post_link_external = options.blog_post_link_external %}
+
+<article
+  class="{% if post_display == 'carousel' %}swiper-slide{% elsif post_display == 'grid' %}{{ class_mobile }} {{ class_desktop }}{% endif %} blog-post"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+>
+  <div class="d-flex flex-column{% if class_desktop == 'col-12' %} flex-lg-row{% endif %} blog-post__wrapper">
+    <a href="{{ blog_post.url }}" class="blog-post__anchor" title="{% t 'Read article' %}">
+      {% if blog_post.images.size > 0 %}
+        {% if options.theme_width == '1320px' %}
+          {% assign image_desktop = blog_post.images.first | thumb: '636x477' %}
+          {% assign image_width_and_height = 'width="636" height="477"' %}
+        {% else %}
+          {% assign image_desktop = blog_post.images.first | thumb: '776x582' %}
+          {% assign image_width_and_height = 'width="776" height="582"' %}
+        {% endif %}
+
+        <picture class="w-100 d-block">
+          <source media="screen and (max-width: 575px)" srcset="{{ blog_post.images.first | thumb: '527x394' }}">
+          <source media="screen and (min-width: 576px)" srcset="{{ image_desktop }}">
+          <img class="w-100 d-block" alt="{{ blog_post.title | escape }}" src="{{ image_desktop }}" {{ image_width_and_height }} loading="lazy">
+        </picture>
+      {% else %}
+        <div class="aspect-ratio-rectangular theme-image-placeholder"></div>
+      {% endif %}
+    </a>
+
+    {% render 'theme_hover_link', link: blog_post.url, link_text: '', link_external: blog_post_link_external %}
+
+    <div class="blog-post__data">
+      {% if options.blog_post_date %}
+        <div class="blog-post__date">{{ blog_post.date | date: options.blog_post_date_format }}</div>
+      {% endif %}
+
+      <a href="{{ blog_post.url }}" class="blog-post__title" title="{% t 'Read' %} {{ blog_post.title | escape }}">
+        {{- blog_post.title -}}
+      </a>
+
+      {% if options.blog_post_excerpt %}
+        <div class="blog-post__excerpt check-empty">{{ blog_post.body | strip_html | truncate: options.blog_post_excerpt_length }}</div>
+      {% endif %}
+
+      {% if options.blog_post_button %}
+        <a href="{{ blog_post.url }}" class="button button--style button--secondary{% if options.blog_post_button_outline %} button--bordered{% endif %} blog-post__button" title="{% t 'Read article' %}">
+          {%- t "Read article" %}
+          {% if options.blog_post_button_arrow %}<i class="ph ph-arrow-right"></i>{% endif %}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</article>

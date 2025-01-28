@@ -1,0 +1,77 @@
+{
+  "name": "Customer login",
+  "icon": "user",
+  "max_usage": 1,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "customer__login"
+  ],
+  "options": {
+    "columns": {
+      "name": "Login form order",
+      "type": "select",
+      "default": "left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    "columns_mobile": {
+      "name": "Respect columns order on Mobile",
+      "type": "checkbox",
+      "help": "If disabled, the form will be always at the begining of the page on Mobile devices.",
+      "default": false
+    },
+    "register_text": {
+      "name": "Register title",
+      "type": "text",
+      "default": "By registering you can make your process shopping faster. Edit your details, add multiple addresses, review and track your orders, and more."
+    },
+    "group_appearance": {
+      "name": "Appearance",
+      "type": "heading",
+      "default": false
+    },
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    }
+  },
+  "nesting": {
+    "group_appearance": [
+      "margin_top",
+      "margin_bottom",
+      "bundle_color"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

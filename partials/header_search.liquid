@@ -1,0 +1,29 @@
+{% capture search_form %}
+  <form
+    {% if store.autocomplete_access == false or request.preview_mode %}
+      class="header-search"
+    {% endif %}
+    method="get"
+    action="{{ search.url_send }}"
+  >
+    <button type="submit" class="button header-search__submit" title="{% t 'Search' %}"><i class="theme-icon ph ph-magnifying-glass"></i></button>
+    <input
+      type="text"
+      {% if store.autocomplete_access %}
+        autocomplete="off"
+      {% endif %}
+      class="text header-search__input"
+      value="{{ search.query }}"
+      name="q"
+      placeholder="{% t 'Search for products here...' %}"
+    >
+  </form>
+{% endcapture %}
+
+{% if store.autocomplete_access %}
+  <div class="jumpseller-autocomplete" data-form="header-search" data-panel="popover mt-1" data-input-wrapper-prefix="d-flex">
+    {{ search_form }}
+  </div>
+{% else %}
+  {{ search_form }}
+{% endif %}

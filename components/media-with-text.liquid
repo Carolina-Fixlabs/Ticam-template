@@ -1,0 +1,100 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+
+{% assign link = component.options.link %}
+{% capture link_default %}{% t "Read more" %}{% endcapture %}
+{% assign link_text = component.options.link_text | default: link_default %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% assign image_desktop = component.options.image_desktop.url %}
+{% assign image_desktop_alt = component.options.image_desktop.alt | default: component.options.image_mobile.alt | default: component.options.title | default: store.name | escape %}
+{% assign image_desktop_width_and_height = component.options.image_desktop.attributes.width_and_height %}
+{% assign image_mobile = component.options.image_mobile.url %}
+{% assign image_mobile_alt = component.options.image_mobile.alt | default: component.options.image_desktop.alt | default: component.options.title | default: store.name | escape %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+  }
+</style>
+
+<section
+  id="{{ section_id }}"
+  class="container-fluid theme-section"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {{ component.attributes }}
+>
+  <div class="container container--adjust theme-section__container">
+    <div class="row align-items-{{ component.options.position_y }} theme-section__content">
+      <div
+        class="col-12 col-md-6{% if component.options.columns == 'content-media' %} order-{% if component.options.columns_mobile == false %}md-{% endif %}2{% endif %} theme-section__block"
+        {% if has_animation %}
+          data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+        {% endif %}
+      >
+        {% if component.options.video != blank %}
+          <div class="theme-section__embed {{ component.options.ratio }}">{{ component.options.video }}</div>
+        {% elsif image_desktop != blank and image_mobile != blank %}
+          <picture class="theme-section__picture">
+            <source media="screen and (max-width: 575px)" srcset="{{ image_mobile }}">
+            <source media="screen and (min-width: 576px)" srcset="{{ image_desktop }}">
+            <img src="{{ image_desktop }}" alt="{{ image_desktop_alt }}" class="theme-section__image" {{ image_desktop_width_and_height }} loading="lazy">
+          </picture>
+        {% elsif image_desktop != blank and image_mobile == blank %}
+          <img src="{{ image_desktop }}" alt="{{ image_desktop_alt }}" class="theme-section__image" {{ image_desktop_width_and_height }} loading="lazy">
+        {% elsif image_desktop == blank and image_mobile != blank %}
+          <img src="{{ image_mobile }}" alt="{{ image_mobile_alt }}" class="theme-section__image" {{ component.options.image_mobile.attributes.width_and_height }} loading="lazy">
+        {% else %}
+          <div class="{{ component.options.ratio }} theme-image-placeholder"></div>
+        {% endif %}
+      </div>
+
+      <div
+        class="col-12 col-md-6{% if component.options.columns == 'content-media' %} order-{% if component.options.columns_mobile == false %}md-{% endif %}1{% endif %} text-{{ component.options.alignment }} theme-section__block theme-section__block--push"
+        {% if has_animation %}
+          data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+        {% endif %}
+      >
+        <div class="theme-section__subtitle check-empty" {{ component.attributes.textfield.subtitle }}>
+          {{- component.options.subtitle -}}
+        </div>
+
+        <h3 class="theme-section__title theme-section__title--no-transform check-empty" {{ component.attributes.textfield.title }}>
+          {{- component.options.title -}}
+        </h3>
+
+        <div class="theme-section__description check-empty" {{ component.attributes.textfield.text }}>
+          {{- component.options.text | newline_to_br -}}
+        </div>
+
+        {% if link != blank %}
+          <a
+            href="{{ link }}"
+            class="button button--style button--main{% if component.options.link_outline %} button--bordered{% endif %} theme-section__button"
+            title="{{ link_text }}"
+            {{ component.attributes.textfield.link_text }}
+          >
+            {{- link_text -}}
+            {% if component.options.link_arrow %} <i class="ph ph-arrow-right"></i>{% endif %}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

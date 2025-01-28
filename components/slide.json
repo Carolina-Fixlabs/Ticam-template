@@ -1,0 +1,253 @@
+{
+  "name": "Slide",
+  "icon": "image",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "image_desktop": {
+      "name": "Image (desktop)",
+      "type": "image"
+    },
+    "image_mobile": {
+      "name": "Image (mobile)",
+      "type": "image"
+    },
+    "group_link": {
+      "name": "Link options",
+      "type": "heading",
+      "default": false
+    },
+    "link": {
+      "name": "Link",
+      "type": "link",
+      "default": "/"
+    },
+    "link_text": {
+      "name": "Link text",
+      "type": "input",
+      "default": "Read more"
+    },
+    "link_external": {
+      "name": "Enable as external link",
+      "type": "checkbox",
+      "default": false
+    },
+    "link_button": {
+      "name": "Show link as button",
+      "type": "checkbox",
+      "default": true
+    },
+    "link_outline": {
+      "name": "Use outline button style",
+      "type": "checkbox",
+      "default": false
+    },
+    "link_arrow": {
+      "name": "Show arrow in button",
+      "type": "checkbox",
+      "default": true
+    },
+    "group_content": {
+      "name": "Image + Content options",
+      "type": "heading",
+      "help": "These options only apply if you have chosen 'Image + Content' within the 'Content type' option at the main component settings.",
+      "default": false
+    },
+    "subtitle": {
+      "name": "Subtitle",
+      "type": "input",
+      "default": "",
+      "placeholder": "Add a subtitle to your slide"
+    },
+    "title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Slide title"
+    },
+    "description": {
+      "name": "Description",
+      "type": "text",
+      "default": "",
+      "placeholder": "Add a description for this slide"
+    },
+    "align_desktop": {
+      "name": "Desktop alignment",
+      "type": "select",
+      "default": "text-md-center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "text-md-start"
+        },
+        {
+          "label": "Center",
+          "value": "text-md-center"
+        },
+        {
+          "label": "Right",
+          "value": "text-md-end"
+        }
+      ]
+    },
+    "align_mobile": {
+      "name": "Mobile alignment",
+      "type": "select",
+      "default": "text-center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "text-start"
+        },
+        {
+          "label": "Center",
+          "value": "text-center"
+        },
+        {
+          "label": "Right",
+          "value": "text-end"
+        }
+      ]
+    },
+    "position_x": {
+      "name": "Desktop horizontal position",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "end"
+        }
+      ]
+    },
+    "position_y_desktop": {
+      "name": "Desktop vertical position",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "label": "Top",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Bottom",
+          "value": "end"
+        }
+      ]
+    },
+    "position_y_mobile": {
+      "name": "Mobile vertical position",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "label": "Top",
+          "value": "start"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Bottom",
+          "value": "end"
+        }
+      ]
+    },
+    "image_overlay": {
+      "name": "Image overlay",
+      "type": "slider",
+      "default": 50,
+      "min": 0,
+      "max": 90,
+      "step": 10,
+      "unit": ""
+    },
+    "position_image_x": {
+      "name": "Horizontal image position",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    "position_image_y": {
+      "name": "Vertical image position",
+      "type": "select",
+      "default": "center",
+      "options": [
+        {
+          "label": "Top",
+          "value": "top"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Bottom",
+          "value": "bottom"
+        }
+      ]
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "system-1",
+      "pack": "color"
+    }
+  },
+  "nesting": {
+    "group_link": [
+      "link",
+      "link_text",
+      "link_external",
+      "link_button"
+    ],
+    "link_button": [
+      "link_outline",
+      "link_arrow"
+    ],
+    "group_content": [
+      "subtitle",
+      "title",
+      "description",
+      "align_desktop",
+      "align_mobile",
+      "position_x",
+      "position_y_desktop",
+      "position_y_mobile",
+      "image_overlay",
+      "position_image_x",
+      "position_image_y",
+      "bundle_color"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

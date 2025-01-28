@@ -1,0 +1,17 @@
+{
+  "name": "Store product",
+  "icon": "box",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "permalink": {
+      "name": "Product",
+      "type": "product"
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

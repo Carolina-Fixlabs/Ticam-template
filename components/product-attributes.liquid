@@ -1,0 +1,33 @@
+{% if prod.variants == blank %}
+  {% assign first_variant = prod %}
+{% else %}
+  {% assign first_variant = prod.variants.first %}
+{% endif %}
+
+<product-attributes
+  data-name="product-attributes"
+  class="product-attributes product-attributes-{{ component.id }} w-100 check-empty{% if product-attributes.options.mobile_first %} mobile-first{% endif %}"
+  {{ product-attributes.attributes }}
+>
+  <script type="application/json" class="product-attributes-json">
+    {
+      "options": {
+        "showSku": {{ product-attributes.options.show_sku | json }},
+        "showSkuText": {{ product-attributes.options.show_sku_text | json }},
+        "showBrand": {{ product-attributes.options.show_brand | json }}
+      },
+      "info": {
+        "variant": {
+          "sku": {{ first_variant.sku | json }},
+          "brand": {{ prod.brand | json }}
+        }
+      }
+    }
+  </script>
+
+  <div class="product-page__attributes">
+    <span class="product-page__sku"></span>
+    <span class="product-page__attributes--divider">|</span>
+    <span class="product-page__brand"></span>
+  </div>
+</product-attributes>

@@ -1,0 +1,28 @@
+{% assign show_arrows = component.options.show_arrows %}
+{% assign show_arrows_hover = component.options.show_arrows_hover %}
+{% assign show_dots = component.options.show_dots %}
+
+{% if show_arrows or show_dots %}
+  <div
+    class="d-flex align-items-center justify-content-between theme-navigation"
+    {% if show_arrows and show_arrows_hover %}
+      data-arrows-hover="true"
+    {% endif %}
+  >
+    {% if show_arrows %}
+      <button type="button" class="button swiper-button-prev theme-navigation__arrow theme-navigation__arrow--prev" aria-label="{% t 'Previous' %}">
+        <i class="ph ph-caret-left"></i>
+      </button>
+    {% endif %}
+
+    {% if show_dots %}
+      <div class="swiper-pagination d-flex flex-wrap align-items-center justify-content-center theme-navigation__pagination"></div>
+    {% endif %}
+
+    {% if show_arrows %}
+      <button type="button" class="button swiper-button-next theme-navigation__arrow theme-navigation__arrow--next" aria-label="{% t 'Next' %}">
+        <i class="ph ph-caret-right"></i>
+      </button>
+    {% endif %}
+  </div>
+{% endif %}

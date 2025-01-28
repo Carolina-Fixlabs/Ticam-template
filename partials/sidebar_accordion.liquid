@@ -1,0 +1,67 @@
+{% if menu.main and menu.main.items.size > 0 %}
+  {% assign accordion_id = 'mobile-menu-accordion' %}
+  <div class="accordion sidebar-accordion" id="{{ accordion_id }}">
+    {% for item in menu.main.items %}
+      {% assign item_id = 'sidebar-accordion-collapse-' | append: item.id %}
+      {% assign item_parent_id = 'sidebar-accordion-group-' | append: item.id %}
+
+      <div class="accordion-item sidebar-accordion__item sidebar-accordion__item--level1">
+        {% if item.dropdown %}
+          <button
+            type="button"
+            class="accordion-button button sidebar-accordion__button{% if item.active %} sidebar-accordion__button{% endif %}"
+            data-bs-toggle="collapse"
+            data-bs-target="#{{ item_id }}"
+            aria-expanded="{% if item.active %}true{% else %}false{% endif %}"
+            aria-controls="{{ item_id }}"
+          >
+            {{- item.name -}}
+            <i class="ph ph-caret-down sidebar-accordion__caret"></i>
+          </button>
+
+          <div id="{{ item_id }}" class="accordion-collapse collapse" data-bs-parent="#{{ accordion_id }}">
+            <div class="accordion-body sidebar-accordion__body">
+              <div class="accordion sidebar-accordion" id="{{ item_parent_id }}">
+                {% for item in item.items %}
+                  {% assign subitem_id = 'sidebar-accordion-collapse-' | append: item.id %}
+                  {% render 'sidebar_accordion_item', item: item, subitem_id: subitem_id, item_parent_id: item_parent_id %}
+                {% endfor %}
+
+                {% unless item.type == 'no_url' %}
+                  <div class="sidebar-accordion__item">
+                    <a
+                      href="{{ item.url }}"
+                      class="button sidebar-accordion__button sidebar-accordion__button--last"
+                      title="{% t 'View all in' %} {{ item.name }}"
+                      {% if item.external %}
+                        target="_blank"
+                      {% endif %}
+                    >
+                      {% t "View all" %}
+                      <i class="ph ph-caret-double-right"></i>
+                    </a>
+                  </div>
+                {% endunless %}
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <a
+            {% if item.type == 'no_url' %}
+              role="button"
+            {% else %}
+              href="{{ item.url }}"
+            {% endif %}
+            class="button sidebar-accordion__button"
+            title="{% t 'Go to' %} {{ item.name }}"
+            {% if item.external %}
+              target="_blank"
+            {% endif %}
+          >
+            {{- item.name -}}
+          </a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}

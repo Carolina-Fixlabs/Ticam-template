@@ -1,0 +1,59 @@
+<div
+  class="{% if display_option == 'carousel' %}swiper-slide{% else %}col-12 {{ class_desktop }}{% endif %} review-block{% if component.options.review_card %} review-block--card{% endif %}"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+>
+  <div
+    class="review-block__wrapper"
+    {% if component.options.review_card %}
+      data-bundle-color="{{ component.options.review_card_bundle_color }}" data-border="{{ component.options.review_card_border }}"
+    {% endif %}
+  >
+    <div class="review-block__header{% if component.options.alignment == 'center' %} flex-column{% endif %}">
+      {% if component.options.show_icon %}
+        <div class="review-block__icon review-block__icon--{{ icon_alignment }} review-block__icon--{{ component.options.icon }}">
+          <i class="theme-icon ph ph-quotes"></i>
+        </div>
+      {% endif %}
+
+      {% if component.options.image %}
+        <a href="{{ review.product.url }}" class="review-block__anchor{% if component.options.alignment == 'end' %} order-2{% endif %}" title="{% t 'See product' %}">
+          {% if review.product.images.first != blank %}
+            <img src="{{ review.product.images.first | thumb: '50x50' }}" alt="{{ review.product.name }}" class="theme-section__picture" width="50" height="50" loading="lazy">
+          {% else %}
+            <div class="aspect-ratio-square theme-image-placeholder theme-image-placeholder--small"></div>
+          {% endif %}
+        </a>
+      {% endif %}
+
+      <div class="d-flex flex-column">
+        <a href="{{ review.product.url }}" class="review-block__name" title="{% t 'Go to' %} {{ review.product.name }}">
+          {{- review.product.name -}}
+        </a>
+
+        <div class="review-block__rating">
+          {% render 'product_rating', prod: review.product %}
+        </div>
+      </div>
+    </div>
+    <!-- end .review-block__header -->
+
+    <div class="review-block__content">{{ review.review }}</div>
+
+    <div class="review-block__footer">
+      {% if component.options.show_name %}
+        <div class="review-block__customer">
+          {% if component.options.name_filter == 'first_name' %}
+            {{ review.customer_name | strip | split: ' ' | first }}
+          {% else %}
+            {{ review.customer_name }}
+          {% endif %}
+        </div>
+      {% endif %}
+      {%- if component.options.show_date %}
+        <div class="review-block__date">{{ review.date | date: component.options.date }}</div>
+      {% endif %}
+    </div>
+  </div>
+</div>

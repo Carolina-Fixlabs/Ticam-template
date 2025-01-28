@@ -1,0 +1,31 @@
+<div class="offcanvas offcanvas-end sidebar" tabindex="-1" id="sidebar-filters" aria-labelledby="sidebar-filters-title" data-bundle-color="default">
+  <div class="offcanvas-header sidebar-header">
+    <h5 class="offcanvas-title sidebar-header__title" id="sidebar-cart-title">
+      {%- if template == 'category' %}
+        {%- t "Filter products" -%}
+      {% elsif template == 'searchresults' %}
+        {%- t "Filter results" -%}
+      {% endif -%}
+    </h5>
+    <button type="button" class="button sidebar-header__close" data-bs-dismiss="offcanvas" aria-label="{% t 'Close' %}"><i class="ph ph-x"></i></button>
+  </div>
+  <!-- end .sidebar-header -->
+
+  <div class="offcanvas-body sidebar-body">
+    <div class="sidebar-body__filters">
+      {% render 'theme_filters' %}
+    </div>
+  </div>
+  <!-- end .sidebar-body -->
+
+  <div class="sidebar-actions">
+    <button
+      id="apply-filters"
+      type="button"
+      class="button button--style button--secondary w-100 text-center"
+      onclick="submitFilters()"
+    >
+      {%- t "Apply filters" -%}
+    </button>
+  </div>
+</div>

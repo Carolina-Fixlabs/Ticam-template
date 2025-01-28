@@ -1,0 +1,34 @@
+{% case header_version -%}
+  {%- when 'v1' -%}
+    {% if has_desktop_menu %}
+      {% assign version_class = 'd-flex d-lg-none' %}
+    {% else %}
+      {% assign version_class = 'd-flex' %}
+    {% endif %}
+  {%- else -%}
+    {% assign version_class = 'd-flex' %}
+{%- endcase %}
+
+<li class="header__item {{ version_class }}">
+  <button type="button" class="button header__link" data-bs-toggle="offcanvas" data-bs-target="#mobile-menu" aria-controls="mobile-menu" aria-label="{% t 'Menu' %}">
+    <i class="theme-icon ph ph-list header__icon"></i>
+    <div class="d-none d-md-block header__text">{% t "Menu" %}</div>
+  </button>
+</li>
+
+{% if header_version == 'v3' or header_version == 'v4' %}
+  {% unless component.options.categories == false %}
+    {% render 'header_menu_categories',
+      categories_display: component.options.categories_display,
+      categories_title: component.options.categories_title,
+      categories_icon: component.options.categories_icon,
+      submenu_type: component.subcomponents['header-desktop'].options.submenu,
+      menu_event: component.subcomponents['header-desktop'].options.event,
+      header_version: header_version
+    %}
+  {% endunless %}
+{% endif %}
+
+{% unless header_version == 'v2' %}
+  {% render 'header_menu_search_item', header_version: header_version %}
+{% endunless %}

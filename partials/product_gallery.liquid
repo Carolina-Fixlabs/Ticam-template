@@ -1,0 +1,174 @@
+{% if component.options.gallery_image_format %}
+  {% assign images_format = 'format' %}
+{% else %}
+  {% assign images_format = 'no-format' %}
+{% endif %}
+
+{% assign images_size = prod.images.size %}
+{% assign has_zoom = component.options.gallery_zoom %}
+{% assign zoom_size = component.options.gallery_zoom_size %}
+
+{% case component.options.gallery_image_dimension %}
+  {% when 'landscape' %}
+    {% assign image_ratio = 9.0 | divided_by: 16.0 %}
+    {% assign size_md = '719x404' %}
+    {% assign size_sm = '526x296' %}
+    {% assign size_xs = '366x206' %}
+  {% when 'portrait' %}
+    {% assign image_ratio = 4.0 | divided_by: 3.0 %}
+    {% assign size_md = '719x959' %}
+    {% assign size_sm = '526x701' %}
+    {% assign size_xs = '366x488' %}
+  {% when 'rectangular' %}
+    {% assign image_ratio = 3.0 | divided_by: 4.0 %}
+    {% assign size_md = '719x539' %}
+    {% assign size_sm = '526x395' %}
+    {% assign size_xs = '366x274' %}
+  {% when 'square' %}
+    {% assign image_ratio = 1.0 | divided_by: 1.0 %}
+    {% assign size_md = '719x719' %}
+    {% assign size_sm = '526x526' %}
+    {% assign size_xs = '366x366' %}
+{% endcase %}
+
+{% assign image_width = component.options.gallery_image_size %}
+{% assign image_height = image_ratio | times: image_width | round: 0 %}
+{% capture image_width_and_height %}width="{{ image_width }}" height="{{ image_height }}"{% endcapture %}
+{% assign image_width_zoom = image_width | times: zoom_size | round: 0 %}
+{% assign image_height_zoom = image_height | times: zoom_size | round: 0 %}
+{% capture image_width_and_height_zoom %}width="{{ image_width_zoom }}" height="{{ image_height_zoom }}"{% endcapture %}
+
+{% assign size_lg = 'x' | append: image_height | prepend: image_width %}
+{% assign size_lg_zoom = 'x' | append: image_height_zoom | prepend: image_width_zoom %}
+
+{% capture product_gallery_main %}
+  {% case images_format %}
+    {% when 'format' %}
+      {% if images_size == 0 %}
+        <div class="swiper-slide product-gallery__slide">
+          <div class="theme-image-placeholder theme-image-placeholder--{{ component.options.gallery_image_dimension }}"></div>
+        </div>
+      {% elsif images_size == 1 %}
+        {% if component.options.gallery_image_display == 'resize' %}
+          {% assign image_mobile_small = prod.images.first | resize: size_xs %}
+          {% assign image_mobile = prod.images.first | resize: size_sm %}
+          {% assign image_tablet = prod.images.first | resize: size_md %}
+          {% assign image_desktop = prod.images.first | resize: size_lg %}
+          {% assign image_desktop_zoom = prod.images.first | resize: size_lg_zoom %}
+        {% elsif component.options.gallery_image_display == 'thumb' %}
+          {% assign image_mobile_small = prod.images.first | thumb: size_xs %}
+          {% assign image_mobile = prod.images.first | thumb: size_sm %}
+          {% assign image_tablet = prod.images.first | thumb: size_md %}
+          {% assign image_desktop = prod.images.first | thumb: size_lg %}
+          {% assign image_desktop_zoom = prod.images.first | thumb: size_lg_zoom %}
+        {% endif %}
+
+        <div class="swiper-slide product-gallery__slide{% if has_zoom %} zoom{% endif %}">
+          <picture class="product-gallery__picture">
+            <source media="screen and (max-width: 414px)" srcset="1x {{ image_mobile_small }}, 2x {{ image_tablet }}">
+            <source media="screen and (min-width: 415px) and (max-width: 575px)" srcset="1x {{ image_mobile }}, 2x {{ image_tablet }}">
+            <source media="screen and (min-width: 575px) and (max-width: 767px)" srcset="{{ image_tablet }}">
+            <source media="screen and (min-width: 768px)" srcset="{{ image_desktop }}">
+            <img src="{{ image_desktop }}" alt="{{ prod.name }}" class="product-gallery__image" {{ image_width_and_height }} loading="eager">
+          </picture>
+          {% if has_zoom %}
+            <img src="{{ image_desktop_zoom }}" alt="{{ prod.name }}" class="product-gallery__image product-gallery__image--hidden" {{ image_width_and_height_zoom }} loading="eager">
+          {% endif %}
+        </div>
+      {% else %}
+        {% for image in prod.images %}
+          {% if component.options.gallery_image_display == 'resize' %}
+            {% assign image_mobile_small = image | resize: size_xs %}
+            {% assign image_mobile = image | resize: size_sm %}
+            {% assign image_tablet = image | resize: size_md %}
+            {% assign image_desktop = image | resize: size_lg %}
+            {% assign image_desktop_zoom = image | resize: size_lg_zoom %}
+          {% elsif component.options.gallery_image_display == 'thumb' %}
+            {% assign image_mobile_small = image | thumb: size_xs %}
+            {% assign image_mobile = image | thumb: size_sm %}
+            {% assign image_tablet = image | thumb: size_md %}
+            {% assign image_desktop = image | thumb: size_lg %}
+            {% assign image_desktop_zoom = image | thumb: size_lg_zoom %}
+          {% endif %}
+
+          <div class="swiper-slide product-gallery__slide{% if has_zoom %} zoom{% endif %}">
+            <picture class="product-gallery__picture">
+              <source media="screen and (max-width: 414px)" srcset="1x {{ image_mobile_small }}, 2x {{ image_tablet }}">
+              <source media="screen and (min-width: 415px) and (max-width: 575px)" srcset="1x {{ image_mobile }}, 2x {{ image_tablet }}">
+              <source media="screen and (min-width: 575px) and (max-width: 767px)" srcset="{{ image_tablet }}">
+              <source media="screen and (min-width: 768px)" srcset="{{ image_desktop }}">
+              <img src="{{ image_desktop }}" alt="{{ prod.name }} {{ forloop.index }}" class="product-gallery__image" {{ image_width_and_height }} loading="eager">
+            </picture>
+            {% if has_zoom %}
+              <img src="{{ image_desktop_zoom }}" alt="{{ prod.name }} {{ forloop.index }}" class="product-gallery__image product-gallery__image--hidden" {{ image_width_and_height_zoom }} loading="eager">
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% when 'no-format' %}
+      {% if images_size == 0 %}
+        <div class="swiper-slide product-gallery__slide">
+          <div class="theme-image-placeholder theme-image-placeholder--square"></div>
+        </div>
+      {% elsif images_size == 1 %}
+        <div class="swiper-slide product-gallery__slide{% if has_zoom %} zoom{% endif %}">
+          <img src="{{ prod.images.first }}" alt="{{ prod.name }}" class="product-gallery__image" width="auto" height="auto" loading="eager">
+          {% if has_zoom %}
+            <img src="{{ prod.images.first }}" alt="{{ prod.name }}" class="product-gallery__image product-gallery__image--hidden" width="auto" height="auto" loading="eager">
+          {% endif %}
+        </div>
+      {% else %}
+        {% for image in prod.images %}
+          <div class="swiper-slide product-gallery__slide{% if has_zoom %} zoom{% endif %}">
+            <img src="{{ image }}" alt="{{ prod.name }} {{ forloop.index }}" class="product-gallery__image" width="auto" height="auto" loading="eager">
+            {% if has_zoom %}
+              <img src="{{ image }}" alt="{{ prod.name }} {{ forloop.index }}" class="product-gallery__image product-gallery__image--hidden" width="auto" height="auto" loading="eager">
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% endif %}
+  {% endcase %}
+{% endcapture %}
+
+{% capture product_gallery_arrows %}
+  <button type="button" class="button swiper-button-prev product-gallery__arrow product-gallery__arrow--prev" aria-label="{% t 'Previous image' %}">
+    <i class="ph ph-arrow-circle-left"></i>
+  </button>
+
+  <button type="button" class="button swiper-button-next product-gallery__arrow product-gallery__arrow--next" aria-label="{% t 'Next image' %}">
+    <i class="ph ph-arrow-circle-right"></i>
+  </button>
+{% endcapture %}
+
+<div
+  class="product-gallery__wrapper{% if component.options.sticky_product_image %} sticky-md-top{% endif %}"
+  data-thumbs="{{ component.options.gallery_thumbs_position }}"
+  data-dimension="{{ component.options.gallery_image_dimension }}"
+  data-zoom="{{ has_zoom }}"
+>
+  {% if images_size > 0 and has_zoom %}
+    <span class="product-gallery__zoom-icon trsn" data-bs-toggle="tooltip" data-bs-title="{% t 'Place your mouse over the image to zoom in and see it with more detail' %}">
+      <i class="ph ph-magnifying-glass-plus"></i>
+    </span>
+  {% endif %}
+
+  <swiper-slider
+    class="swiper product-gallery__carousel product-gallery__carousel--main"
+    sw-layout="product-gallery"
+    sw-thumbs="{{ component.options.gallery_thumbs }}"
+    sw-autoplay="false"
+    sw-auto-height="{% if images_format == 'format' %}false{% elsif images_format == 'no-format' %}true{% endif %}"
+  >
+    <div class="swiper-wrapper">
+      {{ product_gallery_main }}
+    </div>
+
+    {% unless component.options.gallery_thumbs %}
+      {{ product_gallery_arrows }}
+    {% endunless %}
+  </swiper-slider>
+
+  {% if component.options.gallery_thumbs and images_size > 1 %}
+    {% render 'product_gallery_thumbs', prod: prod, images_format: images_format, product_gallery_arrows: product_gallery_arrows %}
+  {% endif %}
+</div>

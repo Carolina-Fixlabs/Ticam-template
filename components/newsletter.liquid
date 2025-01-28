@@ -1,0 +1,112 @@
+{% assign section_id = 'theme-section-' | append: component.id %}
+{% assign section_align = component.options.alignment %}
+
+{% if options.theme_animate %}
+  {% assign has_animation = true %}
+
+  {% if component.options.animate %}
+    {% assign animate_delay = 0 | plus: component.options.animate_delay %}
+    {% assign animate_repeat = component.options.animate_repeat %}
+    {% assign animate_type = component.options.animate_type %}
+  {% else %}
+    {% assign animate_delay = 0 | plus: options.theme_animate_delay %}
+    {% assign animate_repeat = options.theme_animate_repeat %}
+    {% assign animate_type = options.theme_animate_type %}
+  {% endif %}
+{% else %}
+  {% assign has_animation = false %}
+{% endif %}
+
+{% if section_align == 'center' %}
+  {% assign section_classname = 'col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3' %}
+{% else %}
+  {% assign section_classname = 'col-12 col-md-6' %}
+{% endif %}
+
+{% capture button_text %}{% t "Subscribe" %}{% endcapture %}
+
+{% assign image_desktop = component.options.image_desktop.url %}
+{% assign image_desktop_alt = component.options.image_desktop.alt | default: component.options.image_mobile.alt | default: component.options.title | default: store.name | escape %}
+{% assign image_desktop_width_and_height = component.options.image_desktop.attributes.width_and_height %}
+{% assign image_mobile = component.options.image_mobile.url %}
+{% assign image_mobile_alt = component.options.image_mobile.alt | default: component.options.image_desktop.alt | default: component.options.title | default: store.name | escape %}
+{% assign image_mobile_width_and_height = component.options.image_mobile.attributes.width_and_height %}
+
+{% capture background_image %}
+  <div class="theme-section__media">
+    {% if image_desktop != blank or image_mobile != blank %}
+      <div class="theme-section__overlay"></div>
+    {% endif %}
+
+    {% if image_desktop != blank and image_mobile != blank %}
+      <picture class="theme-section__picture">
+        <source media="screen and (max-width: 575px)" srcset="{{ image_mobile }}">
+        <source media="screen and (min-width: 576px)" srcset="{{ image_desktop }}">
+        <img class="theme-section__image big-banner__picture" src="{{ image_desktop }}" alt="{{ image_desktop_alt }}" {{ image_desktop_width_and_height }} loading="lazy">
+      </picture>
+    {% elsif image_desktop != blank and image_mobile == blank %}
+      <img class="theme-section__image big-banner__picture" src="{{ image_desktop }}" alt="{{ image_desktop_alt }}" {{ image_desktop_width_and_height }} loading="lazy">
+    {% elsif image_desktop == blank and image_mobile != blank %}
+      <img class="theme-section__image big-banner__picture" src="{{ image_mobile }}" alt="{{ image_mobile_alt }}" {{ image_mobile_width_and_height }} loading="lazy">
+    {% else %}
+      <div class="theme-image-placeholder"></div>
+    {% endif %}
+  </div>
+{% endcapture %}
+
+<style>
+  #{{ section_id }} {
+    --theme-max-width: {{ options.theme_width }};
+    --section-margin-top: {{ component.options.margin_top }}px;
+    --section-margin-bottom: {{ component.options.margin_bottom }}px;
+    {% if image_desktop != blank or image_mobile != blank %}--theme-image-position: {{ component.options.position_image_x }} {{ component.options.position_image_y }};
+    --theme-overlay-opacity: {{ component.options.image_overlay | divided_by: 100.00 }};{% endif %}
+  }
+</style>
+
+<section
+  id="{{ section_id }}"
+  class="container-fluid text-{{ section_align }} theme-section"
+  data-bundle-color="{{ component.options.bundle_color }}"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+  {{ component.attributes }}
+>
+  <div class="container container--adjust theme-section__container">
+    <div class="row align-items-center theme-section__content">
+      <div class="{{ section_classname }}{% if section_align == 'end' %} order-md-2{% endif %}">
+        <h3 class="theme-section__title{% if section_align == 'center' and options.heading_title_underline %} theme-section__title--underline{% endif %} check-empty" {{ component.attributes.textfield.title }}>
+          {{- component.options.title -}}
+        </h3>
+
+        <div class="theme-section__description check-empty" {{ component.attributes.textfield.description }}>
+          {{- component.options.description -}}
+        </div>
+      </div>
+      <!-- end .theme-section__column -->
+
+      {% if section_align == 'center' %}
+        <div class="w-100"></div>
+      {% endif %}
+
+      <newsletter-form
+        id="newsletter-form-{{ component.id }}"
+        class="{{ section_classname }}{% if section_align == 'end' %} order-md-1{% endif %} theme-newsletter"
+        fn-email-placeholder="{{ component.options.placeholder | escape }}"
+        fn-button-text="{{ component.options.button | default: button_text }}"
+        fn-button-class="button button--style button--main theme-newsletter__submit"
+      >
+        {{ newsletter_form }}
+
+        {% if component.options.disclaimer != blank %}
+          <div class="theme-newsletter__disclaimer" {{ component.attributes.textfield.disclaimer }}>{{ component.options.disclaimer }}</div>
+        {% endif %}
+      </newsletter-form>
+    </div>
+  </div>
+
+  {% if component.options.enable_image %}
+    {{ background_image }}
+  {% endif %}
+</section>

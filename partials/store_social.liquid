@@ -1,0 +1,108 @@
+{% capture title %}
+  <div class="theme-social__title">{%- t "Follow us" -%}</div>
+{% endcapture %}
+
+{% capture print_instagram %}
+  <a href="{{ social.instagram.url }}" class="theme-social__link" title="{% t "Follow us in" %} Instagram" target="_blank">
+    <i class="theme-icon ph ph-instagram-logo"></i>
+  </a>
+{% endcapture %}
+
+{% capture print_facebook %}
+  <a href="{{ social.facebook.url }}" class="theme-social__link" title="{% t "Follow us in" %} Facebook" target="_blank">
+    <i class="theme-icon ph ph-facebook-logo"></i>
+  </a>
+{% endcapture %}
+
+{% capture print_twitter %}
+  <a href="{{ social.twitter.url }}" class="theme-social__link" title="{% t "Follow us in" %} Twitter" target="_blank">
+    <i class="theme-icon ph ph-x-logo"></i>
+  </a>
+{% endcapture %}
+
+{% capture print_youtube %}
+  <a href="{{ social.youtube.url }}" class="theme-social__link" title="{% t "Follow us in" %} Youtube" target="_blank">
+    <i class="theme-icon ph ph-youtube-logo"></i>
+  </a>
+{% endcapture %}
+
+{% capture print_tiktok %}
+  <a href="{{ social.tiktok.url }}" class="theme-social__link" title="{% t "Follow us in" %} TikTok" target="_blank">
+    <i class="theme-icon ph ph-tiktok-logo"></i>
+  </a>
+{% endcapture %}
+
+{% capture print_pinterest %}
+  <a href="{{ social.pinterest.url }}" class="theme-social__link" title="{% t "Follow us in" %} Pinterest" target="_blank">
+    <i class="theme-icon ph ph-pinterest-logo"></i>
+  </a>
+{% endcapture %}
+
+{% case position %}
+  {% when 'header-desktop' %}
+    {% if social.instagram.url != blank %}
+      <li class="header-nav__item">
+        {{- print_instagram -}}
+      </li>
+    {% endif %}
+
+    {% if social.facebook.url != blank %}
+      <li class="header-nav__item">
+        {{- print_facebook -}}
+      </li>
+    {% endif %}
+
+    {% if social.twitter.url != blank %}
+      <li class="header-nav__item">
+        {{- print_twitter -}}
+      </li>
+    {% endif %}
+
+    {% if social.youtube.url != blank %}
+      <li class="header-nav__item">
+        {{- print_youtube -}}
+      </li>
+    {% endif %}
+
+    {% if social.tiktok.url != blank %}
+      <li class="header-nav__item">
+        {{- print_tiktok -}}
+      </li>
+    {% endif %}
+
+    {% if social.pinterest.url != blank %}
+      <li class="header-nav__item">
+        {{- print_pinterest -}}
+      </li>
+    {% endif %}
+  {% else %}
+    <div class="d-flex align-items-center justify-content-start theme-social">
+      {% unless position == 'header' or position == 'contact' %}
+        {{- title -}}
+      {% endunless %}
+
+      {% if social.instagram.url != blank %}
+        {{ print_instagram }}
+      {% endif %}
+
+      {% if social.facebook.url != blank %}
+        {{ print_facebook }}
+      {% endif %}
+
+      {% if social.twitter.url != blank %}
+        {{ print_twitter }}
+      {% endif %}
+
+      {% if social.youtube.url != blank %}
+        {{ print_youtube }}
+      {% endif %}
+
+      {% if social.tiktok.url != blank %}
+        {{ print_tiktok }}
+      {% endif %}
+
+      {% if social.pinterest.url != blank %}
+        {{ print_pinterest }}
+      {% endif %}
+    </div>
+{% endcase %}

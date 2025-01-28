@@ -1,0 +1,49 @@
+{
+  "name": "Line divider",
+  "icon": "grid-dividers",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "thickness": {
+      "name": "Line thickness",
+      "type": "slider",
+      "default": 1,
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": ""
+    },
+    "opacity": {
+      "name": "Line opacity",
+      "type": "slider",
+      "default": 10,
+      "min": 10,
+      "max": 100,
+      "step": 10,
+      "unit": ""
+    },
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 16,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 8,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

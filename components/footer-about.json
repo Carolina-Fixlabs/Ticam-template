@@ -1,0 +1,57 @@
+{
+  "name": "Footer about",
+  "icon": "info-circle",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-customization/#footer-about).",
+  "max_usage": null,
+  "required": true,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [],
+  "options": {
+    "column_width": {
+      "name": "Column space",
+      "type": "select",
+      "default": "auto",
+      "options": [
+        {
+          "label": "Auto",
+          "value": "auto"
+        },
+        {
+          "label": "Half width",
+          "value": "half"
+        },
+        {
+          "label": "Full width",
+          "value": "full"
+        }
+      ]
+    },
+    "logo": {
+      "name": "Logo",
+      "type": "image"
+    },
+    "logo_height": {
+      "name": "Logo height",
+      "type": "slider",
+      "default": 50,
+      "min": 10,
+      "max": 120,
+      "step": 1,
+      "unit": "px"
+    },
+    "description": {
+      "name": "Store description",
+      "type": "text",
+      "default": "",
+      "placeholder": "Add a short description about your store"
+    },
+    "social": {
+      "name": "Show Social media links",
+      "type": "checkbox",
+      "default": true
+    }
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

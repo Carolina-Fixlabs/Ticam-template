@@ -1,0 +1,49 @@
+{% capture item_image %}
+  <img src="{{ accordion-item.options.image.url }}" alt="{{ accordion-item.options.image.alt | default: accordion-item.options.title | escape }}" class="theme-accordion__item--image" width="auto" height="auto" loading="lazy">
+{% endcapture %}
+
+<div
+  class="accordion-item theme-accordion__item"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+  {{ accordion-item.attributes }}
+>
+  <style>
+    --accordion-image-size: {{ accordion-item.options.size }}%;
+  </style>
+
+  <button
+    type="button"
+    id="item-heading-{{ accordion-item.id }}"
+    class="accordion-button button theme-accordion__button"
+    data-bs-toggle="collapse"
+    data-bs-target="#accordion-item-collapse-{{ accordion-item.id }}"
+    aria-expanded="{% if item_index.first and component.options.first %}true{% else %}false{% endif %}"
+    aria-controls="accordion-item-collapse-{{ accordion-item.id }}"
+  >
+    {{- accordion-item.options.title -}}
+
+    <i class="ph ph-caret-down theme-accordion__caret"></i>
+  </button>
+
+  <div
+    id="accordion-item-collapse-{{ accordion-item.id }}"
+    class="accordion-collapse collapse{% if item_index.first and component.options.first %} show{% endif %}"
+    {% if component.options.collapse %}
+      data-bs-parent="#{{ accordion_target_id }}"
+    {% endif %}
+  >
+    <div class="accordion-body theme-accordion__body">
+      {% if accordion-item.options.image.url != blank and accordion-item.options.image_position == 'before' %}
+        {{ item_image }}
+      {% endif %}
+
+      <span {{ accordion-item.attributes.textfield.content }}>{{ accordion-item.options.content | newline_to_br }}</span>
+
+      {% if accordion-item.options.image.url != blank and accordion-item.options.image_position == 'after' %}
+        {{ item_image }}
+      {% endif %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<product-wishlist {{ attributes }} class="product-wishlist trsn" data-display="{{ display }}">
+  <script type="application/json" class="product-wishlist-json">
+    {
+      "info": {
+        "product": {
+          "id": {{ prod.id | json }},
+          "first_variant_id": {{ prod.variants.first.id | json }},
+          "wishlist_add_url": {{ prod.wishlist_add_url | json }},
+          "wishlist_remove_url": {{ prod.wishlist_remove_url | json }},
+          {% if prod.variants.size == 0 %}
+            "wishlisted_product": {{ prod.wishlisted | json }}
+          {% else %}
+            "variants": [{% for variant in prod.variants %}
+              {
+                "variant_id": {{ variant.id | json }},
+                "wishlisted": {{ variant.wishlisted | json }}
+              }{% unless forloop.last %},{% endunless %}
+            {% endfor %}]
+          {% endif %}
+        }
+      }
+    }
+  </script>
+
+  <button
+    type="button"
+    onclick="location.href='{{ customer_login_url }}?target=wishlist'"
+    class="button product-wishlist__button{% if customer %} add-to-wishlist{{ prod.id }}{% endif %}"
+    aria-label="{% t 'Add to Wishlist' %}"
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+    data-bs-title="{% t 'Add to Wishlist' %}"
+    data-bs-custom-class="product-block__tooltip"
+  >
+    <div class="product-wishlist__icon trsn">
+      <i class="theme-icon ph ph-heart"></i>
+    </div>
+    {% if display == 'form' %}
+      <span class="product-withlist__text">{% t "Add to Wishlist" %}</span>
+    {% endif %}
+  </button>
+  <button
+    type="button"
+    onclick="location.href='{{ customer_login_url }}?target=wishlist'"
+    class="button product-wishlist__button product-wishlist__button--added{% if customer %} remove-from-wishlist{{ prod.id }}{% endif %} hidden"
+    aria-label="{% t 'Remove from Wishlist' %}"
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+    data-bs-title="{% t 'Remove from Wishlist' %}"
+    data-bs-custom-class="product-block__tooltip"
+  >
+    <div class="product-wishlist__icon trsn">
+      <i class="ph-fill ph-heart"></i>
+    </div>
+
+    {% if display == 'form' %}
+      <span class="product-withlist__text">{% t "In your Wishlist" %}</span>
+    {% endif %}
+  </button>
+</product-wishlist>

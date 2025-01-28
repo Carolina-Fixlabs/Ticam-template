@@ -1,0 +1,261 @@
+{
+  "name": "Latest blog posts",
+  "icon": "newspaper",
+  "help": "For more information about this component and how it works, please visit [this article](landing?url=support/theme-components/#-latest-blog-posts).",
+  "max_usage": null,
+  "required": false,
+  "tag": "div",
+  "classes": "",
+  "templates_in": [
+    "home",
+    "product",
+    "category",
+    "page",
+    "searchresults",
+    "contactpage",
+    "error"
+  ],
+  "options": {
+    "page_category": {
+      "name": "Page category",
+      "type": "page_category",
+      "default": "Post"
+    },
+    "display": {
+      "name": "Display type",
+      "type": "select",
+      "default": "carousel",
+      "options": [
+        {
+          "label": "Carousel",
+          "value": "carousel"
+        },
+        {
+          "label": "Grid",
+          "value": "grid"
+        }
+      ]
+    },
+    "limit": {
+      "name": "Quantity of items to display",
+      "type": "slider",
+      "default": 3,
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "unit": ""
+    },
+    "columns_desktop": {
+      "name": "Number of columns on desktop",
+      "type": "select",
+      "default": "3",
+      "options": [
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        },
+        {
+          "label": "3",
+          "value": "3"
+        }
+      ]
+    },
+    "columns_mobile": {
+      "name": "Number of columns on mobile",
+      "type": "select",
+      "default": "2",
+      "options": [
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        }
+      ]
+    },
+    "heading": {
+      "name": "Enable heading",
+      "type": "checkbox",
+      "default": true
+    },
+    "heading_subtitle": {
+      "name": "Subtitle",
+      "type": "input",
+      "default": ""
+    },
+    "heading_title": {
+      "name": "Title",
+      "type": "input",
+      "default": "Blog"
+    },
+    "heading_description": {
+      "name": "Description",
+      "type": "text",
+      "default": "",
+      "placeholder": "Add a description to provide more information about these posts"
+    },
+    "heading_link": {
+      "name": "Link",
+      "type": "link",
+      "default": "/blog"
+    },
+    "heading_link_text": {
+      "name": "Link text",
+      "type": "input",
+      "default": "See more posts"
+    },
+    "group_carousel": {
+      "name": "Carousel settings",
+      "type": "heading",
+      "default": false
+    },
+    "autoplay": {
+      "name": "Enable autoplay",
+      "type": "checkbox",
+      "default": false
+    },
+    "autoplay_speed": {
+      "name": "Autoplay speed",
+      "type": "slider",
+      "default": 4000,
+      "min": 1000,
+      "max": 6000,
+      "step": 500,
+      "unit": "ms"
+    },
+    "show_arrows": {
+      "name": "Show arrows",
+      "type": "checkbox",
+      "default": true
+    },
+    "show_arrows_hover": {
+      "name": "Show arrows on hover",
+      "type": "checkbox",
+      "default": false
+    },
+    "show_dots": {
+      "name": "Show dots",
+      "type": "checkbox",
+      "default": true
+    },
+    "group_appearance": {
+      "name": "Appearance",
+      "type": "heading",
+      "default": false
+    },
+    "margin_top": {
+      "name": "Top margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "margin_bottom": {
+      "name": "Bottom margin",
+      "type": "slider",
+      "default": 48,
+      "min": 0,
+      "max": 80,
+      "step": 8,
+      "unit": "px"
+    },
+    "bundle_color": {
+      "name": "Content colors",
+      "type": "bundle",
+      "default": "default",
+      "pack": "color"
+    },
+    "animate": {
+      "name": "Customize animation options",
+      "type": "checkbox",
+      "help": "Allows to override the animation options defined at **Theme settings > Design > Enable theme animations**.",
+      "default": false
+    },
+    "animate_type": {
+      "name": "Animation type",
+      "type": "select",
+      "default": "fade-up",
+      "options": [
+        {
+          "label": "From down",
+          "value": "fade-up"
+        },
+        {
+          "label": "From up",
+          "value": "fade-down"
+        },
+        {
+          "label": "From left",
+          "value": "fade-right"
+        },
+        {
+          "label": "From right",
+          "value": "fade-left"
+        },
+        {
+          "label": "Zoom in",
+          "value": "zoom-in"
+        },
+        {
+          "label": "Zoom out",
+          "value": "zoom-out"
+        }
+      ]
+    },
+    "animate_repeat": {
+      "name": "Do the animation once",
+      "type": "checkbox",
+      "default": true
+    },
+    "animate_delay": {
+      "name": "Animation delay",
+      "type": "slider",
+      "default": 50,
+      "min": 0,
+      "max": 300,
+      "step": 50,
+      "unit": "ms"
+    }
+  },
+  "nesting": {
+    "animate": [
+      "animate_type",
+      "animate_repeat",
+      "animate_delay"
+    ],
+    "heading": [
+      "heading_subtitle",
+      "heading_title",
+      "heading_description",
+      "heading_link",
+      "heading_link_text"
+    ],
+    "autoplay": [
+      "autoplay_speed"
+    ],
+    "show_arrows": [
+      "show_arrows_hover"
+    ],
+    "group_carousel": [
+      "autoplay",
+      "show_arrows",
+      "show_dots"
+    ],
+    "group_appearance": [
+      "margin_top",
+      "margin_bottom",
+      "bundle_color",
+      "animate"
+    ]
+  },
+  "mode": "subcomponents",
+  "properties": {}
+}

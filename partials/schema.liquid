@@ -1,0 +1,163 @@
+<script type="application/ld+json">
+  [
+    {
+      "@context": "http://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {% for breadcrumb in breadcrumbs %}
+          {
+          "@type": "ListItem",
+          "position": {{ forloop.index }},
+          "item": {
+          "name": "{{ breadcrumb.text | escape }}"{% unless forloop.last %},
+          "@id": "{{ breadcrumb.url }}"{% endunless %}
+          }
+          }
+          {% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    },
+    {
+      "@context": "http://schema.org/"
+      {% case template %}
+      {% when 'product' %},
+        "@type": "Product",
+        "name": "{{ product.name | escape }}",
+        "url": "{{ store.base_url }}{{ product.url }}",
+        "itemCondition": "http://schema.org/NewCondition",
+        {% if product.sku != blank %}"sku": "{{ product.sku }}",{% endif %}
+        {% if product.images != blank %}"image": "{{ product.images.first }}",{% endif %}
+        {% if product.selected_variant != blank and product.selected_variant.barcode != blank %}"productID": "{{ product.selected_variant.barcode }}",{% elsif product.barcode != blank %}"productID": "{{ product.barcode }}",{% endif %}
+        "description": "{{ product.description | strip_html | escape | strip | strip_newlines }}",
+        {% if product.brand != blank %}
+        "brand": {
+          "@type": "Brand",
+          "name": "{{ product.brand }}"
+        },
+        {% endif %}
+        {% if options.pb_show_ratings and product.reviews != empty %}
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "{{ product.reviews.rating }}",
+          "reviewCount": "{{ product.reviews.count }}"
+        },
+        {% endif %}
+        {% if product.google_product_category != blank %}
+          "category": "{{ product.google_product_category | escape }}",
+        {% elsif product.categories != blank %}
+          "category": "{{ product.categories.first.name | escape }}",
+        {% endif %}
+        "offers": {
+          {% if product.selected_variant != blank %}
+            "@type": "AggregateOffer",
+            {% if product.selected_variant.stock > 0 or product.selected_variant.stock_unlimited %}
+              "availability": "http://schema.org/InStock",
+            {% else %}
+              "availability": "http://schema.org/OutOfStock",
+            {% endif %}
+            "offerCount": "{{ product.variants.size }}",
+            {% if product.selected_variant.discount > 0 %}
+              "price": "{{ product.selected_variant.price | minus: product.selected_variant.discount }}",
+              {% if product.selected_variant.discount_expires %}"priceValidUntil" : "{{ product.selected_variant.discount_expires }}",{% endif %}
+            {% else %}
+              "price": "{{ product.selected_variant.price }}",
+            {% endif %}
+            "lowPrice": "{{ product.selected_variant.price }}",
+            "highPrice": "{{ product.selected_variant.price }}",
+          {% elsif product.variants != blank %}
+            {% assign available = false %}
+            {% for variant in product.variants %}
+              {% if variant.stock > 0 or variant.stock_unlimited %}
+                {% assign available = true %}
+              {% endif %}
+            {% endfor %}
+            "@type": "AggregateOffer",
+            {% if available %}
+              "availability": "http://schema.org/InStock",
+            {% else %}
+              "availability": "http://schema.org/OutOfStock",
+            {% endif %}
+            "lowPrice": "{{ product.variants_min_price }}",
+            "highPrice": "{{ product.variants_max_price }}",
+            "offerCount": "{{ product.variants.size }}",
+            {% if product.discount > 0 %}
+              {% assign price = product.price | minus: product.discount %}
+              {% if product.discount_expires %}"priceValidUntil" : "{{ product.discount_expires }}",{% endif %}
+            {% else %}
+              {% assign price = product.price %}
+            {% endif %}
+            "price": "{{ price }}",
+
+          {% else %}
+            "@type": "Offer",
+            "itemCondition": "http://schema.org/NewCondition",
+            {% if product.stock == 0 and product.stock_unlimited == false %}
+            "availability": "http://schema.org/OutOfStock",
+            {% else %}
+            "availability": "http://schema.org/InStock",
+            {% endif %}
+            {% if product.discount > 0 %}
+              {% assign price = product.price | minus: product.discount %}
+              {% if product.discount_expires %}"priceValidUntil" : "{{ product.discount_expires }}",{% endif %}
+            {% else %}
+              {% assign price = product.price %}
+            {% endif %}
+            "price": "{{ price }}",
+          {% endif %}
+          "priceCurrency": "{{ store.currency_code }}",
+          "seller": {
+            "@type": "Organization",
+            "name": "{{ store.name }}"
+          },
+          "url": "{{ store.base_url }}{{ product.url }}",
+          "shippingDetails": [
+            {
+            "@type": "OfferShippingDetails",
+            "shippingDestination": [
+            {% for country in store.shipping_countries %}
+            {
+              "@type": "DefinedRegion",
+              "addressCountry": "{{ country.code }}"
+            }{% unless forloop.last %},{% endunless %}
+            {% endfor %}]
+            }
+          ]
+        }
+      {% when 'contactpage' %},
+          "@type": "Store",
+          "@id": "{{ store.url }}",
+          "name": "{{ store.name }}",
+          {% if store.location.phone != blank %}"telephone" : "{{ store.location.phone }}",{% endif %}
+          {% if social.whatsapp.handler != blank %}"telephone": "{{ social.whatsapp.handler }}",{% endif %}
+          {% if store.logo != blank %}"image": "{{ store.logo }}",{% endif %}
+          {% if store.address != blank %}
+          "address": {
+            "@type": "PostalAddress",
+            {% if store.address != blank %}"streetAddress": "{{ store.address }}",{% endif %}
+            {% if store.city != blank %}"addressLocality": "{{ store.city }}",{% endif %}
+            {% if store.region != blank %}"addressRegion": "{{ store.region }}",{% endif %}
+            {% if store.postal != blank %}"postalCode": "{{ store.postal }}",{% endif %}
+            "addressCountry": "{{ store.country }}"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "{{ store.latitude }}",
+            "longitude": "{{ store.longitude }}"
+          },
+          {% endif %}
+          "url": "{{ store.url }}"
+      {% when 'home' %},
+          "@type": "WebSite",
+          "url": "{{ store.url }}",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "{{ store.url }}/search/{search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+      {% endcase %}
+    }
+  ]
+</script>

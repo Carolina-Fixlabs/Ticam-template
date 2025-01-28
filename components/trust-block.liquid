@@ -1,0 +1,43 @@
+{% assign link = trust-block.options.link %}
+{% capture link_default %}{% t "Read more" %}{% endcapture %}
+{% assign link_text = trust-block.options.link_text | default: link_default %}
+
+<div
+  class="{{ section_classname }} trustbar-block{% if component.options.card %} trustbar-block--card{% endif %}"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+  {{ trust-block.attributes }}
+>
+  <div
+    class="d-flex align-items-{% if alignment_option == 'end' %}start{% else %}{{ alignment_option }}{% endif %} justify-content-{{ alignment_option }}{% if alignment_option == 'center' %} flex-column{% endif %} text-{{ alignment_option }} trustbar-block__wrapper"
+    {% if component.options.card %}
+      data-bundle-color="{{ component.options.card_bundle_color }}" data-border="{{ component.options.card_border }}"
+    {% endif %}
+  >
+    {% if has_icons %}
+      <div class="trustbar-block__icon{% if alignment_option == 'end' %} order-2{% endif %}">
+        <i class="theme-icon ph {{ trust-block.options.icon }}"></i>
+      </div>
+    {% endif %}
+    <div class="d-flex flex-column align-items-{{ alignment_option }} trustbar-block__info">
+      <div class="w-100 trustbar-block__title check-empty" {{ trust-block.attributes.textfield.title }}>{{ trust-block.options.title }}</div>
+
+      <div class="w-100 trustbar-block__text check-empty" {{ trust-block.attributes.textfield.text }}>{{ trust-block.options.text | newline_to_br }}</div>
+
+      {% if link != blank %}
+        <a
+          href="{{ link }}"
+          class="trustbar-block__link"
+          title="{{ link_text }}"
+          {% if trust-block.options.link_external %}
+            target="_blank"
+          {% endif %}
+        >
+          <span {{ trust-block.attributes.textfield.link_text }}>{{ link_text }}</span>
+          {% if trust-block.options.link_arrow %} <i class="theme-icon ph ph-arrow-right"></i>{% endif %}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>

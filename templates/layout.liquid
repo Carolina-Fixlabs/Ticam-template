@@ -1,0 +1,116 @@
+{% assign is_checkout_page = false %}
+{% if template == 'cart' or template == 'checkout' or template == 'revieworder' or template == 'success' %}
+  {% assign is_checkout_page = true %}
+{% endif %}
+{% assign is_customer_page = false %}
+{% if template == 'customer_account' or template == 'customer_address' or template == 'customer_details' or template == 'customer_login' or template == 'customer_reset_password' %}
+  {% assign is_customer_page = true %}
+{% endif %}
+{% assign is_category_page = false %}
+{% if template == 'category' or template == 'searchresults' %}
+  {% assign is_category_page = true %}
+{% endif %}
+<!doctype html>
+
+<html class="no-js" lang="{{ languages.first.locale }}" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    {{ options.head_code_top }}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <meta name="description" content="{{ meta_description | default: store.name }}">
+    <meta name="robots" content="follow, all">
+
+    <link rel="preconnect" href="https://images.jumpseller.com">
+    <link rel="preconnect" href="https://cdnx.jumpseller.com">
+    <link rel="preconnect" href="https://assets.jumpseller.com">
+    <link rel="preconnect" href="https://files.jumpseller.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    {% render 'og_meta_tags' %}
+
+    {% for language in languages %}
+      <link rel="alternate" {% if languages.size > 1 %}
+          hreflang="{{ language.locale }}"
+        {% endif %} href="{{ language.url }}">
+    {% endfor %}
+
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {{ favicon }}
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer></script>
+    {{ 'jquery-zoom/1.7.21/jquery.zoom.min.js' | public_asset_tag: 'defer' }}
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    {% if store.autocomplete_access %}
+      <!-- Autocomplete search -->
+      {{ 'autocomplete/1.16.0/index.production.min.js' | public_asset_tag: 'defer' }}
+      <script src="//assets.jumpseller.com/public/autocomplete/jumpseller-autocomplete@1.0.0.min.js" data-suggest-categories="false" defer></script>
+    {% endif %}
+
+    {% unless template == 'success' %}
+      <!-- Swiper -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+    {% endunless %}
+
+    {% if template == 'success' or template == 'customer_account' %}
+      <!-- jsZip -->
+      {{ 'jszip/3.10.1/jszip.min.js' | public_asset_tag }}
+    {% endif %}
+
+    {% render 'schema' %}
+
+    <link rel="stylesheet" href="{{ 'color_pickers.css' | asset }}">
+    <link rel="stylesheet" href="{{ 'app.css' | asset }}">
+    {% if is_customer_page %}<link rel="stylesheet" href="{{ 'customer.css' | asset }}">{% endif %}
+    {% if is_checkout_page %}<link rel="stylesheet" href="{{ 'checkout.css' | asset }}">{% endif %}
+    {% unless request.section_preview_mode %}
+      {{ 'aos/2.3.4/aos.css' | public_asset_tag }}
+    {% endunless %}
+
+    {% render 'theme_data' %}
+
+    {{ options.head_code_bottom }}
+  </head>
+
+  <body data-bundle-color="default">
+    <script src="{{ 'theme.js' | asset }}" defer></script>
+    <script src="{{ 'main.js' | asset }}" defer></script>
+    {% if is_category_page %}<script src="{{ 'category.js' | asset }}" defer></script>{% endif %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]'); // Initialize Bootstrap Tooltips
+        const tooltipList = [...tooltipTriggerList].map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
+      });
+    </script>
+
+    {{ options.body_code_top }}
+
+    <div class="main-container" data-layout="{{ template }}">
+      <div class="toast-notification__wrapper {{ options.cart_notification_position }}"></div>
+      {{ content }}
+    </div>
+
+    {% unless request.section_preview_mode %}
+      {% render 'store_whatsapp' %}
+      {% render 'popup_age_verification' %}
+
+      {{ 'aos/2.3.4/aos.js' | public_asset_tag }}
+      <script>
+        AOS.init();
+      </script>
+    {% endunless %}
+
+    {{ options.body_code_bottom }}
+  </body>
+</html>

@@ -1,0 +1,13 @@
+{% for prod in customer.wishlisted_products %}
+  {% render 'store_product', prod: prod, prod_type: 'wishlist' %}
+{% else %}
+  <div class="col-12 customer-tabs__message">
+    <div class="row align-items-center justify-content-between">
+      <div class="col">
+        <div class="customer-tabs__text">
+          {% t "You don't have products saved in your Wishlist." %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}

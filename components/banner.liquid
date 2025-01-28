@@ -1,0 +1,86 @@
+{% assign banner_id = 'banner-block-' | append: banner.id %}
+
+{% capture image_class -%}
+  {%- if banner_type == 'content' %}w-100 position-relative d-block z-1 h-100 trsn{% endif %} banner-block__image
+{%- endcapture %}
+{% assign image_desktop = banner.options.image_desktop.url %}
+{% assign image_desktop_alt = banner.options.image_desktop.alt %}
+{% assign image_mobile = banner.options.image_mobile.url %}
+{% assign image_mobile_alt = banner.options.image_mobile.alt %}
+
+{% capture banner_image %}
+  {% if image_desktop != blank and image_mobile != blank %}
+    <picture class="{% if banner_type == 'content' %}position-relative d-block z-1{% endif %} h-100 w-100 d-block">
+      <source media="screen and (max-width: 575px)" srcset="{{ image_mobile }}">
+      <source media="screen and (min-width: 576px)" srcset="{{ image_desktop }}">
+      <img class="{{ image_class }}" src="{{ image_desktop }}" alt="{{ image_desktop_alt | default: image_mobile_alt | default: banner.options.title | default: store.name | escape }}" {{ banner.options.image_desktop.attributes.width_and_height }} loading="lazy">
+    </picture>
+  {% elsif image_desktop != blank and image_mobile == blank %}
+    <img class="{{ image_class }}" src="{{ image_desktop }}" alt="{{ image_desktop_alt | default: banner.options.title | default: store.name | escape }}" {{ banner.options.image_desktop.attributes.width_and_height }} loading="lazy">
+  {% elsif image_desktop == blank and image_mobile != blank %}
+    <img class="{{ image_class }}" src="{{ image_mobile }}" alt="{{ image_mobile_alt | default: banner.options.title | default: store.name | escape }}" {{ banner.options.image_mobile.attributes.width_and_height }} loading="lazy">
+  {% else %}
+    <div class="theme-image-placeholder{% if banner_type == 'content' %} theme-image-placeholder--no-icon{% endif %}"></div>
+  {% endif %}
+{% endcapture %}
+
+{% assign link = banner.options.link %}
+{% capture link_default %}{% t "Read more" %}{% endcapture %}
+{% assign link_text = banner.options.link_text | default: link_default %}
+{% assign link_external = banner.options.link_external %}
+
+<div
+  class="{% if banner_display == 'carousel' %}swiper-slide{% else %}{{ class_mobile }} {{ class_desktop }}{% endif %} banner-block"
+  {% if has_animation %}
+    data-aos-once="{{ animate_repeat }}" data-aos="{{ animate_type }}" data-aos-delay="{{ animate_delay }}"
+  {% endif %}
+>
+  <style>
+    #{{ banner_id }} {
+      --banner-block-position-y: {{ banner.options.position_y }};
+      --banner-block-position-x: {{ banner.options.position_x }};
+      --banner-block-alignment: {{ banner.options.position_x }};
+      --theme-image-position: {{ banner.options.position_image_x }} {{ banner.options.position_image_y }};
+      --theme-overlay-opacity: {{ banner.options.image_overlay | divided_by: 100.00 }};
+    }
+  </style>
+  <div
+    id="{{ banner_id }}"
+    class="banner-block__wrapper{% if banner_type == 'content' %} aspect-ratio-{{ component.options.ratio }}{% endif %}"
+    {% if banner_type == 'content' %}
+      data-bundle-color="{{ banner.options.bundle_color }}"
+    {% endif %}
+    {{ banner.attributes }}
+  >
+    {% render 'theme_hover_link', link: link, link_text: link_text, link_external: link_external %}
+
+    {% if banner_type == 'content' %}
+      <div class="{% if component.options.ratio == 'landscape' %}position-relative{% else %}position-absolute{% endif %} banner-block__content">
+        <div class="theme-section__subtitle check-empty" {{ banner.attributes.textfield.subtitle }}>{{ banner.options.subtitle }}</div>
+
+        <h3 class="theme-section__title check-empty" {{ banner.attributes.textfield.title }}>{{ banner.options.title }}</h3>
+
+        {% if link != blank and banner.options.link_button %}
+          <a
+            href="{{ link }}"
+            class="button button--style button--main{% if banner.options.link_outline %} button--bordered{% endif %} theme-section__button"
+            title="{{ link_text }}"
+            {% if link_external %}
+              target="_blank"
+            {% endif %}
+          >
+            <span {{ banner.attributes.textfield.link_text }}>{{ link_text }}</span>
+            {%- if banner.options.link_arrow %} <i class="ph ph-arrow-right"></i>{% endif %}
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="banner-block__media aspect-ratio-{{ component.options.ratio }}">
+        <div class="theme-section__overlay"></div>
+        {{ banner_image }}
+      </div>
+    {% else %}
+      {{ banner_image }}
+    {% endif %}
+  </div>
+</div>
