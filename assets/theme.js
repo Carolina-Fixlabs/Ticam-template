@@ -2060,6 +2060,15 @@ class ProductPrice extends CustomHTMLElement {
         return element;
       });
 
+        const addIvaText = (priceElement) => {
+     if (this.getAttribute("data-show-iva") === "true") {
+       const ivaText = document.createElement("span");
+       ivaText.className = "product-page__iva-text";
+       ivaText.textContent = " +IVA";
+       priceElement.appendChild(ivaText);
+     }
+   };
+
     if (this.product.discount > 0) {
       this.price = this.product.price - this.product.discount;
       productNormalPrice.classList.add("hidden");
@@ -2067,6 +2076,8 @@ class ProductPrice extends CustomHTMLElement {
       productOldPrice.classList.remove("hidden");
       productNewPrice.textContent = this.product.price_with_discount_formatted;
       productOldPrice.textContent = this.product.price_formatted;
+
+       addIvaText(productNewPrice);
 
       if (this.options.showDiscountBadge) {
         productDiscountBadge.classList.remove("hidden");
@@ -2094,6 +2105,7 @@ class ProductPrice extends CustomHTMLElement {
       ...this.product,
       price_with_discount: this.price,
     };
+    addIvaText(productNormalPrice);
   }
 }
 window.customElements.define("product-price", ProductPrice);

@@ -10,6 +10,7 @@
   data-display="{{ product-price.options.display }}"
   data-productid="{{ first_id }}"
   {{ product-price.attributes }}
+  data-show-iva="true"
 >
   <script type="application/json" class="product-price-json">
     {
@@ -54,3 +55,10 @@
     }
   </script>
 </product-price>
+
+<style>
+    .product-page__iva-text {
+   font-weight: 400;
+   font-size: 80%;
+  }
+</style>
