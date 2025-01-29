@@ -84,7 +84,7 @@
           {% when 'hover' %}
             <a
               role="button"
-              class="d-none d-lg-flex button header-nav__anchor header-nav__anchor--categories"
+              class="d-none d-lg-flex button header-nav__anchor header-nav__anchor--categories button-style"
               title="{% t 'Open submenu' %}"
               data-event="hover"
             >
@@ -152,3 +152,8 @@
       </li>
     {% endunless %}
 {% endcase %}
+<style>
+  .button-style{
+    display: none !important;
+  }
+</style>

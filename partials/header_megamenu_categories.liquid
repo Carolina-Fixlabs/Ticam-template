@@ -1,49 +1,227 @@
-{% assign columns = menu.category.items.size %}
-
-<div class="header-megamenu dropdown-menu">
-  <div class="container header-megamenu__container">
-    <div class="row">
-      {% for item in menu.category.items %}
-        <div class="col{% if columns > 6 %}-2{% endif %} header-megamenu__column">
-          <a
-            {% if item.type == 'no_url' %}
-              role="button"
-            {% else %}
-              href="{{ item.url }}"
-            {% endif %}
-            class="header-megamenu__title"
-            title="{% t 'Go to' %} {{ item.name }}"
-          >
-            {{- item.name -}}
-          </a>
-
-          <ul class="no-bullet d-flex flex-column header-megamenu__list">
-            {% for item in item.items %}
-              <li class="header-megamenu__item">
-                <a
+<div class="full-container-menu">
+  <div id="custom-menu" class="header-megamenu dropdown-menu pages-style">
+    <div class="container header-megamenu__container" style="display:flex; flex-direction:row-reverse; padding:0px !important">
+      <div class="column">
+        <button class="button d-flex button-categories">
+          <img src="{{ 'categories.png' | asset }}" loading="lazy" alt="categories" style="width:15px; margin-right: 8px;">
+          CATEGORÍAS DE PRODUCTOS
+        </button>
+        {% for item in menu.category.items %}
+          <div class="col{% if columns > 6 %}-2{% endif %} header-megamenu__column">
+            <div class="header-megamenu__title-wrapper">
+              <a
+                {% if item.type == 'no_url' %}
+                  role="button"
+                {% else %}
                   href="{{ item.url }}"
-                  class="header-megamenu__link"
-                  title="{% t 'Go to' %} {{ item.name }}"
-                  {% if item.external %}
-                    target="_blank"
-                  {% endif %}
-                >
-                  {{- item.name -}}
-                </a>
-              </li>
-            {% endfor %}
+                {% endif %}
+                class="header-megamenu__title title-style"
+                title="{% t 'Go to' %} {{ item.name }}"
+              >
+                {{- item.name -}}
+              </a>
+              {% if item.items.size > 0 %}
+                <button class="submenu-toggle active" aria-label="Toggle submenu">
+                  <i class="ph ph-caret-down"></i>
+                </button>
+              {% endif %}
+            </div>
 
-            {% unless item.type == 'no_url' %}
-              <li class="header-megamenu__item">
-                <a href="{{ item.url }}" class="header-megamenu__link header-megamenu__link--last" title="{% t 'View all in' %} {{ item.name }}">
-                  {%- t "View all" %}
-                  <i class="ph ph-arrow-right"></i
-                ></a>
-              </li>
-            {% endunless %}
-          </ul>
-        </div>
-      {% endfor %}
+            {% if item.items.size > 0 %}
+              <ul class="no-bullet d-flex flex-column header-megamenu__list submenu active">
+                {% for subitem in item.items %}
+                  <li class="header-megamenu__item">
+                    <a
+                      href="{{ subitem.url }}"
+                      class="header-megamenu__link"
+                      title="{% t 'Go to' %} {{ subitem.name }}"
+                      {% if subitem.external %}
+                        target="_blank"
+                      {% endif %}
+                    >
+                      {{- subitem.name -}}
+                    </a>
+                  </li>
+                {% endfor %}
+
+                {% unless item.type == 'no_url' %}
+                  <li class="header-megamenu__item">
+                    <a href="{{ item.url }}" class="header-megamenu__link header-megamenu__link--last" title="{% t 'View all in' %} {{ item.name }}">
+                      {%- t "View all" %}
+                      <i class="ph ph-arrow-right"></i>
+                    </a>
+                  </li>
+                {% endunless %}
+              </ul>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const customMenu = document.getElementById("custom-menu")
+
+  // Mostrar menú solo en la página de inicio
+  if (
+    window.location.pathname === "/" ||
+    window.location.pathname === "/inicio" ||
+    window.location.pathname === "/start"
+  ) {
+    if (customMenu) {
+      customMenu.classList.add("menu-personalized")
+      customMenu.style.display = "block"
+      customMenu.style.opacity = "1"
+      customMenu.style.visibility = "visible"
+    }
+
+    // Ajustar la posición del menú
+    const header = document.querySelector("header")
+    if (header && customMenu) {
+      const headerHeight = header.offsetHeight
+      customMenu.style.top = `${headerHeight}px`
+    }
+  }
+
+  // Manejo de submenús
+  const submenuToggles = document.querySelectorAll(".submenu-toggle")
+  submenuToggles.forEach((toggle) => {
+    // Activar todos los submenús por defecto
+    const submenu = toggle.closest(".header-megamenu__column").querySelector(".submenu")
+    if (submenu) {
+      submenu.classList.add("active")
+      toggle.classList.add("active")
+    }
+
+    toggle.addEventListener("click", function (e) {
+      e.preventDefault()
+      const submenu = this.closest(".header-megamenu__column").querySelector(".submenu")
+      if (submenu) {
+        submenu.classList.toggle("active")
+        this.classList.toggle("active")
+      }
+    })
+  })
+})
+document.addEventListener('DOMContentLoaded', function () {
+  // Verificar si estamos en la página de inicio
+  if (window.location.pathname === '/' || window.location.pathname === '/inicio' || window.location.pathname === '/start') {
+    document.body.classList.add('is-homepage'); // Agregar clase al body
+  }
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const customMenu = document.getElementById("custom-menu");
+  const footer = document.getElementById("site-footer");
+
+  if (customMenu && footer) {
+    const adjustMenuPosition = () => {
+      const footerTop = footer.getBoundingClientRect().top;
+      const menuHeight = customMenu.offsetHeight;
+      const windowHeight = window.innerHeight;
+
+      // Si el footer está visible y el menú lo alcanza
+      if (footerTop < windowHeight) {
+        customMenu.style.bottom = `${windowHeight - footerTop}px`; // Limitar al footer
+      } else {
+        customMenu.style.bottom = "0"; // Restaurar el comportamiento normal
+      }
+    };
+
+    // Ajustar al cargar y al redimensionar/scroll
+    adjustMenuPosition();
+    window.addEventListener("resize", adjustMenuPosition);
+    window.addEventListener("scroll", adjustMenuPosition);
+  }
+});
+
+</script>
+<style>
+  .button-categories {
+  background-color:#1C4F99;
+  color:white;
+  padding:18px 20px;
+   width:100%;
+  }
+   .is-homepage #components {
+  margin-left: 18%;
+}
+.menu-personalized {
+  width: 20%;
+  display: block !important;
+  opacity: 1;
+  visibility: visible;
+  position: fixed; 
+  top: 155px; 
+  bottom: 0; 
+  overflow-y: auto; 
+}
+
+.pages-style {
+  display: flex;
+  width: 18%;
+  opacity: 1;
+  margin-top: 155px !important;
+  box-shadow: none;
+  border: none!important;
+  margin-left: 10px !important;
+
+}
+
+.header-megamenu__title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Botón de submenú */
+.submenu-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.submenu-toggle i {
+  transition: transform 0.3s ease;
+}
+
+.submenu-toggle.active i {
+  transform: rotate(180deg);
+}
+
+/* Submenú */
+.header-megamenu__list.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.header-megamenu__list.submenu.active {
+  max-height: none; /* Cambiado para mostrar todo el contenido */
+}
+
+.header-megamenu__column {
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.title-style {
+  margin-top: 10px;
+}
+
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .pages-style {
+    width: 16%;
+  }
+}
+@media (max-width: 767px) {
+ #components {
+   margin-left: 0% !important;
+ }
+}
+
+
+</style>

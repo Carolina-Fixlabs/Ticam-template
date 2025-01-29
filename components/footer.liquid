@@ -24,7 +24,7 @@
 {% endcapture %}
 
 <footer
-  class="footer {{ component.options.align_mobile }} {{ align_desktop }}"
+  class="footer {{ component.options.align_mobile }} {{ align_desktop }} footer-position"
   data-titles-underline="{{ component.options.titles_underline }}"
   data-bundle-color="{{ component.options.bundle_color }}"
   {{ component.attributes }}
@@ -136,3 +136,12 @@
   <!-- end .footer__container -->
 </footer>
 <!-- end .footer -->
+
+<style>
+  .footer-position{
+  position: absolute;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+  }
+</style>
